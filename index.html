@@ -1,25 +1,685 @@
-In my repository xau-ai, create a complete working web app for XAUUSD trading analysis.
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAU AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090d12;color:#eee;font-family:Arial,sans-serif}
+main{max-width:850px;margin:auto;padding:14px}
+.card{background:#121820;border:1px solid #26313d;border-radius:14px;padding:14px;margin-bottom:12px}
+h1{margin:0;font-size:24px}
+.gray{color:#8995a3;font-size:12px}
+.price{font-size:30px;font-weight:bold}
+.top{display:flex;justify-content:space-between;align-items:center}
+.signal{text-align:center;font-size:32px;font-weight:bold;padding:18px;border-radius:12px;margin-top:12px;background:#1a222c}
+.buy{color:#35d07f}.sell{color:#ff6470}.wait{color:#f0c84b}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.box{background:#171f28;border-radius:10px;padding:12px}
+.title{font-size:11px;color:#8995a3;text-transform:uppercase}
+.val{font-size:20px;font-weight:bold;margin-top:5px}
+table{width:100%;border-collapse:collapse}
+td,th{padding:9px 4px;border-bottom:1px solid #26313d;text-align:left}
+th{color:#8995a3;font-size:12px}
+button{background:#273443;color:white;border:0;border-radius:10px;padding:12px 15px;font-weight:bold;margin:3px}
+input{background:#0d1319;border:1px solid #303c49;color:white;padding:10px;border-radius:8px;width:100%}
+.ok{color:#35d07f}.err{color:#ff6470}.warn{color:#f0c84b}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
 
-Create an index.html that works directly in a mobile browser.
+<body>
+<main>
 
-The app must:
-- show current XAUUSD price
-- fetch market data
-- analyze H1, M30 and M15
-- determine BUY, SELL or WAIT
-- calculate Entry, SL, TP1, TP2 and TP3
-- use EMA, RSI, ATR and market structure
-- show market regime: QUIET / NORMAL / HIGH VOL
-- show a clear trading signal dashboard
-- include a button "SCAN XAUUSD"
-- include a paper position manager with HOLD / MOVE SL / PARTIAL / CLOSE
-- include a historical backtest section
-- use a clean dark mobile-friendly interface
-- do not require Python
-- do not require the user to install anything
-- everything must run from index.html
-- use public XAUUSD market data API where possible
-- do not use fake prices or fake results
-- if live data cannot be loaded, clearly show the actual error
+<div class="card">
+<div class="top">
+<div>
+<h1>XAU AI</h1>
+<div class="gray">H1 → M30 → M15 • LIVE</div>
+</div>
+<div style="text-align:right">
+<div class="gray">XAUUSD</div>
+<div id="price" class="price">---</div>
+</div>
+</div>
+</div>
 
-Create the file directly in the repository and commit the changes.
+<div class="card">
+<div class="title">DECYZJA</div>
+<div id="signal" class="signal wait">ŁADOWANIE</div>
+<div id="reason" class="gray" style="text-align:center;margin-top:8px">
+Pobieranie danych...
+</div>
+</div>
+
+<div class="grid">
+
+<div class="box">
+<div class="title">H1 — KIERUNEK</div>
+<div id="h1" class="val">---</div>
+<div id="h1info" class="gray">---</div>
+</div>
+
+<div class="box">
+<div class="title">M30 — SETUP</div>
+<div id="m30" class="val">---</div>
+<div id="m30info" class="gray">---</div>
+</div>
+
+<div class="box">
+<div class="title">M15 — POTWIERDZENIE</div>
+<div id="m15" class="val">---</div>
+<div id="m15info" class="gray">---</div>
+</div>
+
+<div class="box">
+<div class="title">REGIME</div>
+<div id="regime" class="val">---</div>
+<div id="regimeinfo" class="gray">---</div>
+</div>
+
+</div>
+
+<div class="card">
+<div class="title">PLAN TRANSAKCJI</div>
+<table>
+<tr>
+<th>ENTRY</th>
+<th>SL</th>
+<th>TP1</th>
+<th>TP2</th>
+<th>TP3</th>
+</tr>
+<tr>
+<td id="entry">---</td>
+<td id="sl">---</td>
+<td id="tp1">---</td>
+<td id="tp2">---</td>
+<td id="tp3">---</td>
+</tr>
+</table>
+<div id="planinfo" class="gray" style="margin-top:8px">---</div>
+</div>
+
+<div class="card">
+<div class="title">WSKAŹNIKI</div>
+<table>
+<tr><td>EMA 20</td><td id="ema20">---</td></tr>
+<tr><td>EMA 50</td><td id="ema50">---</td></tr>
+<tr><td>RSI 14</td><td id="rsi">---</td></tr>
+<tr><td>ATR 14</td><td id="atr">---</td></tr>
+<tr><td>STRUKTURA</td><td id="structure">---</td></tr>
+<tr><td>NEWS USA</td><td id="news">---</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="title">POZYCJA PAPIEROWA</div>
+
+<div style="margin-top:8px">
+<div class="gray">LOT</div>
+<input id="lot" type="number" value="0.10" step="0.01">
+</div>
+
+<div style="margin-top:8px">
+<div class="gray">ENTRY RĘCZNY — opcjonalnie</div>
+<input id="manualEntry" type="number" placeholder="automatyczny">
+</div>
+
+<div style="margin-top:10px">
+<button onclick="openPosition()">OPEN</button>
+<button onclick="positionAction('HOLD')">HOLD</button>
+<button onclick="positionAction('MOVE SL')">MOVE SL</button>
+<button onclick="positionAction('CLOSE')">CLOSE</button>
+</div>
+
+<div id="position" class="gray" style="margin-top:8px">
+Brak pozycji.
+</div>
+</div>
+
+<div class="card">
+<button onclick="analyse()">ODŚWIEŻ ANALIZĘ</button>
+<button onclick="autoMode()" id="auto">AUTO: OFF</button>
+<div id="status" class="gray" style="margin-top:8px">Uruchamianie...</div>
+</div>
+
+</main>
+
+<script>
+
+const API="https://biquote.io/api";
+
+let data={h1:[],m30:[],m15:[]};
+let plan=null;
+let position=null;
+let automatic=false;
+let interval=null;
+
+const $=x=>document.getElementById(x);
+
+function number(x){
+return Number(x);
+}
+
+function fmt(x){
+return Number.isFinite(x)?x.toFixed(2):"---";
+}
+
+async function getData(tf){
+
+const url=
+API+"/XAUUSD/ohlc?interval="+tf+"&limit=250";
+
+const response=await fetch(url,{cache:"no-store"});
+
+if(!response.ok)
+throw new Error("HTTP "+response.status);
+
+const json=await response.json();
+
+const arr=Array.isArray(json)?
+json:
+(json.data||json.bars||json.results||[]);
+
+return arr.map(x=>({
+
+time:number(x.openTime||x.time||x.timestamp),
+
+open:number(x.open),
+high:number(x.high),
+low:number(x.low),
+close:number(x.close),
+
+volume:number(x.volume||x.tickVolume||0)
+
+})).filter(x=>
+Number.isFinite(x.open)&&
+Number.isFinite(x.high)&&
+Number.isFinite(x.low)&&
+Number.isFinite(x.close)
+);
+
+}
+
+function EMA(values,period){
+
+if(values.length<period)return NaN;
+
+let k=2/(period+1);
+let e=values[0];
+
+for(let i=1;i<values.length;i++)
+e=values[i]*k+e*(1-k);
+
+return e;
+}
+
+function RSI(values,period=14){
+
+if(values.length<period+1)return NaN;
+
+let gain=0;
+let loss=0;
+
+for(let i=1;i<=period;i++){
+
+let d=values[i]-values[i-1];
+
+if(d>0)gain+=d;
+else loss-=d;
+
+}
+
+gain/=period;
+loss/=period;
+
+for(let i=period+1;i<values.length;i++){
+
+let d=values[i]-values[i-1];
+
+gain=(gain*(period-1)+Math.max(d,0))/period;
+loss=(loss*(period-1)+Math.max(-d,0))/period;
+
+}
+
+if(loss===0)return 100;
+
+return 100-(100/(1+gain/loss));
+
+}
+
+function ATR(bars,period=14){
+
+if(bars.length<period+1)return NaN;
+
+let tr=[];
+
+for(let i=1;i<bars.length;i++){
+
+tr.push(
+Math.max(
+bars[i].high-bars[i].low,
+Math.abs(bars[i].high-bars[i-1].close),
+Math.abs(bars[i].low-bars[i-1].close)
+)
+);
+
+}
+
+return EMA(tr.slice(-period*3),period);
+
+}
+
+function structure(bars){
+
+let recent=bars.slice(-20);
+
+let high=Math.max(...recent.map(x=>x.high));
+let low=Math.min(...recent.map(x=>x.low));
+let price=recent.at(-1).close;
+
+if(price>(high+low)/2)return "BULLISH";
+if(price<(high+low)/2)return "BEARISH";
+
+return "NEUTRAL";
+}
+
+function analyseFrame(bars){
+
+let closes=bars.map(x=>x.close);
+
+let price=closes.at(-1);
+
+let ema20=EMA(closes.slice(-100),20);
+let ema50=EMA(closes.slice(-120),50);
+let rsi=RSI(closes.slice(-100),14);
+let atr=ATR(bars,14);
+let str=structure(bars);
+
+let score=0;
+
+if(price>ema20)score++;
+else score--;
+
+if(ema20>ema50)score++;
+else score--;
+
+if(rsi>52)score++;
+if(rsi<48)score--;
+
+if(str==="BULLISH")score++;
+if(str==="BEARISH")score--;
+
+let signal="WAIT";
+
+if(score>=2)signal="BUY";
+if(score<=-2)signal="SELL";
+
+return {
+price,
+ema20,
+ema50,
+rsi,
+atr,
+structure:str,
+score,
+signal
+};
+
+}
+
+function getRegime(x){
+
+let ratio=x.atr/x.price;
+
+if(ratio>0.004)return "HIGH VOL";
+if(ratio<0.001)return "QUIET";
+
+return "NORMAL";
+
+}
+
+function makePlan(signal,x){
+
+let e=x.price;
+let a=x.atr;
+
+if(!Number.isFinite(a))
+return null;
+
+if(signal==="BUY"){
+
+return {
+entry:e,
+sl:e-Math.max(a*1.35,e*0.0015),
+tp1:e+a*0.9,
+tp2:e+a*1.6,
+tp3:e+a*2.4
+};
+
+}
+
+if(signal==="SELL"){
+
+return {
+entry:e,
+sl:e+Math.max(a*1.35,e*0.0015),
+tp1:e-a*0.9,
+tp2:e-a*1.6,
+tp3:e-a*2.4
+};
+
+}
+
+return {
+entry:e,
+sl:e,
+tp1:e,
+tp2:e,
+tp3:e
+};
+
+}
+
+async function analyse(){
+
+try{
+
+$("status").textContent="Pobieram H1 / M30 / M15...";
+
+[
+data.h1,
+data.m30,
+data.m15
+]=await Promise.all([
+getData("1h"),
+getData("30m"),
+getData("15m")
+]);
+
+let H=analyseFrame(data.h1);
+let M=analyseFrame(data.m30);
+let F=analyseFrame(data.m15);
+
+let regime=getRegime(H);
+
+let final="WAIT";
+
+if(
+H.signal==="BUY"&&
+M.signal==="BUY"&&
+F.signal==="BUY"
+)final="BUY";
+
+if(
+H.signal==="SELL"&&
+M.signal==="SELL"&&
+F.signal==="SELL"
+)final="SELL";
+
+if(
+regime==="HIGH VOL" &&
+Math.abs(F.score)<3
+)
+final="WAIT";
+
+$("price").textContent=fmt(F.price);
+
+show("h1",H.signal);
+$("h1info").textContent=
+"score "+H.score+" • RSI "+fmt(H.rsi);
+
+show("m30",M.signal);
+$("m30info").textContent=
+"score "+M.score+" • "+M.structure;
+
+show("m15",F.signal);
+$("m15info").textContent=
+"score "+F.score+" • RSI "+fmt(F.rsi);
+
+$("regime").textContent=regime;
+$("regimeinfo").textContent=
+"ATR "+fmt(H.atr);
+
+$("ema20").textContent=fmt(F.ema20);
+$("ema50").textContent=fmt(F.ema50);
+$("rsi").textContent=fmt(F.rsi);
+$("atr").textContent=fmt(F.atr);
+$("structure").textContent=F.structure;
+
+$("signal").textContent=final;
+$("signal").className=
+"signal "+
+(final==="BUY"?"buy":
+final==="SELL"?"sell":"wait");
+
+$("reason").textContent=
+"H1 "+H.signal+
+" → M30 "+M.signal+
+" → M15 "+F.signal+
+" • regime "+regime;
+
+plan=makePlan(final,F);
+
+$("entry").textContent=fmt(plan.entry);
+$("sl").textContent=fmt(plan.sl);
+$("tp1").textContent=fmt(plan.tp1);
+$("tp2").textContent=fmt(plan.tp2);
+$("tp3").textContent=fmt(plan.tp3);
+
+if(final==="WAIT")
+$("planinfo").textContent=
+"WAIT — brak pełnego potwierdzenia.";
+
+else
+$("planinfo").textContent=
+"SL: "+fmt(Math.abs(plan.entry-plan.sl))+
+" • TP3: "+fmt(Math.abs(plan.tp3-plan.entry));
+
+await checkNews();
+
+managePosition(F.price);
+
+$("status").innerHTML=
+'<span class="ok">DANE AKTUALNE</span> • '+
+new Date().toLocaleTimeString("pl-PL");
+
+}
+catch(error){
+
+$("status").innerHTML=
+'<span class="err">BŁĄD:</span> '+error.message;
+
+$("signal").textContent="ERROR";
+$("signal").className="signal wait";
+
+}
+
+}
+
+function show(id,signal){
+
+$(id).textContent=signal;
+
+$(id).className=
+"val "+
+(signal==="BUY"?"buy":
+signal==="SELL"?"sell":"wait");
+
+}
+
+async function checkNews(){
+
+try{
+
+const r=await fetch(
+API+"/calendar/upcoming?importance=high&countries=US",
+{cache:"no-store"}
+);
+
+if(!r.ok)throw new Error();
+
+const j=await r.json();
+
+const events=
+Array.isArray(j)?
+j:
+(j.data||j.events||[]);
+
+let now=Date.now();
+
+let soon=events.filter(e=>{
+
+let t=new Date(
+e.time||e.date||e.timestamp
+).getTime();
+
+return Number.isFinite(t)&&
+t>now&&
+t<now+7200000;
+
+});
+
+if(soon.length){
+
+$("news").textContent=
+"HIGH IMPACT < 2H";
+
+$("news").className="warn";
+
+}else{
+
+$("news").textContent=
+"brak wysokiego wpływu < 2H";
+
+$("news").className="ok";
+
+}
+
+}catch(e){
+
+$("news").textContent="NIEDOSTĘPNE";
+
+}
+
+}
+
+function openPosition(){
+
+if(!plan)return;
+
+let signal=$("signal").textContent;
+
+if(signal==="WAIT"||signal==="ERROR")return;
+
+let entry=
+Number($("manualEntry").value)||
+plan.entry;
+
+position={
+side:signal,
+lot:Number($("lot").value)||0.1,
+entry:entry,
+sl:plan.sl,
+tp1:plan.tp1,
+tp2:plan.tp2,
+tp3:plan.tp3
+};
+
+renderPosition(entry);
+
+}
+
+function renderPosition(price){
+
+if(!position)return;
+
+let move=
+position.side==="BUY"?
+price-position.entry:
+position.entry-price;
+
+$("position").textContent=
+position.side+
+" • "+
+position.lot+
+" lot • Entry "+
+fmt(position.entry)+
+" • Cena "+
+fmt(price)+
+" • Δ "+
+fmt(move)+
+" • SL "+
+fmt(position.sl);
+
+}
+
+function managePosition(price){
+
+if(position)
+renderPosition(price);
+
+}
+
+function positionAction(action){
+
+if(!position){
+
+$("position").textContent=
+"Brak pozycji.";
+
+return;
+
+}
+
+if(action==="MOVE SL")
+position.sl=position.entry;
+
+if(action==="CLOSE"){
+
+$("position").textContent=
+"Pozycja zamknięta.";
+
+position=null;
+
+return;
+
+}
+
+$("position").textContent=
+action+
+" • SL "+
+fmt(position.sl);
+
+}
+
+function autoMode(){
+
+automatic=!automatic;
+
+$("auto").textContent=
+"AUTO: "+(automatic?"ON":"OFF");
+
+if(interval)
+clearInterval(interval);
+
+if(automatic){
+
+analyse();
+
+interval=setInterval(
+analyse,
+60000
+);
+
+}
+
+}
+
+analyse();
+
+</script>
+</body>
+</html>
