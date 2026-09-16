@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-
 <title>XAU AI PRO</title>
 
 <style>
-
 *{
  box-sizing:border-box;
  -webkit-tap-highlight-color:transparent;
@@ -239,22 +237,6 @@ button.yellowBtn{
  gap:8px;
 }
 
-@media(max-width:600px){
-
- .controls{
-  grid-template-columns:repeat(2,1fr);
- }
-
- .planGrid{
-  grid-template-columns:repeat(2,1fr);
- }
-
- .tf{
-  grid-template-columns:45px 1fr 85px;
- }
-
-}
-
 .bigValue{
  font-size:19px;
  font-weight:900;
@@ -296,6 +278,29 @@ button.yellowBtn{
  color:#ffd15c;
 }
 
+.statGrid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:8px;
+}
+
+.stat{
+ background:#121a23;
+ border:1px solid #202b36;
+ border-radius:12px;
+ padding:10px;
+}
+
+.statValue{
+ font-size:18px;
+ font-weight:900;
+ margin-top:4px;
+}
+
+.historyWrap{
+ overflow-x:auto;
+}
+
 table{
  width:100%;
  border-collapse:collapse;
@@ -305,12 +310,18 @@ table{
 th{
  color:#748091;
  font-weight:700;
+ white-space:nowrap;
 }
 
 td,th{
- padding:8px 4px;
+ padding:8px 5px;
  border-bottom:1px solid #202833;
  text-align:left;
+ white-space:nowrap;
+}
+
+.historyTable{
+ min-width:850px;
 }
 
 .log{
@@ -332,6 +343,31 @@ td,th{
  padding:10px;
 }
 
+.empty{
+ text-align:center;
+ color:#687382;
+ padding:14px;
+}
+
+@media(max-width:650px){
+
+ .controls{
+  grid-template-columns:repeat(2,1fr);
+ }
+
+ .planGrid{
+  grid-template-columns:repeat(2,1fr);
+ }
+
+ .statGrid{
+  grid-template-columns:repeat(2,1fr);
+ }
+
+ .tf{
+  grid-template-columns:45px 1fr 85px;
+ }
+
+}
 </style>
 </head>
 
@@ -339,19 +375,17 @@ td,th{
 
 <div class="container">
 
-<!-- HEADER -->
-
 <div class="header">
-
  <div>
   <div class="title">XAU AI PRO</div>
-  <div class="subtitle">M5 • M15 • M30 • H1 • PRICE ACTION • MACRO</div>
+  <div class="subtitle">
+   M5 • M15 • M30 • H1 • PRICE ACTION • MACRO
+  </div>
  </div>
 
  <div class="status" id="connection">
   CONNECTING
  </div>
-
 </div>
 
 
@@ -362,29 +396,14 @@ td,th{
  <div class="priceRow">
 
   <div>
-
    <div class="small">XAUUSD MID</div>
-
-   <div class="price" id="price">
-    ---
-   </div>
-
+   <div class="price" id="price">---</div>
   </div>
 
   <div style="text-align:right">
-
-   <div class="small">
-    BID / ASK
-   </div>
-
-   <div id="bidAsk">
-    --- / ---
-   </div>
-
-   <div class="small" id="quoteAge">
-    ---
-   </div>
-
+   <div class="small">BID / ASK</div>
+   <div id="bidAsk">--- / ---</div>
+   <div class="small" id="quoteAge">---</div>
   </div>
 
  </div>
@@ -461,7 +480,7 @@ td,th{
   </div>
 
   <div class="strength" id="strength">
-   Siła: ---
+   Siła sygnału: ---
   </div>
 
   <div class="reason" id="decisionReason">
@@ -473,7 +492,7 @@ td,th{
 </div>
 
 
-<!-- FOUR TIMEFRAMES -->
+<!-- TIMEFRAMES -->
 
 <div class="card">
 
@@ -482,67 +501,27 @@ td,th{
  </div>
 
  <div class="tf">
-
-  <div class="tfName">
-   M5
-  </div>
-
-  <div id="m5Trend">
-   ---
-  </div>
-
-  <div id="m5Info">
-   ---
-  </div>
-
+  <div class="tfName">M5</div>
+  <div id="m5Trend">---</div>
+  <div id="m5Info">---</div>
  </div>
 
  <div class="tf">
-
-  <div class="tfName">
-   M15
-  </div>
-
-  <div id="m15Trend">
-   ---
-  </div>
-
-  <div id="m15Info">
-   ---
-  </div>
-
+  <div class="tfName">M15</div>
+  <div id="m15Trend">---</div>
+  <div id="m15Info">---</div>
  </div>
 
  <div class="tf">
-
-  <div class="tfName">
-   M30
-  </div>
-
-  <div id="m30Trend">
-   ---
-  </div>
-
-  <div id="m30Info">
-   ---
-  </div>
-
+  <div class="tfName">M30</div>
+  <div id="m30Trend">---</div>
+  <div id="m30Info">---</div>
  </div>
 
  <div class="tf">
-
-  <div class="tfName">
-   H1
-  </div>
-
-  <div id="h1Trend">
-   ---
-  </div>
-
-  <div id="h1Info">
-   ---
-  </div>
-
+  <div class="tfName">H1</div>
+  <div id="h1Trend">---</div>
+  <div id="h1Info">---</div>
  </div>
 
 </div>
@@ -609,7 +588,7 @@ td,th{
 </div>
 
 
-<!-- TRADE PLAN -->
+<!-- PLAN -->
 
 <div class="card">
 
@@ -645,7 +624,7 @@ td,th{
   </div>
 
   <div class="box">
-   <div class="label">TP3 / RUNNER</div>
+   <div class="label">TP3</div>
    <div class="value" id="tp3">---</div>
   </div>
 
@@ -654,7 +633,7 @@ td,th{
 </div>
 
 
-<!-- MARKET STRUCTURE -->
+<!-- STRUCTURE -->
 
 <div class="card">
 
@@ -735,53 +714,31 @@ td,th{
  <div class="grid">
 
   <div class="box">
-
-   <div class="label">
-    STATUS
-   </div>
-
-   <div id="runnerStatus"
-        class="runnerStatus neutral">
+   <div class="label">STATUS</div>
+   <div id="runnerStatus" class="runnerStatus neutral">
     OFF
    </div>
-
   </div>
 
   <div class="box">
-
-   <div class="label">
-    POSITIONS
-   </div>
-
+   <div class="label">AKTYWNE</div>
    <div class="value" id="runnerPositions">
     0 / 4
    </div>
-
   </div>
 
   <div class="box">
-
-   <div class="label">
-    REALIZED
-   </div>
-
+   <div class="label">REALIZED</div>
    <div class="value" id="realized">
     $0.00
    </div>
-
   </div>
 
   <div class="box">
-
-   <div class="label">
-    TOTAL P/L
-   </div>
-
-   <div id="runnerProfit"
-        class="profit neutral">
+   <div class="label">TOTAL P/L</div>
+   <div id="runnerProfit" class="profit neutral">
     $0.00
    </div>
-
   </div>
 
  </div>
@@ -789,27 +746,23 @@ td,th{
 
  <div class="controls" style="margin-top:10px">
 
-  <button
-   id="runnerButton"
-   onclick="toggleRunner()">
+  <button id="runnerButton"
+          onclick="toggleRunner()">
    RUNNER OFF
   </button>
 
-  <button
-   class="greenBtn"
-   onclick="openPaperRunner()">
+  <button class="greenBtn"
+          onclick="openPaperRunner()">
    TEST ENTRY
   </button>
 
-  <button
-   class="redBtn"
-   onclick="runnerCloseAll()">
+  <button class="redBtn"
+          onclick="runnerCloseAll()">
    CLOSE ALL
   </button>
 
-  <button
-   class="yellowBtn"
-   onclick="runnerReset()">
+  <button class="yellowBtn"
+          onclick="runnerReset()">
    RESET
   </button>
 
@@ -819,33 +772,146 @@ td,th{
  <div style="margin-top:12px">
 
   <table>
-
    <thead>
-
     <tr>
      <th>#</th>
      <th>Side</th>
      <th>Lot</th>
      <th>Entry</th>
+     <th>SL</th>
      <th>TP</th>
      <th>Status</th>
      <th>P/L</th>
     </tr>
-
    </thead>
 
    <tbody id="runnerTable">
-
     <tr>
-     <td colspan="7"
-         style="text-align:center;color:#687382">
+     <td colspan="8"
+         class="empty">
       No positions
      </td>
     </tr>
-
    </tbody>
 
   </table>
+
+ </div>
+
+</div>
+
+
+<!-- TRADE JOURNAL -->
+
+<div class="card">
+
+ <div class="sectionTitle">
+  HISTORIA TRANSAKCJI
+ </div>
+
+
+ <div class="statGrid">
+
+  <div class="stat">
+   <div class="label">ZAMKNIĘTE</div>
+   <div class="statValue" id="historyTotal">
+    0
+   </div>
+  </div>
+
+  <div class="stat">
+   <div class="label">WIN</div>
+   <div class="statValue positive" id="historyWins">
+    0
+   </div>
+  </div>
+
+  <div class="stat">
+   <div class="label">LOSS</div>
+   <div class="statValue negative" id="historyLosses">
+    0
+   </div>
+  </div>
+
+  <div class="stat">
+   <div class="label">WIN RATE</div>
+   <div class="statValue" id="historyWinRate">
+    0%
+   </div>
+  </div>
+
+  <div class="stat">
+   <div class="label">ZYSKI</div>
+   <div class="statValue positive" id="historyGrossWin">
+    $0.00
+   </div>
+  </div>
+
+  <div class="stat">
+   <div class="label">STRATY</div>
+   <div class="statValue negative" id="historyGrossLoss">
+    $0.00
+   </div>
+  </div>
+
+  <div class="stat">
+   <div class="label">NETTO</div>
+   <div class="statValue" id="historyNet">
+    $0.00
+   </div>
+  </div>
+
+  <div class="stat">
+   <div class="label">AVG / TRADE</div>
+   <div class="statValue" id="historyAvg">
+    $0.00
+   </div>
+  </div>
+
+ </div>
+
+
+ <div style="margin-top:14px"
+      class="historyWrap">
+
+  <table class="historyTable">
+
+   <thead>
+    <tr>
+     <th>#</th>
+     <th>Data</th>
+     <th>Side</th>
+     <th>Entry</th>
+     <th>Exit</th>
+     <th>SL</th>
+     <th>TP</th>
+     <th>Powód</th>
+     <th>P/L</th>
+     <th>Signal</th>
+    </tr>
+   </thead>
+
+   <tbody id="historyTable">
+    <tr>
+     <td colspan="10"
+         class="empty">
+      Brak zamkniętych transakcji
+     </td>
+    </tr>
+   </tbody>
+
+  </table>
+
+ </div>
+
+
+ <div class="controls"
+      style="margin-top:10px">
+
+  <button class="redBtn"
+          onclick="clearHistory()">
+   WYCZYŚĆ HISTORIĘ
+  </button>
 
  </div>
 
@@ -863,12 +929,10 @@ td,th{
  <table>
 
   <thead>
-
    <tr>
     <th>Element</th>
     <th>Wynik</th>
    </tr>
-
   </thead>
 
   <tbody id="conditions">
@@ -920,7 +984,7 @@ td,th{
 
 
 <div class="footer">
- XAU AI PRO • PAPER RUNNER • MT5 CONNECTION NOT ACTIVE
+ XAU AI PRO • PAPER RUNNER • TRADE JOURNAL
 </div>
 
 </div>
@@ -941,9 +1005,28 @@ const LOT =
 const MAX_RUNNER_POSITIONS =
  4;
 
+/*
+  PAPER VALUE:
+
+  This is only a simulator.
+
+  0.01 lot is temporarily treated
+  as approximately $1 for every
+  $1 movement in XAUUSD.
+
+  Later we will replace this with
+  the exact contract specification
+  from the broker.
+*/
+
+const USD_PER_DOLLAR_MOVE_001 =
+ 1.0;
+
 let selectedLevel =
  Number(
-  localStorage.getItem("xauLevel") || 3
+  localStorage.getItem(
+   "xauLevel"
+  ) || 3
  );
 
 let latestPrice =
@@ -954,7 +1037,7 @@ let analysis =
 
 
 /* =========================================================
-   RUNNER
+   RUNNER STATE
 ========================================================= */
 
 let runner = {
@@ -969,9 +1052,72 @@ let runner = {
 
  realized:0,
 
- positions:[]
+ positions:[],
+
+ openedAt:null
 
 };
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+const HISTORY_KEY =
+ "xau_ai_trade_history_v2";
+
+let tradeHistory =
+ loadHistory();
+
+
+function loadHistory(){
+
+ try{
+
+  const raw =
+   localStorage.getItem(
+    HISTORY_KEY
+   );
+
+  if(!raw)
+   return [];
+
+  const parsed =
+   JSON.parse(raw);
+
+  return Array.isArray(parsed)
+   ? parsed
+   : [];
+
+ }catch(e){
+
+  return [];
+
+ }
+
+}
+
+
+function saveHistory(){
+
+ try{
+
+  localStorage.setItem(
+   HISTORY_KEY,
+   JSON.stringify(
+    tradeHistory
+   )
+  );
+
+ }catch(e){
+
+  log(
+   "Nie udało się zapisać historii."
+  );
+
+ }
+
+}
 
 
 /* =========================================================
@@ -987,10 +1133,12 @@ function el(id){
 
 function text(id,value){
 
- const x=el(id);
+ const x=
+  el(id);
 
  if(x)
-  x.textContent=value;
+  x.textContent=
+   value;
 
 }
 
@@ -1004,24 +1152,28 @@ function fmt(value,d=2){
  )
   return "---";
 
- return Number(value).toFixed(d);
+ return Number(value)
+  .toFixed(d);
 
 }
 
 
 function log(message){
 
- const box =
+ const box=
   el("systemLog");
 
- const row =
-  document.createElement("div");
+ const row=
+  document.createElement(
+   "div"
+  );
 
- row.className =
+ row.className=
   "logRow";
 
- row.textContent =
-  new Date().toLocaleTimeString()+
+ row.textContent=
+  new Date()
+   .toLocaleTimeString()+
   " — "+
   message;
 
@@ -1048,7 +1200,7 @@ async function getLivePrice(){
 
  try{
 
-  const response =
+  const response=
    await fetch(
     API+
     "/XAUUSD?allowStale=false",
@@ -1059,13 +1211,14 @@ async function getLivePrice(){
 
   if(!response.ok)
    throw new Error(
-    "HTTP "+response.status
+    "HTTP "+
+    response.status
    );
 
-  const data =
+  const data=
    await response.json();
 
-  latestPrice =
+  latestPrice=
    data;
 
   text(
@@ -1104,7 +1257,8 @@ async function getLivePrice(){
 
   el(
    "connection"
-  ).textContent="LIVE";
+  ).textContent=
+   "LIVE";
 
   return data;
 
@@ -1112,7 +1266,8 @@ async function getLivePrice(){
 
   el(
    "connection"
-  ).textContent="ERROR";
+  ).textContent=
+   "ERROR";
 
   log(
    "Live price error: "+
@@ -1132,7 +1287,7 @@ async function getBars(interval){
 
  try{
 
-  const response =
+  const response=
    await fetch(
     API+
     "/XAUUSD/ohlc?interval="+
@@ -1145,41 +1300,51 @@ async function getBars(interval){
 
   if(!response.ok)
    throw new Error(
-    "HTTP "+response.status
+    "HTTP "+
+    response.status
    );
 
-  const data =
+  const data=
    await response.json();
 
-  let bars =
+  let bars=
    data.bars || data;
 
   if(!Array.isArray(bars))
    return [];
 
-  bars =
+  bars=
    bars
-   .map(b=>({
+   .map(
+    b=>({
 
-    time:Number(b.time),
+     time:
+      Number(b.time),
 
-    open:Number(b.open),
+     open:
+      Number(b.open),
 
-    high:Number(b.high),
+     high:
+      Number(b.high),
 
-    low:Number(b.low),
+     low:
+      Number(b.low),
 
-    close:Number(b.close),
+     close:
+      Number(b.close),
 
-    volume:Number(
-     b.volume || 0
-    ),
+     volume:
+      Number(
+       b.volume || 0
+      ),
 
-    isOpen:Boolean(
-     b.isOpen
-    )
+     isOpen:
+      Boolean(
+       b.isOpen
+      )
 
-   }))
+    })
+   )
    .filter(
     b=>
      isFinite(b.open)&&
@@ -1189,8 +1354,8 @@ async function getBars(interval){
    );
 
   /*
-    Current unfinished candle
-    is NEVER used.
+    NEVER analyze the
+    unfinished candle.
   */
 
   if(
@@ -1232,21 +1397,27 @@ function ema(values,period){
  )
   return [];
 
- const k =
-  2/(period+1);
+ const k=
+  2/
+  (period+1);
 
  const output=[];
 
- let first =
+ let first=
   values
-  .slice(0,period)
+  .slice(
+   0,
+   period
+  )
   .reduce(
    (a,b)=>a+b,
    0
   )/
   period;
 
- output[period-1]=
+ output[
+  period-1
+ ]=
   first;
 
  for(
@@ -1257,7 +1428,8 @@ function ema(values,period){
 
   output[i]=
    values[i]*k+
-   output[i-1]*(1-k);
+   output[i-1]*
+   (1-k);
 
  }
 
@@ -1270,7 +1442,10 @@ function ema(values,period){
    RSI
 ========================================================= */
 
-function rsi(values,period=14){
+function rsi(
+ values,
+ period=14
+){
 
  if(
   values.length<
@@ -1315,33 +1490,47 @@ function rsi(values,period=14){
    values[i-1];
 
   const g=
-   Math.max(diff,0);
+   Math.max(
+    diff,
+    0
+   );
 
   const l=
-   Math.max(-diff,0);
+   Math.max(
+    -diff,
+    0
+   );
 
   avgGain=
    (
-    avgGain*(period-1)+g
+    avgGain*
+    (period-1)+
+    g
    )/
    period;
 
   avgLoss=
    (
-    avgLoss*(period-1)+l
+    avgLoss*
+    (period-1)+
+    l
    )/
    period;
 
  }
 
- if(avgLoss===0)
+ if(
+  avgLoss===0
+ )
   return 100;
 
  const rs=
-  avgGain/avgLoss;
+  avgGain/
+  avgLoss;
 
  return 100-
-  100/(1+rs);
+  100/
+  (1+rs);
 
 }
 
@@ -1350,7 +1539,10 @@ function rsi(values,period=14){
    ATR
 ========================================================= */
 
-function atr(bars,period=14){
+function atr(
+ bars,
+ period=14
+){
 
  if(
   bars.length<
@@ -1394,9 +1586,12 @@ function atr(bars,period=14){
 
  }
 
- let value =
+ let value=
   trs
-  .slice(0,period)
+  .slice(
+   0,
+   period
+  )
   .reduce(
    (a,b)=>a+b,
    0
@@ -1411,7 +1606,8 @@ function atr(bars,period=14){
 
   value=
    (
-    value*(period-1)+
+    value*
+    (period-1)+
     trs[i]
    )/
    period;
@@ -1430,10 +1626,16 @@ function atr(bars,period=14){
 function macd(values){
 
  const e12=
-  ema(values,12);
+  ema(
+   values,
+   12
+  );
 
  const e26=
-  ema(values,26);
+  ema(
+   values,
+   26
+  );
 
  if(
   !e12.length ||
@@ -1441,7 +1643,7 @@ function macd(values){
  )
   return null;
 
- return (
+ return(
   e12[e12.length-1]-
   e26[e26.length-1]
  );
@@ -1460,12 +1662,14 @@ function structure(bars){
   20
  ){
 
-  return {
+  return{
    direction:"NEUTRAL",
    score:0,
    text:"NEUTRAL",
    recentHigh:null,
-   recentLow:null
+   recentLow:null,
+   previousHigh:null,
+   previousLow:null
   };
 
  }
@@ -1536,17 +1740,23 @@ function structure(bars){
  let structureText=
   "RANGE";
 
- if(score>=2){
+ if(
+  score>=2
+ ){
 
-  direction="BUY";
+  direction=
+   "BUY";
 
   structureText=
    "HH / HL";
 
  }
- else if(score<=-2){
+ else if(
+  score<=-2
+ ){
 
-  direction="SELL";
+  direction=
+   "SELL";
 
   structureText=
    "LH / LL";
@@ -1562,7 +1772,8 @@ function structure(bars){
    previousHigh
   ){
 
-   direction="BUY";
+   direction=
+    "BUY";
 
    structureText=
     "BULLISH BREAK";
@@ -1574,7 +1785,8 @@ function structure(bars){
    previousLow
   ){
 
-   direction="SELL";
+   direction=
+    "SELL";
 
    structureText=
     "BEARISH BREAK";
@@ -1583,7 +1795,7 @@ function structure(bars){
 
  }
 
- return {
+ return{
 
   direction,
 
@@ -1624,7 +1836,9 @@ function candlePower(bars){
   b.high-
   b.low;
 
- if(range<=0)
+ if(
+  range<=0
+ )
   return 0;
 
  const body=
@@ -1634,7 +1848,8 @@ function candlePower(bars){
   );
 
  const ratio=
-  body/range;
+  body/
+  range;
 
  if(
   b.close>b.open &&
@@ -1677,12 +1892,12 @@ function impulseScore(bars){
   if(
    b.close>b.open
   )
-   score+=1;
+   score++;
 
   else if(
    b.close<b.open
   )
-   score-=1;
+   score--;
 
  }
 
@@ -1709,19 +1924,31 @@ function analyzeTF(bars){
   );
 
  const e20=
-  ema(closes,20);
+  ema(
+   closes,
+   20
+  );
 
  const e50=
-  ema(closes,50);
+  ema(
+   closes,
+   50
+  );
 
  const current=
-  closes[closes.length-1];
+  closes[
+   closes.length-1
+  ];
 
  const ema20=
-  e20[e20.length-1];
+  e20[
+   e20.length-1
+  ];
 
  const ema50=
-  e50[e50.length-1];
+  e50[
+   e50.length-1
+  ];
 
  const r=
   rsi(
@@ -1736,102 +1963,92 @@ function analyzeTF(bars){
   );
 
  const m=
-  macd(closes);
+  macd(
+   closes
+  );
 
  const s=
-  structure(bars);
+  structure(
+   bars
+  );
 
  const candle=
-  candlePower(bars);
+  candlePower(
+   bars
+  );
 
  const impulse=
-  impulseScore(bars);
+  impulseScore(
+   bars
+  );
 
  let score=0;
-
- /*
-   EMA
- */
 
  if(
   current>ema20
  )
-  score+=1;
-
+  score++;
  else
-  score-=1;
+  score--;
 
  if(
   ema20>ema50
  )
-  score+=1;
-
+  score++;
  else
-  score-=1;
-
- /*
-   RSI
- */
+  score--;
 
  if(
   r!==null
  ){
 
   if(r>55)
-   score+=1;
+   score++;
 
   else if(r<45)
-   score-=1;
+   score--;
 
  }
-
- /*
-   MACD
- */
 
  if(
   m!==null
  ){
 
   if(m>0)
-   score+=1;
+   score++;
 
   else
-   score-=1;
+   score--;
 
  }
 
- /*
-   Structure
- */
-
  score+=
-  s.score*1.4;
-
- /*
-   Candle
- */
+  s.score*
+  1.4;
 
  score+=
   candle;
 
- /*
-   Impulse
- */
-
  score+=
-  impulse*.6;
+  impulse*
+  .6;
 
  let trend=
   "WAIT";
 
- if(score>=3)
-  trend="BUY";
+ if(
+  score>=3
+ )
+  trend=
+   "BUY";
 
- else if(score<=-3)
-  trend="SELL";
+ else if(
+  score<=-3
+ )
+  trend=
+   "SELL";
 
- return {
+ return{
 
   price:current,
 
@@ -1861,7 +2078,7 @@ function analyzeTF(bars){
 
 
 /* =========================================================
-   MACRO CALENDAR
+   CALENDAR
 ========================================================= */
 
 async function getCalendar(){
@@ -1927,7 +2144,7 @@ async function getCalendar(){
    error.message
   );
 
-  return [];
+  return[];
 
  }
 
@@ -1935,7 +2152,7 @@ async function getCalendar(){
 
 
 /* =========================================================
-   MACRO ANALYSIS
+   MACRO
 ========================================================= */
 
 function analyzeMacro(events){
@@ -1967,20 +2184,6 @@ function analyzeMacro(events){
     e.name || ""
    ).toLowerCase();
 
-  const actual=
-   Number(
-    e.actual
-   );
-
-  const forecast=
-   Number(
-    e.forecast
-   );
-
-  /*
-    Find closest future event.
-  */
-
   if(
    ts>now &&
    (
@@ -1991,11 +2194,22 @@ function analyzeMacro(events){
 
    next={
     ts,
-    name:e.name ||
+    name:
+     e.name ||
      "US event"
    };
 
   }
+
+  const actual=
+   Number(
+    e.actual
+   );
+
+  const forecast=
+   Number(
+    e.forecast
+   );
 
   if(
    !isFinite(actual) ||
@@ -2013,13 +2227,9 @@ function analyzeMacro(events){
     actual-
     forecast
    )/
-   Math.abs(forecast);
-
-  /*
-    Stronger US data:
-    USD stronger
-    Gold generally weaker.
-  */
+   Math.abs(
+    forecast
+   );
 
   if(
    name.includes("cpi") ||
@@ -2029,12 +2239,12 @@ function analyzeMacro(events){
   ){
 
    if(
-    surprise>0.03
+    surprise>.03
    )
     score-=2;
 
    if(
-    surprise<-0.03
+    surprise<-.03
    )
     score+=2;
 
@@ -2047,12 +2257,12 @@ function analyzeMacro(events){
   ){
 
    if(
-    surprise>0.05
+    surprise>.05
    )
     score-=2;
 
    if(
-    surprise<-0.05
+    surprise<-.05
    )
     score+=2;
 
@@ -2067,12 +2277,12 @@ function analyzeMacro(events){
   ){
 
    if(
-    surprise>0.03
+    surprise>.03
    )
     score-=1;
 
    if(
-    surprise<-0.03
+    surprise<-.03
    )
     score+=1;
 
@@ -2083,22 +2293,22 @@ function analyzeMacro(events){
  let bias=
   "NEUTRAL";
 
- if(score>=2)
+ if(
+  score>=2
+ )
   bias=
    "GOLD BULLISH";
 
- if(score<=-2)
+ if(
+  score<=-2
+ )
   bias=
    "GOLD BEARISH";
 
- return {
-
+ return{
   score,
-
   bias,
-
   next
-
  };
 
 }
@@ -2135,10 +2345,6 @@ function newsRisk(events){
     ts-now
    );
 
-  /*
-    ±60 minutes.
-  */
-
   if(
    diff<=
    60*60*1000
@@ -2150,15 +2356,11 @@ function newsRisk(events){
    ){
 
     closest={
-
      diff,
-
      name:
       e.name ||
       "US event",
-
      ts
-
     };
 
    }
@@ -2173,7 +2375,7 @@ function newsRisk(events){
 
 
 /* =========================================================
-   INTEGRATED DECISION
+   DECISION
 ========================================================= */
 
 function calculateDecision(
@@ -2188,66 +2390,42 @@ function calculateDecision(
 ){
 
  /*
-   NOW ALL FOUR TIMEFRAMES
-   PARTICIPATE.
+   Equal participation:
+   M5 + M15 + M30 + H1.
 
-   H1 = 25%
-   M30 = 25%
-   M15 = 25%
-   M5 = 25%
-
-   They are not simply
-   counted as votes.
+   No longer a simple
+   "H1 decides everything".
  */
 
  let raw=0;
 
- raw +=
+ raw+=
   h1.score;
 
- raw +=
+ raw+=
   m30.score;
 
- raw +=
+ raw+=
   m15.score;
 
- raw +=
+ raw+=
   m5.score;
 
- raw +=
-  paScore*1.5;
+ raw+=
+  paScore*
+  1.5;
 
- raw +=
+ raw+=
   reversalScore;
 
- raw +=
+ raw+=
   macro.score;
 
- /*
-   Normalize to approximate
-   -100 ... +100.
- */
-
- let strength=
-  Math.min(
-   100,
-   Math.abs(raw)*4
-  );
-
- /*
-   Threshold according to level.
- */
-
  const thresholds={
-
   1:5,
-
   2:7,
-
   3:9,
-
   4:11
-
  };
 
  const threshold=
@@ -2261,59 +2439,52 @@ function calculateDecision(
  if(
   raw>=threshold
  )
-  decision="BUY";
+  decision=
+   "BUY";
 
  else if(
   raw<=-threshold
  )
-  decision="SELL";
-
- /*
-   Strong reversal can block
-   an otherwise attractive
-   signal.
- */
+  decision=
+   "SELL";
 
  if(
   decision==="BUY" &&
   reversalScore<=-5
- ){
-
-  decision="WAIT";
-
- }
+ )
+  decision=
+   "WAIT";
 
  if(
   decision==="SELL" &&
   reversalScore>=5
- ){
-
-  decision="WAIT";
-
- }
+ )
+  decision=
+   "WAIT";
 
  /*
-   PRO blocks near high-impact
-   news.
+   Level 4:
+   high-impact event nearby
+   blocks a fresh trade.
  */
 
  if(
   selectedLevel===4 &&
   risk
- ){
+ )
+  decision=
+   "WAIT";
 
-  decision="WAIT";
+ const strength=
+  Math.min(
+   100,
+   Math.abs(raw)*4
+  );
 
- }
-
- return {
-
+ return{
   raw,
-
   strength,
-
   decision
-
  };
 
 }
@@ -2335,7 +2506,7 @@ function createTradePlan(
  if(
   decision==="WAIT"
  )
-  return {
+  return{
 
    entry:price,
 
@@ -2360,23 +2531,21 @@ function createTradePlan(
   m5.atr
  ]
  .filter(
-  x=>x &&
-  isFinite(x)
+  x=>
+   x &&
+   isFinite(x)
  );
 
  const avgATR=
   atrs.length
-  ? atrs.reduce(
-     (a,b)=>a+b,
-     0
-    )/
-    atrs.length
-  : 10;
-
- /*
-   Use actual structure
-   from M15/M30/H1.
- */
+  ?
+   atrs.reduce(
+    (a,b)=>a+b,
+    0
+   )/
+   atrs.length
+  :
+   10;
 
  const lows=[
   h1.structure.recentLow,
@@ -2385,8 +2554,9 @@ function createTradePlan(
   m5.structure.recentLow
  ]
  .filter(
-  x=>x &&
-  isFinite(x)
+  x=>
+   x &&
+   isFinite(x)
  );
 
  const highs=[
@@ -2396,8 +2566,9 @@ function createTradePlan(
   m5.structure.recentHigh
  ]
  .filter(
-  x=>x &&
-  isFinite(x)
+  x=>
+   x &&
+   isFinite(x)
  );
 
  let sl;
@@ -2414,15 +2585,11 @@ function createTradePlan(
     ...lows
    );
 
-  /*
-    SL below meaningful
-    structure, with ATR buffer.
-  */
-
   sl=
    Math.min(
     structuralLow-
     avgATR*.25,
+
     price-
     avgATR*.9
    );
@@ -2455,7 +2622,6 @@ function createTradePlan(
    );
 
  }
-
  else{
 
   const structuralHigh=
@@ -2467,6 +2633,7 @@ function createTradePlan(
    Math.max(
     structuralHigh+
     avgATR*.25,
+
     price+
     avgATR*.9
    );
@@ -2503,7 +2670,7 @@ function createTradePlan(
  const zoneSize=
   avgATR*.25;
 
- return {
+ return{
 
   entry:price,
 
@@ -2534,7 +2701,7 @@ async function runAnalysis(){
 
  try{
 
-  const [
+  const[
    h1Bars,
    m30Bars,
    m15Bars,
@@ -2543,11 +2710,8 @@ async function runAnalysis(){
    await Promise.all([
 
     getBars("1h"),
-
     getBars("30m"),
-
     getBars("15m"),
-
     getBars("5m")
 
    ]);
@@ -2572,7 +2736,7 @@ async function runAnalysis(){
   ){
 
    log(
-    "Brak wystarczających danych"
+    "Brak wystarczających danych."
    );
 
    return;
@@ -2583,12 +2747,6 @@ async function runAnalysis(){
    candlePower(m5Bars)+
    candlePower(m15Bars)+
    candlePower(m30Bars);
-
-  /*
-    Reversal is based on
-    lower-timeframe structure
-    versus higher timeframe.
-  */
 
   let reversalScore=0;
 
@@ -2622,11 +2780,6 @@ async function runAnalysis(){
   )
    reversalScore+=1.5;
 
-  /*
-    Strong agreement gives
-    additional confirmation.
-  */
-
   if(
    m5.trend==="BUY" &&
    m15.trend==="BUY" &&
@@ -2645,10 +2798,14 @@ async function runAnalysis(){
    await getCalendar();
 
   const macro=
-   analyzeMacro(events);
+   analyzeMacro(
+    events
+   );
 
   const risk=
-   newsRisk(events);
+   newsRisk(
+    events
+   );
 
   const decision=
    calculateDecision(
@@ -2664,10 +2821,12 @@ async function runAnalysis(){
 
   const price=
    latestPrice
-   ? Number(
-      latestPrice.mid
-     )
-   : h1.price;
+   ?
+    Number(
+     latestPrice.mid
+    )
+   :
+    h1.price;
 
   const plan=
    createTradePlan(
@@ -2679,38 +2838,32 @@ async function runAnalysis(){
     m5
    );
 
-  const atrH1=
-   h1.atr;
-
   let regime=
    "QUIET";
 
   if(
-   atrH1>=30
+   h1.atr>=30
   )
-   regime="HIGH VOL";
+   regime=
+    "HIGH VOL";
 
   else if(
-   atrH1>=15
+   h1.atr>=15
   )
-   regime="NORMAL";
+   regime=
+    "NORMAL";
 
   analysis={
 
    h1,
-
    m30,
-
    m15,
-
    m5,
 
    macro,
-
    risk,
 
    paScore,
-
    reversalScore,
 
    ...decision,
@@ -2730,11 +2883,6 @@ async function runAnalysis(){
    fmt(
     decision.raw,
     1
-   )+
-   " | STRENGTH "+
-   fmt(
-    decision.strength,
-    0
    )
   );
 
@@ -2751,25 +2899,31 @@ async function runAnalysis(){
 
 
 /* =========================================================
-   UI — TREND BADGE
+   UI
 ========================================================= */
 
 function trendBadge(trend){
 
- if(trend==="BUY")
-  return '<span class="badge green">BUY</span>';
+ if(
+  trend==="BUY"
+ )
+  return(
+   '<span class="badge green">BUY</span>'
+  );
 
- if(trend==="SELL")
-  return '<span class="badge red">SELL</span>';
+ if(
+  trend==="SELL"
+ )
+  return(
+   '<span class="badge red">SELL</span>'
+  );
 
- return '<span class="badge yellow">WAIT</span>';
+ return(
+  '<span class="badge yellow">WAIT</span>'
+ );
 
 }
 
-
-/* =========================================================
-   UPDATE UI
-========================================================= */
 
 function updateUI(){
 
@@ -2778,10 +2932,6 @@ function updateUI(){
 
  const a=
   analysis;
-
- /*
-   Regime
- */
 
  text(
   "regime",
@@ -2795,11 +2945,6 @@ function updateUI(){
    2
   )
  );
-
-
- /*
-   Timeframes
- */
 
  el("m5Trend").innerHTML=
   trendBadge(
@@ -2857,11 +3002,6 @@ function updateUI(){
   )
  );
 
-
- /*
-   Score
- */
-
  text(
   "scoreM5",
   fmt(
@@ -2918,25 +3058,14 @@ function updateUI(){
   )
  );
 
- /*
-   Score bar
- */
-
- const percentage=
-  Math.min(
-   100,
-   Math.abs(a.raw)*4
-  );
-
  el(
   "scoreFill"
  ).style.width=
-  percentage+"%";
-
-
- /*
-   Decision
- */
+  Math.min(
+   100,
+   Math.abs(a.raw)*4
+  )+
+  "%";
 
  const decisionEl=
   el("decision");
@@ -2948,10 +3077,14 @@ function updateUI(){
   "signalText "+
   (
    a.decision==="BUY"
-   ? "buy"
-   : a.decision==="SELL"
-   ? "sell"
-   : "wait"
+   ?
+    "buy"
+   :
+   a.decision==="SELL"
+   ?
+    "sell"
+   :
+    "wait"
   );
 
  text(
@@ -2964,25 +3097,20 @@ function updateUI(){
   " / 100"
  );
 
- let reason="";
+ let reason=
+  "Brak wystarczającej przewagi.";
 
  if(
   a.decision==="BUY"
  )
   reason=
-   "4 interwały wskazują przewagę wzrostową.";
+   "Wspólna przewaga wzrostowa M5/M15/M30/H1.";
 
  if(
   a.decision==="SELL"
  )
   reason=
-   "4 interwały wskazują przewagę spadkową.";
-
- if(
-  a.decision==="WAIT"
- )
-  reason=
-   "Brak wystarczającej przewagi.";
+   "Wspólna przewaga spadkowa M5/M15/M30/H1.";
 
  if(
   a.risk &&
@@ -2991,29 +3119,10 @@ function updateUI(){
   reason=
    "PRO: ważne dane USA w pobliżu.";
 
- if(
-  a.reversalScore<=-5 &&
-  a.decision==="WAIT"
- )
-  reason=
-   "Silne ryzyko odwrócenia w dół.";
-
- if(
-  a.reversalScore>=5 &&
-  a.decision==="WAIT"
- )
-  reason=
-   "Silne ryzyko odwrócenia w górę.";
-
  text(
   "decisionReason",
   reason
  );
-
-
- /*
-   Trade plan
- */
 
  text(
   "entry",
@@ -3025,7 +3134,6 @@ function updateUI(){
 
  text(
   "entryZone",
-
   a.plan.zoneLow
   ?
    fmt(
@@ -3073,11 +3181,6 @@ function updateUI(){
   )
  );
 
-
- /*
-   Structure
- */
-
  text(
   "structureM5",
   a.m5.structure.text
@@ -3098,11 +3201,6 @@ function updateUI(){
   a.h1.structure.text
  );
 
-
- /*
-   Macro
- */
-
  text(
   "macroBias",
   a.macro.bias
@@ -3119,21 +3217,20 @@ function updateUI(){
  text(
   "newsRisk",
   a.risk
-  ? "HIGH"
-  : "LOW"
+  ?
+   "HIGH"
+  :
+   "LOW"
  );
 
  text(
   "nextEvent",
   a.macro.next
-  ? a.macro.next.name
-  : "Brak"
+  ?
+   a.macro.next.name
+  :
+   "Brak"
  );
-
-
- /*
-   Conditions
- */
 
  updateConditions();
 
@@ -3173,10 +3270,14 @@ function updateConditions(){
   [
    "Price Action",
    a.paScore>0
-   ? "BULLISH"
-   : a.paScore<0
-   ? "BEARISH"
-   : "NEUTRAL"
+   ?
+    "BULLISH"
+   :
+   a.paScore<0
+   ?
+    "BEARISH"
+   :
+    "NEUTRAL"
   ],
 
   [
@@ -3231,7 +3332,6 @@ function updateConditions(){
    row[1];
 
   tr.appendChild(td1);
-
   tr.appendChild(td2);
 
   tbody.appendChild(tr);
@@ -3290,9 +3390,6 @@ function setLevel(level){
   );
 
  }
-
- if(analysis)
-  runAnalysis();
 
 }
 
@@ -3368,7 +3465,7 @@ function toggleRunner(){
 
 
 /* =========================================================
-   OPEN PAPER RUNNER
+   CREATE PAPER POSITIONS
 ========================================================= */
 
 function openPaperRunner(){
@@ -3391,7 +3488,7 @@ function openPaperRunner(){
  ){
 
   log(
-   "Brak analizy."
+   "Brak aktualnej analizy."
   );
 
   return;
@@ -3404,7 +3501,7 @@ function openPaperRunner(){
  ){
 
   log(
-   "RUNNER nie otworzył pozycji — sygnał WAIT."
+   "RUNNER: WAIT — brak wejścia."
   );
 
   return;
@@ -3416,12 +3513,30 @@ function openPaperRunner(){
  ){
 
   log(
-   "RUNNER już działa."
+   "RUNNER już ma aktywną pozycję."
   );
 
   return;
 
  }
+
+
+ /*
+   Realistic paper entry:
+   BUY uses ASK.
+   SELL uses BID.
+ */
+
+ const entry=
+  analysis.decision==="BUY"
+  ?
+   Number(
+    latestPrice.ask
+   )
+  :
+   Number(
+    latestPrice.bid
+   );
 
  runner.active=
   true;
@@ -3430,23 +3545,24 @@ function openPaperRunner(){
   analysis.decision;
 
  runner.initialPrice=
-  Number(
-   latestPrice.mid
-  );
+  entry;
 
  runner.realized=
   0;
 
  runner.positions=[];
 
+ runner.openedAt=
+  Date.now();
+
 
  /*
-   Four positions.
+   Four virtual positions.
 
-   Position 1 → TP1
-   Position 2 → TP2
-   Position 3 → TP3
-   Position 4 → RUNNER
+   #1 = TP1
+   #2 = TP2
+   #3 = TP3
+   #4 = RUNNER
  */
 
  for(
@@ -3468,7 +3584,8 @@ function openPaperRunner(){
 
   runner.positions.push({
 
-   id:i+1,
+   id:
+    i+1,
 
    side:
     runner.side,
@@ -3476,35 +3593,273 @@ function openPaperRunner(){
    lot:
     LOT,
 
-   entry:
-    runner.initialPrice,
+   entry,
+
+   sl:
+    analysis.plan.sl,
 
    tp,
 
-   status:"OPEN",
+   status:
+    "OPEN",
 
    pnl:0,
 
    runner:
     i===3,
 
-   be:false
+   be:false,
+
+   openedAt:
+    runner.openedAt
 
   });
 
  }
 
+
  log(
-  "PAPER RUNNER "+
+  "PAPER ENTRY "+
   runner.side+
-  " x4 @ "+
+  " @ "+
   fmt(
-   runner.initialPrice,
+   entry,
+   2
+  )+
+  " | 4 pozycje"
+ );
+
+ updateRunner();
+
+}
+
+
+/* =========================================================
+   CALCULATE PAPER P/L
+========================================================= */
+
+function calculatePnl(
+ position,
+ exitPrice
+){
+
+ const diff=
+  position.side==="BUY"
+  ?
+   exitPrice-
+   position.entry
+  :
+   position.entry-
+   exitPrice;
+
+ return(
+  diff*
+  (
+   position.lot/
+   0.01
+  )*
+  USD_PER_DOLLAR_MOVE_001
+ );
+
+}
+
+
+/* =========================================================
+   CLOSE SINGLE POSITION
+========================================================= */
+
+function closePaperPosition(
+ position,
+ exitPrice,
+ reason
+){
+
+ if(
+  position.status!=="OPEN" &&
+  position.status!=="RUNNER"
+ )
+  return;
+
+ const pnl=
+  calculatePnl(
+   position,
+   exitPrice
+  );
+
+ position.pnl=
+  pnl;
+
+ position.exit=
+  exitPrice;
+
+ position.closeReason=
+  reason;
+
+ position.closedAt=
+  Date.now();
+
+ position.status=
+  reason;
+
+ runner.realized+=
+  pnl;
+
+
+ /*
+   SAVE TO HISTORY IMMEDIATELY.
+
+   This is the important part:
+   once a position closes,
+   it can never simply disappear.
+ */
+
+ addHistory(
+  position
+ );
+
+ log(
+  "CLOSE #"+
+  position.id+
+  " "+
+  reason+
+  " @ "+
+  fmt(
+   exitPrice,
+   2
+  )+
+  " | P/L "+
+  (
+   pnl>=0
+   ? "+"
+   : ""
+  )+
+  "$"+
+  fmt(
+   pnl,
    2
   )
  );
 
- updateRunner();
+}
+
+
+/* =========================================================
+   HISTORY ENTRY
+========================================================= */
+
+function addHistory(position){
+
+ const signal=
+  analysis
+  ?
+   analysis.decision
+  :
+   position.side;
+
+ const item={
+
+  id:
+   Date.now()+
+   "-" +
+   position.id,
+
+  time:
+   new Date()
+   .toISOString(),
+
+  side:
+   position.side,
+
+  lot:
+   position.lot,
+
+  entry:
+   position.entry,
+
+  exit:
+   position.exit,
+
+  sl:
+   position.sl,
+
+  tp:
+   position.tp,
+
+  reason:
+   position.closeReason,
+
+  pnl:
+   position.pnl,
+
+  signal,
+
+  score:
+   analysis
+   ?
+    analysis.raw
+   :
+    null,
+
+  strength:
+   analysis
+   ?
+    analysis.strength
+   :
+    null,
+
+  m5:
+   analysis
+   ?
+    analysis.m5.trend
+   :
+    null,
+
+  m15:
+   analysis
+   ?
+    analysis.m15.trend
+   :
+    null,
+
+  m30:
+   analysis
+   ?
+    analysis.m30.trend
+   :
+    null,
+
+  h1:
+   analysis
+   ?
+    analysis.h1.trend
+   :
+    null
+
+ };
+
+ tradeHistory.unshift(
+  item
+ );
+
+ /*
+   Keep last 500 records.
+ */
+
+ if(
+  tradeHistory.length>500
+ ){
+
+  tradeHistory=
+   tradeHistory.slice(
+    0,
+    500
+   );
+
+ }
+
+ saveHistory();
+
+ updateHistory();
 
 }
 
@@ -3517,19 +3872,28 @@ function updateRunner(){
 
  if(
   !runner.active ||
-  !latestPrice ||
-  !analysis
+  !latestPrice
  )
   return;
 
- const price=
-  Number(
-   latestPrice.mid
-  );
+ /*
+   BUY positions are evaluated
+   against BID when closing.
 
- const atr=
-  analysis.h1.atr ||
-  20;
+   SELL positions are evaluated
+   against ASK when closing.
+ */
+
+ const price=
+  runner.side==="BUY"
+  ?
+   Number(
+    latestPrice.bid
+   )
+  :
+   Number(
+    latestPrice.ask
+   );
 
  let floating=0;
 
@@ -3543,29 +3907,44 @@ function updateRunner(){
   )
    continue;
 
-  const diff=
-   p.side==="BUY"
-   ?
-    price-p.entry
-   :
-    p.entry-price;
-
-  /*
-    Approximation for
-    XAUUSD 0.01 lot:
-    $1 for each $1 move.
-  */
-
   p.pnl=
-   diff;
+   calculatePnl(
+    p,
+    price
+   );
 
   floating+=
    p.pnl;
 
 
   /*
-    TP for first three
-    positions.
+    STOP LOSS
+  */
+
+  const slHit=
+   p.side==="BUY"
+   ?
+    price<=p.sl
+   :
+    price>=p.sl;
+
+  if(
+   slHit
+  ){
+
+   closePaperPosition(
+    p,
+    p.sl,
+    "SL"
+   );
+
+   continue;
+
+  }
+
+
+  /*
+    TP for positions 1-3
   */
 
   if(
@@ -3573,35 +3952,34 @@ function updateRunner(){
    p.status==="OPEN"
   ){
 
-   const reached=
+   const tpHit=
     p.side==="BUY"
     ?
      price>=p.tp
     :
      price<=p.tp;
 
-   if(reached){
+   if(
+    tpHit
+   ){
 
-    p.status=
-     "TP HIT";
-
-    runner.realized+=
-     p.pnl;
-
-    log(
-     "Position "+
-     p.id+
-     " → TP HIT @ "+
-     fmt(
-      price,
-      2
-     )+
-     " | P/L $"+
-     fmt(
-      p.pnl,
-      2
+    closePaperPosition(
+     p,
+     p.tp,
+     (
+      p.id===1
+      ?
+       "TP1"
+      :
+      p.id===2
+      ?
+       "TP2"
+      :
+       "TP3"
      )
     );
+
+    continue;
 
    }
 
@@ -3609,22 +3987,42 @@ function updateRunner(){
 
 
   /*
-    RUNNER:
-    after TP1 distance,
-    simulate BE.
+    RUNNER position.
+
+    When price moves enough,
+    activate BE.
+
+    The BE is stored and then
+    used as the new stop.
   */
 
   if(
    p.runner &&
-   p.status==="OPEN"
+   (
+    p.status==="OPEN" ||
+    p.status==="RUNNER"
+   )
   ){
 
+   const atrValue=
+    analysis &&
+    analysis.h1 &&
+    analysis.h1.atr
+    ?
+     analysis.h1.atr
+    :
+     20;
+
    const move=
-    diff;
+    p.side==="BUY"
+    ?
+     price-p.entry
+    :
+     p.entry-price;
 
    if(
     move>=
-    atr*.65
+    atrValue*.65
    ){
 
     p.be=true;
@@ -3634,52 +4032,94 @@ function updateRunner(){
 
    }
 
+
+   /*
+     BE + small buffer.
+   */
+
+   if(
+    p.be
+   ){
+
+    const buffer=
+     Math.max(
+      .05,
+      atrValue*.05
+     );
+
+    const newSL=
+     p.side==="BUY"
+     ?
+      p.entry+buffer
+     :
+      p.entry-buffer;
+
+    /*
+      Only move SL in
+      favorable direction.
+    */
+
+    if(
+     p.side==="BUY"
+    ){
+
+     if(
+      newSL>p.sl
+     )
+      p.sl=
+       newSL;
+
+    }else{
+
+     if(
+      newSL<p.sl
+     )
+      p.sl=
+       newSL;
+
+    }
+
+   }
+
   }
 
  }
 
 
  /*
-   Runner trailing logic.
-
-   This is PAPER simulation.
+   If no active positions remain,
+   finish Runner.
  */
 
- const runnerPosition=
-  runner.positions.find(
+ const stillOpen=
+  runner.positions.some(
    p=>
-    p.runner &&
-    (
-     p.status==="OPEN" ||
-     p.status==="RUNNER"
-    )
+    p.status==="OPEN" ||
+    p.status==="RUNNER"
   );
 
  if(
-  runnerPosition
+  !stillOpen
  ){
 
-  const diff=
-   runnerPosition.side==="BUY"
-   ?
-    price-runnerPosition.entry
-   :
-    runnerPosition.entry-price;
+  runner.active=
+   false;
 
-  /*
-    If market moved strongly,
-    runner remains active.
-  */
-
-  if(
-   diff>=
-   atr*1.8
-  ){
-
-   runnerPosition.status=
-    "RUNNER PROFIT";
-
-  }
+  log(
+   "RUNNER zakończony | REALIZED "+
+   (
+    runner.realized>=0
+    ?
+     "+"
+    :
+     ""
+   )+
+   "$"+
+   fmt(
+    runner.realized,
+    2
+   )
+  );
 
  }
 
@@ -3706,35 +4146,21 @@ function updateRunnerTable(){
   tbody.innerHTML=
    `
    <tr>
-    <td colspan="7"
-        style="text-align:center;color:#687382">
+    <td colspan="8"
+        class="empty">
      No positions
     </td>
    </tr>
    `;
 
-  text(
-   "runnerPositions",
-   "0 / 4"
-  );
-
-  text(
-   "realized",
-   "$0.00"
-  );
-
-  text(
-   "runnerProfit",
-   "$0.00"
-  );
+  updateRunnerSummary();
 
   return;
 
  }
 
- let floating=0;
-
  let open=0;
+ let floating=0;
 
  for(
   const p of runner.positions
@@ -3742,8 +4168,7 @@ function updateRunnerTable(){
 
   if(
    p.status==="OPEN" ||
-   p.status==="RUNNER" ||
-   p.status==="RUNNER PROFIT"
+   p.status==="RUNNER"
   ){
 
    open++;
@@ -3784,6 +4209,13 @@ function updateRunnerTable(){
 
    "<td>"+
    fmt(
+    p.sl,
+    2
+   )+
+   "</td>"+
+
+   "<td>"+
+   fmt(
     p.tp,
     2
    )+
@@ -3796,8 +4228,10 @@ function updateRunnerTable(){
    "<td>"+
    (
     p.pnl>=0
-    ? "+"
-    : ""
+    ?
+     "+"
+    :
+     ""
    )+
    fmt(
     p.pnl,
@@ -3811,6 +4245,23 @@ function updateRunnerTable(){
 
  }
 
+ updateRunnerSummary(
+  open,
+  floating
+ );
+
+}
+
+
+/* =========================================================
+   RUNNER SUMMARY
+========================================================= */
+
+function updateRunnerSummary(
+ open=0,
+ floating=0
+){
+
  const total=
   runner.realized+
   floating;
@@ -3823,6 +4274,13 @@ function updateRunnerTable(){
 
  text(
   "realized",
+  (
+   runner.realized>=0
+   ?
+    "+"
+   :
+    ""
+  )+
   "$"+
   fmt(
    runner.realized,
@@ -3830,14 +4288,18 @@ function updateRunnerTable(){
   )
  );
 
- const profitEl=
-  el("runnerProfit");
+ const profit=
+  el(
+   "runnerProfit"
+  );
 
- profitEl.textContent=
+ profit.textContent=
   (
    total>=0
-   ? "+"
-   : ""
+   ?
+    "+"
+   :
+    ""
   )+
   "$"+
   fmt(
@@ -3845,14 +4307,18 @@ function updateRunnerTable(){
    2
   );
 
- profitEl.className=
+ profit.className=
   "profit "+
   (
    total>0
-   ? "positive"
-   : total<0
-   ? "negative"
-   : "neutral"
+   ?
+    "positive"
+   :
+   total<0
+   ?
+    "negative"
+   :
+    "neutral"
   );
 
 }
@@ -3869,14 +4335,23 @@ function runnerCloseAll(){
  ){
 
   log(
-   "Brak aktywnego RUNNERA."
+   "Brak aktywnego Runnera."
   );
 
   return;
 
  }
 
- let floating=0;
+ const price=
+  runner.side==="BUY"
+  ?
+   Number(
+    latestPrice.bid
+   )
+  :
+   Number(
+    latestPrice.ask
+   );
 
  for(
   const p of runner.positions
@@ -3884,32 +4359,24 @@ function runnerCloseAll(){
 
   if(
    p.status==="OPEN" ||
-   p.status==="RUNNER" ||
-   p.status==="RUNNER PROFIT"
+   p.status==="RUNNER"
   ){
 
-   floating+=
-    p.pnl;
-
-   p.status=
-    "CLOSED";
+   closePaperPosition(
+    p,
+    price,
+    "MANUAL"
+   );
 
   }
 
  }
 
- runner.realized+=
-  floating;
-
  runner.active=
   false;
 
  log(
-  "RUNNER CLOSE ALL | RESULT $"+
-  fmt(
-   runner.realized,
-   2
-  )
+  "RUNNER CLOSE ALL"
  );
 
  updateRunnerTable();
@@ -3922,6 +4389,11 @@ function runnerCloseAll(){
 ========================================================= */
 
 function runnerReset(){
+
+ /*
+   Reset ONLY current Runner.
+   History stays intact.
+ */
 
  runner={
 
@@ -3936,15 +4408,361 @@ function runnerReset(){
 
   realized:0,
 
-  positions:[]
+  positions:[],
+
+  openedAt:null
 
  };
 
  updateRunnerTable();
 
  log(
-  "RUNNER RESET"
+  "RUNNER RESET — historia zachowana."
  );
+
+}
+
+
+/* =========================================================
+   CLEAR HISTORY
+========================================================= */
+
+function clearHistory(){
+
+ /*
+   Browser confirm is intentional:
+   history deletion is irreversible.
+ */
+
+ const ok=
+  confirm(
+   "Usunąć całą historię transakcji?"
+  );
+
+ if(!ok)
+  return;
+
+ tradeHistory=[];
+
+ saveHistory();
+
+ updateHistory();
+
+ log(
+  "Historia została wyczyszczona."
+ );
+
+}
+
+
+/* =========================================================
+   HISTORY UI
+========================================================= */
+
+function updateHistory(){
+
+ const tbody=
+  el("historyTable");
+
+ tbody.innerHTML="";
+
+ const total=
+  tradeHistory.length;
+
+ let wins=0;
+ let losses=0;
+
+ let grossWin=0;
+ let grossLoss=0;
+
+ let net=0;
+
+ for(
+  const t of tradeHistory
+ ){
+
+  const pnl=
+   Number(
+    t.pnl || 0
+   );
+
+  net+=
+   pnl;
+
+  if(
+   pnl>0
+  ){
+
+   wins++;
+
+   grossWin+=
+    pnl;
+
+  }
+
+  else if(
+   pnl<0
+  ){
+
+   losses++;
+
+   grossLoss+=
+    Math.abs(pnl);
+
+  }
+
+ }
+
+ const winRate=
+  total
+  ?
+   wins/
+   total*
+   100
+  :
+   0;
+
+ const avg=
+  total
+  ?
+   net/
+   total
+  :
+   0;
+
+ text(
+  "historyTotal",
+  total
+ );
+
+ text(
+  "historyWins",
+  wins
+ );
+
+ text(
+  "historyLosses",
+  losses
+ );
+
+ text(
+  "historyWinRate",
+  fmt(
+   winRate,
+   1
+  )+
+  "%"
+ );
+
+ text(
+  "historyGrossWin",
+  "+$"+
+  fmt(
+   grossWin,
+   2
+  )
+ );
+
+ text(
+  "historyGrossLoss",
+  "-$"+
+  fmt(
+   grossLoss,
+   2
+  )
+ );
+
+ const netEl=
+  el(
+   "historyNet"
+  );
+
+ netEl.textContent=
+  (
+   net>=0
+   ?
+    "+"
+   :
+    ""
+  )+
+  "$"+
+  fmt(
+   net,
+   2
+  );
+
+ netEl.className=
+  "statValue "+
+  (
+   net>0
+   ?
+    "positive"
+   :
+   net<0
+   ?
+    "negative"
+   :
+    "neutral"
+  );
+
+ const avgEl=
+  el(
+   "historyAvg"
+  );
+
+ avgEl.textContent=
+  (
+   avg>=0
+   ?
+    "+"
+   :
+    ""
+  )+
+  "$"+
+  fmt(
+   avg,
+   2
+  );
+
+ avgEl.className=
+  "statValue "+
+  (
+   avg>0
+   ?
+    "positive"
+   :
+   avg<0
+   ?
+    "negative"
+   :
+    "neutral"
+  );
+
+
+ if(!tradeHistory.length){
+
+  tbody.innerHTML=
+   `
+   <tr>
+    <td colspan="10"
+        class="empty">
+     Brak zamkniętych transakcji
+    </td>
+   </tr>
+   `;
+
+  return;
+
+ }
+
+
+ for(
+  let i=0;
+  i<tradeHistory.length;
+  i++
+ ){
+
+  const t=
+   tradeHistory[i];
+
+  const date=
+   new Date(
+    t.time
+   );
+
+  const signal=
+   [
+    t.m5,
+    t.m15,
+    t.m30,
+    t.h1
+   ]
+   .filter(Boolean)
+   .join("/");
+
+  const tr=
+   document.createElement(
+    "tr"
+   );
+
+  tr.innerHTML=
+
+   "<td>"+
+   (i+1)+
+   "</td>"+
+
+   "<td>"+
+   date.toLocaleString(
+    "pl-PL",
+    {
+     day:"2-digit",
+     month:"2-digit",
+     hour:"2-digit",
+     minute:"2-digit"
+    }
+   )+
+   "</td>"+
+
+   "<td>"+
+   t.side+
+   "</td>"+
+
+   "<td>"+
+   fmt(
+    t.entry,
+    2
+   )+
+   "</td>"+
+
+   "<td>"+
+   fmt(
+    t.exit,
+    2
+   )+
+   "</td>"+
+
+   "<td>"+
+   fmt(
+    t.sl,
+    2
+   )+
+   "</td>"+
+
+   "<td>"+
+   fmt(
+    t.tp,
+    2
+   )+
+   "</td>"+
+
+   "<td>"+
+   (t.reason || "---")+
+   "</td>"+
+
+   "<td>"+
+   (
+    Number(t.pnl)>=0
+    ?
+     "+"
+    :
+     ""
+   )+
+   "$"+
+   fmt(
+    t.pnl,
+    2
+   )+
+   "</td>"+
+
+   "<td>"+
+   signal+
+   "</td>";
+
+  tbody.appendChild(
+   tr
+  );
+
+ }
 
 }
 
@@ -4005,6 +4823,8 @@ setLevel(
  selectedLevel
 );
 
+updateHistory();
+
 log(
  "XAU AI PRO START"
 );
@@ -4014,15 +4834,13 @@ log(
 );
 
 log(
- "Live price: 2 sec"
+ "Trade Journal loaded: "+
+ tradeHistory.length+
+ " records"
 );
 
 log(
- "Analysis: 60 sec"
-);
-
-log(
- "RUNNER: PAPER"
+ "Runner: PAPER MODE"
 );
 
 priceLoop();
