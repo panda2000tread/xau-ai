@@ -260,11 +260,11 @@ td{
   <div class="header">
     <div>
       <h1>XAU AI</h1>
-      <div class="note">XAUUSD • dynamic analysis & paper runner</div>
+      <div class="note">XAUUSD â¢ dynamic analysis & paper runner</div>
     </div>
 
     <div id="connection" class="status">
-      Łączenie...
+      ÅÄczenie...
     </div>
   </div>
 
@@ -307,7 +307,7 @@ td{
 
   <div class="section">
 
-    <h2>SYGNAŁ</h2>
+    <h2>SYGNAÅ</h2>
 
     <div class="signal">
 
@@ -344,7 +344,7 @@ td{
       </div>
 
       <div class="card">
-        <div class="label">TP3</div>
+        <div class="label" id="tp3Label">TP3</div>
         <div id="tp3" class="value">---</div>
       </div>
 
@@ -490,7 +490,7 @@ td{
 
   <div class="section">
 
-    <h2>RUNNER — PAPER MODE</h2>
+    <h2>RUNNER â PAPER MODE</h2>
 
     <div class="grid2">
 
@@ -542,8 +542,34 @@ td{
     <div class="autoBox">
 
       <div class="label">
-        AUTOMATYCZNE WEJŚCIA
+        PARAMETRY POZYCJI
       </div>
+
+      <div class="grid2" style="margin-top:10px">
+        <div class="card">
+          <div class="label">LOT</div>
+          <input id="lotInput" type="number" min="0.01" max="1.00" step="0.01" value="0.04"
+            style="width:100%;margin-top:7px;padding:12px;border-radius:12px;border:1px solid var(--border);background:#0a1118;color:var(--text);font-size:18px;font-weight:800">
+        </div>
+        <div class="card">
+          <div class="label">MODEL RYZYKA</div>
+          <div id="riskModel" class="value small">ATR + STRUKTURA</div>
+        </div>
+        <div class="card">
+          <div class="label">TAKE PROFIT</div>
+          <select id="tpMode" style="width:100%;margin-top:7px;padding:12px;border-radius:12px;border:1px solid var(--border);background:#0a1118;color:var(--text);font-size:16px;font-weight:800">
+            <option value="3TP">3 TP + RUNNER</option>
+            <option value="1TP">1 TP â CAÅA POZYCJA</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:8px">Lot ustawia uÅ¼ytkownik. Silnik zarzÄdzania skaluje tolerancjÄ ruchu do lota, ATR, SL i struktury â nie do staÅej kwoty USD.</div>
+
+      <div style="margin-top:14px">
+        <div class="label">
+          AUTOMATYCZNE WEJÅCIA
+        </div>
 
       <div id="autoStatus" class="note">
         Runner OFF
@@ -628,7 +654,7 @@ td{
     <div class="grid4">
 
       <div class="card">
-        <div class="label">ZAMKNIĘTE</div>
+        <div class="label">ZAMKNIÄTE</div>
         <div id="histClosed" class="metric">0</div>
       </div>
 
@@ -689,13 +715,17 @@ td{
           <tr>
             <th>Data</th>
             <th>Side</th>
+            <th>Lot</th>
             <th>Entry</th>
-            <th>Exit</th>
-            <th>P/L</th>
+            <th>TP1</th>
+            <th>TP2</th>
+            <th>Runner</th>
+            <th>NET</th>
             <th>Peak</th>
+            <th>Max DD</th>
             <th>Giveback</th>
             <th>Reason</th>
-            <th>Entry TF</th>
+            <th>TF</th>
           </tr>
 
         </thead>
@@ -731,8 +761,45 @@ td{
 
 const API="https://biquote.io/api/XAUUSD";
 
-const HISTORY_KEY="xau_ai_trade_history_v4";
-const RUNNER_KEY="xau_ai_runner_v4";
+const HISTORY_KEY="xau_ai_trade_history_v5";
+const RUNNER_KEY="xau_ai_runner_v5";
+
+/* One-time import of the previous journal, preserving its results. */
+if(!localStorage.getItem(HISTORY_KEY)){
+  try{
+    const old=JSON.parse(localStorage.getItem("xau_ai_trade_history_v4") || "[]");
+    if(Array.isArray(old) && old.length){
+      localStorage.setItem(HISTORY_KEY,JSON.stringify(old.map(x=>({...x,partials:Array.isArray(x.partials)?x.partials:[],tp1Realized:Number(x.tp1Realized||0),tp2Realized:Number(x.tp2Realized||0),runnerRealized:Number(x.runnerRealized||x.pnl||0),maxDrawdownFromPeak:Number(x.maxDrawdownFromPeak||x.giveback||0)}))));
+    }
+  }catch(e){}
+}
+
+/* Migrate an interrupted v4 paper position so an update does not erase it. */
+if(!localStorage.getItem(RUNNER_KEY)){
+  try{
+    const oldRunner=JSON.parse(localStorage.getItem("xau_ai_runner_v4") || "null");
+    if(oldRunner){
+      if(oldRunner.position){
+        const p=oldRunner.position;
+        p.originalLot=Number(p.originalLot || p.lot || 0.04);
+        p.remainingLot=Number(p.remainingLot ?? p.originalLot);
+        p.realized=Number(p.realized || 0);
+        p.tp1Realized=Number(p.tp1Realized || 0);
+        p.tp2Realized=Number(p.tp2Realized || 0);
+        p.runnerRealized=Number(p.runnerRealized || 0);
+        p.partials=Array.isArray(p.partials)?p.partials:[];
+        p.initialSl=Number(p.initialSl || p.sl || p.entry);
+        p.initialRiskPrice=Number(p.initialRiskPrice || Math.abs(Number(p.entry)-Number(p.initialSl)));
+        p.atrAtEntry=Number(p.atrAtEntry || 0);
+        p.maxAdverseMove=Number(p.maxAdverseMove || 0);
+        p.maxDrawdownFromPeak=Number(p.maxDrawdownFromPeak || 0);
+        p.totalPnl=Number(p.totalPnl || p.realized || 0);
+        p.currentPnl=Number(p.currentPnl || 0);
+      }
+      localStorage.setItem(RUNNER_KEY,JSON.stringify(oldRunner));
+    }
+  }catch(e){}
+}
 
 let level=
   Number(localStorage.getItem("xau_ai_level") || 3);
@@ -787,33 +854,40 @@ let runner={
   cooldownUntil:0
 };
 
-
 let history=[];
 
-
+/*
+  v5 keeps the old v4 records readable while new trades use the
+  full ledger format. Nothing from the old journal is silently
+  discarded.
+*/
 try{
-  history=
-    JSON.parse(
-      localStorage.getItem(HISTORY_KEY) || "[]"
-    );
+  history=JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+  if(!Array.isArray(history)) history=[];
 }catch(e){
   history=[];
 }
 
-
 try{
-
-  const saved=
-    JSON.parse(
-      localStorage.getItem(RUNNER_KEY) || "null"
-    );
-
+  const saved=JSON.parse(localStorage.getItem(RUNNER_KEY) || "null");
   if(saved){
     runner=saved;
+    /* v4 -> v5 compatibility for an interrupted open trade */
+    if(runner.position){
+      const p=runner.position;
+      p.originalLot=Number(p.originalLot || p.lot || 0.04);
+      p.remainingLot=Number(p.remainingLot ?? p.originalLot);
+      p.realized=Number(p.realized || 0);
+      p.partials=Array.isArray(p.partials) ? p.partials : [];
+      p.tp1Realized=Number(p.tp1Realized || 0);
+      p.tp2Realized=Number(p.tp2Realized || 0);
+      p.runnerRealized=Number(p.runnerRealized || 0);
+      p.maxAdverseMove=Number(p.maxAdverseMove || 0);
+      p.failureScore=Number(p.failureScore || 0);
+      p.initialRiskPrice=Number(p.initialRiskPrice || Math.abs((p.entry||0)-(p.sl||0)));
+    }
   }
-
 }catch(e){}
-
 
 /* =========================================================
    HELPERS
@@ -1050,7 +1124,7 @@ async function fetchLive(){
   }catch(e){
 
     $("connection").textContent=
-      "BŁĄD API";
+      "BÅÄD API";
 
     $("connection").style.color=
       "var(--red)";
@@ -1209,7 +1283,7 @@ async function loadAllBars(){
 
 
     log(
-      `Świece: M5 ${data.M5.length} / M15 ${data.M15.length} / M30 ${data.M30.length} / H1 ${data.H1.length}`
+      `Åwiece: M5 ${data.M5.length} / M15 ${data.M15.length} / M30 ${data.M30.length} / H1 ${data.H1.length}`
     );
 
 
@@ -2045,16 +2119,16 @@ function analyzeAll(){
 
 
   $("m5detail").textContent=
-    `RSI ${fmt(a5.rsi,1)} • ${a5.structure}`;
+    `RSI ${fmt(a5.rsi,1)} â¢ ${a5.structure}`;
 
   $("m15detail").textContent=
-    `RSI ${fmt(a15.rsi,1)} • ${a15.structure}`;
+    `RSI ${fmt(a15.rsi,1)} â¢ ${a15.structure}`;
 
   $("m30detail").textContent=
-    `RSI ${fmt(a30.rsi,1)} • ${a30.structure}`;
+    `RSI ${fmt(a30.rsi,1)} â¢ ${a30.structure}`;
 
   $("h1detail").textContent=
-    `RSI ${fmt(a1.rsi,1)} • ${a1.structure}`;
+    `RSI ${fmt(a1.rsi,1)} â¢ ${a1.structure}`;
 
 
   $("structure").textContent=
@@ -2214,7 +2288,7 @@ function analyzeAll(){
       ? "MULTI-TF BULLISH"
       : signal==="SELL"
         ? "MULTI-TF BEARISH"
-        : "BRAK WYSTARCZAJĄCEGO POTWIERDZENIA";
+        : "BRAK WYSTARCZAJÄCEGO POTWIERDZENIA";
 
 
   analysis={
@@ -2292,7 +2366,7 @@ function updateSignalMemory(){
     signalMemory.count=0;
 
     $("entryWait").textContent=
-      "Brak wystarczającego sygnału.";
+      "Brak wystarczajÄcego sygnaÅu.";
 
     return;
   }
@@ -2319,7 +2393,7 @@ function updateSignalMemory(){
 
 
   $("entryWait").textContent=
-    `${analysis.signal} • potwierdzenia ${signalMemory.count}/2`;
+    `${analysis.signal} â¢ potwierdzenia ${signalMemory.count}/2`;
 }
 
 
@@ -2346,7 +2420,7 @@ function renderAnalysis(){
 
 
   $("signalReason").textContent=
-    `${analysis.reason} • score ${analysis.score.toFixed(1)}`;
+    `${analysis.reason} â¢ score ${analysis.score.toFixed(1)}`;
 
 
   $("entry").textContent=
@@ -2359,23 +2433,12 @@ function renderAnalysis(){
       : fmt(analysis.sl);
 
 
-  $("tp1").textContent=
-    analysis.tp1===null
-      ? "---"
-      : fmt(analysis.tp1);
-
-
-  $("tp2").textContent=
-    analysis.tp2===null
-      ? "---"
-      : fmt(analysis.tp2);
-
-
-  $("tp3").textContent=
-    analysis.tp3===null
-      ? "---"
-      : fmt(analysis.tp3);
-
+  const oneTp=getTpMode()==="1TP";
+  $("tp1").textContent=oneTp?"---":(analysis.tp1===null?"---":fmt(analysis.tp1));
+  $("tp2").textContent=oneTp?"---":(analysis.tp2===null?"---":fmt(analysis.tp2));
+  $("tp3").textContent=oneTp?(analysis.tp2===null?"---":fmt(analysis.tp2)):(analysis.tp3===null?"---":fmt(analysis.tp3));
+  if($("tp3Label")) $("tp3Label").textContent=oneTp?"TP":"TP3";
+  renderTpMode();
 
   $("score").textContent=
     analysis.score.toFixed(1);
@@ -2397,37 +2460,124 @@ function renderAnalysis(){
    ========================================================= */
 
 function pnlFor(position,price){
+  if(!position || !Number.isFinite(Number(price))) return 0;
 
-  if(!position){
-    return 0;
-  }
+  const direction=position.side==="BUY" ? 1 : -1;
+  const diff=(Number(price)-Number(position.entry))*direction;
 
-
-  const direction=
-    position.side==="BUY"
-      ? 1
-      : -1;
-
-
-  const diff=
-    (
-      price-
-      position.entry
-    )*
-    direction;
-
-
-  /*
-    Paper approximation:
-    0.01 lot ~= $1 per $1 move.
-  */
-
-  return(
-    diff*
-    (position.lot/0.01)
-  );
+  /* Paper approximation: 0.01 lot ~= $1 per $1 XAU move. */
+  return diff*(Number(position.lot||0)/0.01);
 }
 
+function unrealizedFor(p,price){
+  return pnlFor({...p,lot:p.remainingLot},price);
+}
+
+function totalTradePnl(p,price){
+  return Number(p.realized||0)+unrealizedFor(p,price);
+}
+
+function getLot(){
+  const raw=Number($("lotInput")?.value || localStorage.getItem("xau_ai_lot") || 0.04);
+  const lot=Math.min(1,Math.max(0.01,Number.isFinite(raw)?raw:0.04));
+  return Math.round(lot*100)/100;
+}
+
+function saveLot(){
+  const lot=getLot();
+  if($("lotInput")) $("lotInput").value=lot.toFixed(2);
+  localStorage.setItem("xau_ai_lot",String(lot));
+}
+
+function getTpMode(){
+  return $("tpMode")?.value || localStorage.getItem("xau_ai_tp_mode") || "3TP";
+}
+
+function saveTpMode(){
+  const mode=getTpMode();
+  localStorage.setItem("xau_ai_tp_mode",mode);
+  renderTpMode();
+  renderAnalysis();
+  renderRunner();
+  renderHistory();
+}
+
+function renderTpMode(){
+  const one=getTpMode()==="1TP";
+  if($("tpMode")) $("tpMode").value=one?"1TP":"3TP";
+  ["tp1","tp2"].forEach(id=>{
+    const el=$(id);
+    if(el) el.parentElement.style.display=one?"none":"";
+  });
+  if($("tp3Label")) $("tp3Label").textContent=one?"TP":"TP3";
+}
+
+function adverseMove(p,price){
+  return p.side==="BUY"
+    ? Math.max(0,p.entry-price)
+    : Math.max(0,price-p.entry);
+}
+
+function failureScore(p,price){
+  if(!analysis) return 0;
+
+  const opposite=p.side==="BUY"?"SELL":"BUY";
+  const a5=analysis.M5, a15=analysis.M15, a30=analysis.M30;
+  let score=0;
+
+  if(a5.signal===opposite) score+=2;
+  if(a15.signal===opposite) score+=2;
+  if(a30.signal===opposite) score+=1;
+
+  if(p.side==="BUY" && a5.direction<0) score+=2;
+  if(p.side==="SELL" && a5.direction>0) score+=2;
+  if(p.side==="BUY" && a15.direction<0) score+=2;
+  if(p.side==="SELL" && a15.direction>0) score+=2;
+
+  if(p.side==="BUY" && a5.impulse<0) score+=1;
+  if(p.side==="SELL" && a5.impulse>0) score+=1;
+  if(p.side==="BUY" && a15.impulse<0) score+=1;
+  if(p.side==="SELL" && a15.impulse>0) score+=1;
+
+  if(p.side==="BUY" && a5.candle<-0.55) score+=1;
+  if(p.side==="SELL" && a5.candle>0.55) score+=1;
+
+  const atrVal=Number(analysis.atr||a15.atr||0);
+  const adverse=adverseMove(p,price);
+  if(atrVal>0 && adverse>=atrVal*0.35) score+=1;
+  if(atrVal>0 && adverse>=atrVal*0.60) score+=1;
+
+  return score;
+}
+
+function entryFailureLimit(p){
+  const atrVal=Number(p.atrAtEntry || analysis?.atr || 0);
+  const slRisk=Math.abs(Number(p.entry)-Number(p.initialSl));
+  const base=Math.max(atrVal*0.28,slRisk*0.18);
+  const structureFactor=p.entryQuality==="LATE"?0.75:1;
+  return Math.max(0.05,base*structureFactor);
+}
+
+function dynamicCooldown(reason,p){
+  const rev=p?reversalScore(p):0;
+  const atrVal=Number(analysis?.atr||0);
+  let seconds=180;
+
+  if(reason.includes("EARLY FAILURE")) seconds=180;
+  else if(reason.includes("STRUCTURAL SL")) seconds=300;
+  else if(reason.includes("REVERSAL")) seconds=120;
+  else if(reason.includes("TP3")) seconds=60;
+
+  if(atrVal>25) seconds+=120;
+  if(rev>=7) seconds-=60;
+  if(analysis && p){
+    const opposite=p.side==="BUY"?"SELL":"BUY";
+    if(analysis.signal===opposite) seconds-=60;
+    if(analysis.signal===p.side) seconds+=120;
+  }
+
+  return Math.min(600,Math.max(60,seconds));
+}
 
 /* =========================================================
    AUTO ENTRY
@@ -2545,105 +2695,56 @@ function automaticEntryCheck(){
    OPEN POSITION
    ========================================================= */
 
-function openPaperPosition(
-  side,
-  reason
-){
+function openPaperPosition(side,reason){
+  if(!analysis || !live.bid || !live.ask || runner.position) return;
 
-  if(
-    !analysis ||
-    !live.bid ||
-    !live.ask
-  ){
-
-    return;
-  }
-
-
-  if(runner.position){
-    return;
-  }
-
-
-  const lot=0.04;
-
-
-  const entry=
-    side==="BUY"
-      ? live.ask
-      : live.bid;
-
+  const lot=getLot();
+  const entry=side==="BUY"?live.ask:live.bid;
+  const initialSl=analysis.sl;
+  const atrAtEntry=Number(analysis.atr||0);
+  const riskPrice=Math.abs(entry-initialSl);
 
   runner.position={
-
-    id:
-      "P-"+Date.now(),
-
+    id:"P-"+Date.now(),
     side,
-
     lot,
-
-    originalLot:
-      lot,
-
+    originalLot:lot,
     entry,
-
-    sl:
-      analysis.sl,
-
-    tp1:
-      analysis.tp1,
-
-    tp2:
-      analysis.tp2,
-
-    tp3:
-      analysis.tp3,
-
-    remainingLot:
-      lot,
-
+    initialSl,
+    sl:initialSl,
+    tpMode:getTpMode(),
+    tp1:analysis.tp1,
+    tp2:analysis.tp2,
+    tp3:analysis.tp3,
+    tpSingle:analysis.tp2,
+    remainingLot:lot,
     partial1:false,
-
     partial2:false,
-
     realized:0,
-
+    tp1Realized:0,
+    tp2Realized:0,
+    runnerRealized:0,
     currentPnl:0,
-
+    totalPnl:0,
     peakPnl:0,
-
-    peakPrice:
-      entry,
-
+    peakPrice:entry,
     maxDrawdownFromPeak:0,
-
-    openedAt:
-      Date.now(),
-
-    openReason:
-      reason,
-
-    entrySnapshot:
-      JSON.parse(
-        JSON.stringify(
-          analysis
-        )
-      )
+    maxAdverseMove:0,
+    failureScore:0,
+    initialRiskPrice:riskPrice,
+    atrAtEntry,
+    entryQuality:"STANDARD",
+    partials:[],
+    openedAt:Date.now(),
+    openReason:reason,
+    entrySnapshot:JSON.parse(JSON.stringify(analysis))
   };
 
-
+  runner.realized=0;
   saveRunner();
-
-
-  log(
-    `OPEN AUTO ${side} ${lot.toFixed(2)} @ ${entry.toFixed(2)}`
-  );
-
-
+  log(`OPEN AUTO ${side} ${lot.toFixed(2)} @ ${entry.toFixed(2)} â¢ risk ${fmt(riskPrice)}`);
   renderRunner();
 }
-
 
 /* =========================================================
    REVERSAL SCORE
@@ -2786,482 +2887,168 @@ function reversalScore(p){
    DYNAMIC PROTECTION
    ========================================================= */
 
-function dynamicProtection(
-  p,
-  pnl
-){
+function dynamicProtection(p,totalPnl){
+  const rev=reversalScore(p);
+  const fail=failureScore(p, p.side==="BUY"?live.bid:live.ask);
+  p.failureScore=fail;
 
-  const peak=
-    p.peakPnl;
+  const price=p.side==="BUY"?live.bid:live.ask;
+  const adverse=adverseMove(p,price);
+  const atrVal=Number(p.atrAtEntry||analysis?.atr||0);
+  const riskPrice=Math.max(Number(p.initialRiskPrice||0),0.01);
+  const ageMs=Date.now()-p.openedAt;
+  const ageMin=ageMs/60000;
 
+  /* EARLY FAILURE: no need to first reach a positive P/L.
+     Movement is normalized by ATR and original structural risk. */
+  if(ageMs>=20000 && p.peakPnl<=Math.max(0.15,p.originalLot/0.01*0.5)){
+    const limit=entryFailureLimit(p);
+    const severe=atrVal>0 && adverse>=atrVal*0.60;
+    const failedStructure=fail>=6;
+    const confirmed=fail>=5 && adverse>=limit;
+    const fastFailure=ageMin<=8 && fail>=4 && adverse>=Math.max(atrVal*0.45,riskPrice*0.28);
 
-  /*
-    VERY EARLY TRADE
-
-    +$0.50 to +$5:
-    if reversal is real,
-    close quickly.
-
-    This prevents:
-    +$1 -> -$10
-  */
-
-  if(
-    peak>=0.5 &&
-    peak<5
-  ){
-
-    if(
-      reversalScore(p)>=4
-    ){
-
-      return{
-        action:"CLOSE",
-        reason:
-          "LATE ENTRY / REVERSAL"
-      };
+    if(severe && fail>=4 || failedStructure && adverse>=limit || confirmed || fastFailure){
+      return {action:"CLOSE",reason:"EARLY FAILURE / REVERSAL"};
     }
-
-
-    return{
-      action:"HOLD",
-      floor:null
-    };
   }
 
-
-  /*
-    MEDIUM PROFIT
-  */
-
-  if(
-    peak>=5 &&
-    peak<20
-  ){
-
-    if(
-      reversalScore(p)>=5
-    ){
-
-      const floor=
-        Math.max(
-          0,
-          peak-3
-        );
-
-
-      if(
-        pnl<=floor
-      ){
-
-        return{
-          action:"CLOSE",
-          reason:
-            "PROFIT PROTECTION"
-        };
-      }
-
-
-      return{
-        action:"PROTECT",
-        floor
-      };
-    }
-
-
-    return{
-      action:"HOLD",
-      floor:null
-    };
+  /* If the trade is still structurally valid, a normal pullback gets room. */
+  if(p.peakPnl<0){
+    return {action:"HOLD",floor:null};
   }
 
-
-  /*
-    LARGE PROFIT
-
-    NOT a fixed 20% rule.
-
-    Strong reversal:
-    tight protection.
-
-    Weak correction:
-    more room.
-  */
-
-  if(
-    peak>=20
-  ){
-
-    const rev=
-      reversalScore(p);
-
-
-    let givebackPct=
-      0.30;
-
-
-    if(rev>=8){
-
-      givebackPct=
-        0.08;
-
-    }else if(rev>=6){
-
-      givebackPct=
-        0.12;
-
-    }else if(rev>=5){
-
-      givebackPct=
-        0.16;
-
-    }else if(rev>=3){
-
-      givebackPct=
-        0.22;
-
-    }else{
-
-      givebackPct=
-        0.30;
+  if(p.peakPnl>=0.5 && p.peakPnl<5){
+    if(rev>=6 && totalPnl<=Math.max(0,p.peakPnl-(atrVal>0?atrVal*(p.originalLot/0.01)*0.04:0.75))){
+      return {action:"CLOSE",reason:"EARLY PROFIT REVERSAL"};
     }
-
-
-    const floor=
-      Math.max(
-        0,
-        peak*
-        (1-givebackPct)
-      );
-
-
-    if(
-      rev>=5 &&
-      pnl<=floor
-    ){
-
-      return{
-        action:"CLOSE",
-        reason:
-          "STRONG REVERSAL / PROFIT LOCK"
-      };
-    }
-
-
-    return{
-      action:"PROTECT",
-      floor
-    };
+    return {action:"HOLD",floor:null};
   }
 
+  if(p.peakPnl>=5 && p.peakPnl<20){
+    if(rev>=5){
+      const lock=atrVal>0 ? Math.max(0.35,atrVal*(p.originalLot/0.01)*0.035) : p.originalLot/0.01*0.5;
+      const floor=Math.max(0,p.peakPnl-lock);
+      if(totalPnl<=floor) return {action:"CLOSE",reason:"PROFIT PROTECTION"};
+      return {action:"PROTECT",floor};
+    }
+    return {action:"HOLD",floor:null};
+  }
 
-  return{
-    action:"HOLD",
-    floor:null
-  };
+  if(p.peakPnl>=20){
+    let givebackPct=0.30;
+    if(rev>=8) givebackPct=0.08;
+    else if(rev>=6) givebackPct=0.12;
+    else if(rev>=5) givebackPct=0.16;
+    else if(rev>=3) givebackPct=0.22;
+
+    const volatilityAllowance=atrVal>0
+      ? atrVal*(p.originalLot/0.01)*0.03
+      : p.originalLot/0.01;
+    const floor=Math.max(0,p.peakPnl*(1-givebackPct)-volatilityAllowance);
+
+    if(rev>=5 && totalPnl<=floor){
+      return {action:"CLOSE",reason:"STRONG REVERSAL / PROFIT LOCK"};
+    }
+    return {action:"PROTECT",floor};
+  }
+
+  return {action:"HOLD",floor:null};
 }
-
 
 /* =========================================================
    UPDATE RUNNER
    ========================================================= */
 
 function updateRunner(){
-
-  if(
-    !runner.on ||
-    !runner.position
-  ){
-
+  if(!runner.on || !runner.position){
     renderRunner();
     return;
   }
+  if(!live.bid || !live.ask) return;
 
+  const p=runner.position;
+  const price=p.side==="BUY"?live.bid:live.ask;
+  const unrealized=unrealizedFor(p,price);
+  const totalPnl=Number(p.realized||0)+unrealized;
 
-  if(
-    !live.bid ||
-    !live.ask
-  ){
+  p.currentPnl=unrealized;
+  p.totalPnl=totalPnl;
 
-    return;
+  const adverse=adverseMove(p,price);
+  p.maxAdverseMove=Math.max(Number(p.maxAdverseMove||0),adverse);
+
+  if(totalPnl>p.peakPnl){
+    p.peakPnl=totalPnl;
+    p.peakPrice=price;
   }
 
+  const giveback=Math.max(0,p.peakPnl-totalPnl);
+  p.maxDrawdownFromPeak=Math.max(Number(p.maxDrawdownFromPeak||0),giveback);
 
-  const p=
-    runner.position;
-
-
-  const price=
-    p.side==="BUY"
-      ? live.bid
-      : live.ask;
-
-
-  const pnl=
-    pnlFor(
-      p,
-      price
-    );
-
-
-  p.currentPnl=
-    pnl;
-
-
-  /*
-    New peak.
-  */
-
-  if(
-    pnl>
-    p.peakPnl
-  ){
-
-    p.peakPnl=
-      pnl;
-
-    p.peakPrice=
-      price;
-  }
-
-
-  const giveback=
-    Math.max(
-      0,
-      p.peakPnl-pnl
-    );
-
-
-  p.maxDrawdownFromPeak=
-    Math.max(
-      p.maxDrawdownFromPeak,
-      giveback
-    );
-
-
-  /* =======================================================
-     TP1
-     ======================================================= */
-
-  if(
-    !p.partial1 &&
-    p.tp1!==null
-  ){
-
-    const hit=
-      p.side==="BUY"
-        ? price>=p.tp1
-        : price<=p.tp1;
-
-
+  /* TAKE PROFIT MODE */
+  if(p.tpMode==="1TP"){
+    const target=p.tpSingle ?? p.tp2;
+    const hit=target!==null && target!==undefined && (p.side==="BUY" ? price>=target : price<=target);
     if(hit){
-
-      const qty=
-        p.originalLot*0.25;
-
-
-      p.remainingLot-=
-        qty;
-
-
-      p.partial1=true;
-
-
-      const realized=
-        pnlFor(
-          {
-            ...p,
-            lot:qty
-          },
-          p.tp1
-        );
-
-
-      p.realized+=
-        realized;
-
-      runner.realized+=
-        realized;
-
-
-      log(
-        `TP1 ${money(realized)}`
-      );
-
-
-      /*
-        After TP1:
-        protect entry.
-      */
-
-      if(
-        p.side==="BUY"
-      ){
-
-        p.sl=
-          Math.max(
-            p.sl,
-            p.entry+0.10
-          );
-
-      }else{
-
-        p.sl=
-          Math.min(
-            p.sl,
-            p.entry-0.10
-          );
+      closeRunner("SINGLE TP",price);
+      return;
+    }
+  }else{
+    /* TP1 = 25% of original position */
+    if(!p.partial1 && p.tp1!==null){
+      const hit=p.side==="BUY"?price>=p.tp1:price<=p.tp1;
+      if(hit){
+        const qty=Math.min(p.remainingLot,p.originalLot*0.25);
+        const realized=pnlFor({...p,lot:qty},p.tp1);
+        p.remainingLot=Math.max(0,p.remainingLot-qty); p.partial1=true;
+        p.realized+=realized; p.tp1Realized+=realized;
+        p.partials.push({type:"TP1",lot:qty,price:p.tp1,pnl:realized,time:Date.now()});
+        log(`TP1 ${money(realized)} â¢ lot ${qty.toFixed(2)}`);
+        if(p.side==="BUY") p.sl=Math.max(p.sl,p.entry+0.10); else p.sl=Math.min(p.sl,p.entry-0.10);
+        p.peakPnl=Math.max(p.peakPnl,p.realized+unrealizedFor(p,p.tp1));
+      }
+    }
+    /* TP2 = another 25% */
+    if(p.partial1 && !p.partial2 && p.tp2!==null && p.remainingLot>0){
+      const hit=p.side==="BUY"?price>=p.tp2:price<=p.tp2;
+      if(hit){
+        const qty=Math.min(p.remainingLot,p.originalLot*0.25);
+        const realized=pnlFor({...p,lot:qty},p.tp2);
+        p.remainingLot=Math.max(0,p.remainingLot-qty); p.partial2=true;
+        p.realized+=realized; p.tp2Realized+=realized;
+        p.partials.push({type:"TP2",lot:qty,price:p.tp2,pnl:realized,time:Date.now()});
+        log(`TP2 ${money(realized)} â¢ lot ${qty.toFixed(2)}`);
+        if(p.side==="BUY") p.sl=Math.max(p.sl,p.tp1); else p.sl=Math.min(p.sl,p.tp1);
+        p.peakPnl=Math.max(p.peakPnl,p.realized+unrealizedFor(p,p.tp2));
       }
     }
   }
 
-
-  /* =======================================================
-     TP2
-     ======================================================= */
-
-  if(
-    p.partial1 &&
-    !p.partial2 &&
-    p.tp2!==null
-  ){
-
-    const hit=
-      p.side==="BUY"
-        ? price>=p.tp2
-        : price<=p.tp2;
-
-
-    if(hit){
-
-      const qty=
-        p.originalLot*0.25;
-
-
-      p.remainingLot-=
-        qty;
-
-
-      p.partial2=true;
-
-
-      const realized=
-        pnlFor(
-          {
-            ...p,
-            lot:qty
-          },
-          p.tp2
-        );
-
-
-      p.realized+=
-        realized;
-
-      runner.realized+=
-        realized;
-
-
-      log(
-        `TP2 ${money(realized)}`
-      );
-
-
-      /*
-        Protect TP1.
-      */
-
-      if(
-        p.side==="BUY"
-      ){
-
-        p.sl=
-          Math.max(
-            p.sl,
-            p.tp1
-          );
-
-      }else{
-
-        p.sl=
-          Math.min(
-            p.sl,
-            p.tp1
-          );
-      }
-    }
-  }
-
-
-  /* =======================================================
-     STRUCTURAL SL
-     ======================================================= */
-
-  const stopHit=
-    p.side==="BUY"
-      ? price<=p.sl
-      : price>=p.sl;
-
-
+  const stopHit=p.side==="BUY"?price<=p.sl:price>=p.sl;
   if(stopHit){
-
-    closeRunner(
-      "STRUCTURAL SL",
-      price
-    );
-
+    closeRunner("STRUCTURAL SL",price);
     return;
   }
 
-
-  /* =======================================================
-     DYNAMIC PROTECTION
-     ======================================================= */
-
-  const protection=
-    dynamicProtection(
-      p,
-      pnl
-    );
-
-
-  if(
-    protection.action===
-    "CLOSE"
-  ){
-
-    closeRunner(
-      protection.reason,
-      price
-    );
-
+  const protection=dynamicProtection(p,totalTradePnl(p,price));
+  if(protection.action==="CLOSE"){
+    closeRunner(protection.reason,price);
     return;
   }
 
-
-  /* =======================================================
-     TP3
-     ======================================================= */
-
-  const tp3Hit=
-    p.side==="BUY"
-      ? price>=p.tp3
-      : price<=p.tp3;
-
-
-  if(tp3Hit){
-
-    closeRunner(
-      "TP3 RUNNER",
-      price
-    );
-
-    return;
+  if(p.tpMode!=="1TP"){
+    const tp3Hit=p.side==="BUY"?price>=p.tp3:price<=p.tp3;
+    if(tp3Hit){
+      closeRunner("TP3 RUNNER",price);
+      return;
+    }
   }
 
-
+  /* Update combined P/L after partials. */
+  p.currentPnl=unrealizedFor(p,price);
+  p.totalPnl=totalTradePnl(p,price);
   saveRunner();
-
   renderRunner();
 }
 
@@ -3270,138 +3057,73 @@ function updateRunner(){
    CLOSE POSITION
    ========================================================= */
 
-function closeRunner(
-  reason,
-  customPrice=null
-){
+function closeRunner(reason,customPrice=null){
+  const p=runner.position;
+  if(!p) return;
 
-  const p=
-    runner.position;
+  const price=customPrice ?? (p.side==="BUY"?live.bid:live.ask);
+  const remainingLot=Math.max(0,Number(p.remainingLot||0));
+  const remainingPnl=pnlFor({...p,lot:remainingLot},price);
 
-
-  if(!p){
-    return;
+  if(remainingLot>0){
+    p.runnerRealized=remainingPnl;
+    p.partials.push({type:"RUNNER",lot:remainingLot,price,pnl:remainingPnl,time:Date.now(),reason});
+  }else{
+    p.runnerRealized=0;
   }
 
+  const totalPnl=Number(p.realized||0)+remainingPnl;
+  p.totalPnl=totalPnl;
+  p.currentPnl=0;
+  p.realized=totalPnl;
 
-  const price=
-    customPrice ??
-    (
-      p.side==="BUY"
-        ? live.bid
-        : live.ask
-    );
-
-
-  const remainingPnl=
-    pnlFor(
-      {
-        ...p,
-        lot:p.remainingLot
-      },
-      price
-    );
-
-
-  const totalPnl=
-    p.realized+
-    remainingPnl;
-
-
-  runner.realized+=
-    remainingPnl;
-
-
-  const giveback=
-    Math.max(
-      0,
-      p.peakPnl-totalPnl
-    );
-
+  const peak=Math.max(Number(p.peakPnl||0),totalPnl);
+  const giveback=Math.max(0,peak-totalPnl);
 
   const record={
-
     id:p.id,
-
-    date:
-      new Date().toISOString(),
-
+    date:new Date().toISOString(),
     side:p.side,
-
     lot:p.originalLot,
-
     entry:p.entry,
-
     exit:price,
-
     sl:p.sl,
-
+    initialSl:p.initialSl,
+    tpMode:p.tpMode||"3TP",
+    tp:p.tpMode==="1TP"?(p.tpSingle??p.tp2):p.tp3,
     tp1:p.tp1,
-
     tp2:p.tp2,
-
     tp3:p.tp3,
-
+    tp1Realized:Number(p.tp1Realized||0),
+    tp2Realized:Number(p.tp2Realized||0),
+    runnerRealized:Number(p.runnerRealized||0),
     pnl:totalPnl,
-
-    peakPnl:p.peakPnl,
-
+    peakPnl:peak,
+    maxDrawdownFromPeak:Number(p.maxDrawdownFromPeak||giveback),
+    maxAdverseMove:Number(p.maxAdverseMove||0),
     giveback,
-
     reason,
-
-    duration:
-      Date.now()-
-      p.openedAt,
-
-    entrySnapshot:
-      p.entrySnapshot
+    duration:Date.now()-p.openedAt,
+    partials:Array.isArray(p.partials)?p.partials:[],
+    entrySnapshot:p.entrySnapshot
   };
 
-
   history.unshift(record);
-
-
-  if(
-    history.length>500
-  ){
-
-    history=
-      history.slice(0,500);
-  }
-
-
+  if(history.length>500) history=history.slice(0,500);
   saveHistory();
 
-
-  log(
-    `CLOSE ${p.side} ${money(totalPnl)} • ${reason} • PEAK ${money(p.peakPnl)} • GIVEBACK ${money(giveback)}`
-  );
-
+  const cd=dynamicCooldown(reason,p);
+  log(`CLOSE ${p.side} ${money(totalPnl)} â¢ ${reason} â¢ TP1 ${money(record.tp1Realized)} â¢ TP2 ${money(record.tp2Realized)} â¢ RUNNER ${money(record.runnerRealized)} â¢ PEAK ${money(peak)} â¢ DD ${money(record.maxDrawdownFromPeak)} â¢ CD ${cd}s`);
 
   runner.position=null;
-
-
-  /*
-    Five minute cooldown after close.
-    Prevents immediate re-entry at same level.
-  */
-
-  runner.cooldownUntil=
-    Date.now()+
-    5*60*1000;
-
-
+  runner.realized=0;
+  runner.cooldownUntil=Date.now()+cd*1000;
   signalMemory.count=0;
 
-
   saveRunner();
-
   renderRunner();
-
   renderHistory();
 }
-
 
 /* =========================================================
    TEST ENTRY
@@ -3436,7 +3158,7 @@ function testEntry(){
   ){
 
     log(
-      "Pozycja już istnieje."
+      "Pozycja juÅ¼ istnieje."
     );
 
     return;
@@ -3463,11 +3185,11 @@ function toggleRunner(){
   if(runner.on){
 
     log(
-      "RUNNER ON — automatyczne wejścia AKTYWNE"
+      "RUNNER ON â automatyczne wejÅcia AKTYWNE"
     );
 
     $("autoStatus").textContent=
-      "AUTO ENTRY AKTYWNE — system czeka na potwierdzony sygnał.";
+      "AUTO ENTRY AKTYWNE â system czeka na potwierdzony sygnaÅ.";
 
   }else{
 
@@ -3522,220 +3244,74 @@ function resetRunner(){
    ========================================================= */
 
 function renderRunner(){
+  const oneTp=getTpMode()==="1TP";
+  const head=document.querySelector("#runnerTable")?.closest("table")?.querySelector("thead");
+  if(head) head.innerHTML=oneTp?`<tr><th>Side</th><th>Lot</th><th>Entry</th><th>SL</th><th>TP</th><th>P/L</th><th>Status</th></tr>`:`<tr><th>Side</th><th>Lot</th><th>Entry</th><th>SL</th><th>TP1</th><th>TP2</th><th>TP3</th><th>P/L</th><th>Status</th></tr>`;
+  $("runnerStatus").textContent=runner.on?"ON":"OFF";
+  $("runnerStatus").className="runnerStatus "+(runner.on?"buy":"");
 
-  $("runnerStatus").textContent=
-    runner.on
-      ? "ON"
-      : "OFF";
+  const p=runner.position;
+  $("runnerPosition").textContent=p?`${p.side} ${Number(p.remainingLot).toFixed(2)}`:"BRAK";
+  $("runnerRealized").textContent=money(p?Number(p.realized||0):0);
 
-
-  $("runnerStatus").className=
-    "runnerStatus "+
-    (
-      runner.on
-        ? "buy"
-        : ""
-    );
-
-
-  const p=
-    runner.position;
-
-
-  $("runnerPosition").textContent=
-    p
-      ? `${p.side} ${p.remainingLot.toFixed(2)}`
-      : "BRAK";
-
-
-  $("runnerRealized").textContent=
-    money(
-      runner.realized
-    );
-
-
-  const total=
-    runner.realized+
-    (
-      p
-        ? p.currentPnl
-        : 0
-    );
-
-
-  $("runnerTotal").textContent=
-    money(total);
-
-
-  $("runnerTotal").className=
-    "value "+
-    (
-      total>=0
-        ? "buy"
-        : "sell"
-    );
-
-
-  $("runnerPeak").textContent=
-    money(
-      p
-        ? p.peakPnl
-        : 0
-    );
-
-
-  const giveback=
-    p
-      ? Math.max(
-          0,
-          p.peakPnl-
-          p.currentPnl
-        )
-      : 0;
-
-
-  $("runnerGiveback").textContent=
-    money(giveback);
-
+  const total=p?Number(p.totalPnl||0):0;
+  $("runnerTotal").textContent=money(total);
+  $("runnerTotal").className="value "+(total>=0?"buy":"sell");
+  $("runnerPeak").textContent=money(p?p.peakPnl:0);
+  $("runnerGiveback").textContent=money(p?Math.max(0,p.peakPnl-(p.totalPnl||0)):0);
 
   if(!p){
+    $("runnerProtection").textContent="Brak aktywnej pozycji.";
+    $("runnerTable").innerHTML=`<tr><td colspan="${oneTp?7:9}">Brak pozycji</td></tr>`;
 
-    $("runnerProtection").textContent=
-      "Brak aktywnej pozycji.";
-
-
-    $("runnerTable").innerHTML=
-      `<tr>
-        <td colspan="9">
-          Brak pozycji
-        </td>
-      </tr>`;
-
-
-    if(
-      runner.on &&
-      Date.now()<
-      Number(
-        runner.cooldownUntil||0
-      )
-    ){
-
-      const left=
-        Math.ceil(
-          (
-            runner.cooldownUntil-
-            Date.now()
-          )/1000
-        );
-
-
-      $("autoStatus").textContent=
-        "AUTO ON — cooldown";
-
-
-      $("entryWait").textContent=
-        `Następne wejście za około ${left}s`;
-
+    if(runner.on && Date.now()<Number(runner.cooldownUntil||0)){
+      const left=Math.ceil((runner.cooldownUntil-Date.now())/1000);
+      $("autoStatus").textContent="AUTO ON â cooldown dynamiczny";
+      $("entryWait").textContent=`NastÄpne wejÅcie za okoÅo ${left}s`;
     }else if(runner.on){
-
-      $("autoStatus").textContent=
-        "AUTO ENTRY AKTYWNE";
-
-      $("entryWait").textContent=
-        analysis
-          ? `${analysis.signal} • potwierdzenia ${signalMemory.count}/2`
-          : "Czekam na analizę...";
+      $("autoStatus").textContent="AUTO ENTRY AKTYWNE";
+      $("entryWait").textContent=analysis?`${analysis.signal} â¢ potwierdzenia ${signalMemory.count}/2`:"Czekam na analizÄ...";
     }
-
-
     return;
   }
 
+  const price=p.side==="BUY"?live.bid:live.ask;
+  const rev=reversalScore(p);
+  const fail=failureScore(p,price);
+  const protection=dynamicProtection(p,p.totalPnl);
+  const adverse=adverseMove(p,price);
+  const limit=entryFailureLimit(p);
 
-  const rev=
-    reversalScore(p);
+  let text=`P/L ${money(p.totalPnl)} â¢ peak ${money(p.peakPnl)} â¢ reversal ${rev} â¢ failure ${fail}`;
+  if(protection.floor!==null && protection.floor!==undefined) text+=` â¢ ochrona od ${money(protection.floor)}`;
+  text+=` â¢ ${protection.action}`;
+  if(p.totalPnl<=0) text+=` â¢ adverse ${fmt(adverse)} / limit ${fmt(limit)}`;
+  $("runnerProtection").textContent=text;
 
+  $("autoStatus").textContent=`AUTO RUNNER â ${p.side} aktywna`;
+  $("entryWait").textContent=`ZarzÄdzanie: ${protection.action} â¢ remaining ${p.remainingLot.toFixed(2)}`;
 
-  const protection=
-    dynamicProtection(
-      p,
-      p.currentPnl
-    );
-
-
-  let text=
-    `P/L ${money(p.currentPnl)} • peak ${money(p.peakPnl)} • reversal ${rev}`;
-
-
-  if(
-    protection.floor!==null &&
-    protection.floor!==undefined
-  ){
-
-    text+=
-      ` • ochrona od ${money(protection.floor)}`;
-  }
-
-
-  text+=
-    ` • ${protection.action}`;
-
-
-  $("runnerProtection").textContent=
-    text;
-
-
-  $("autoStatus").textContent=
-    `AUTO RUNNER — ${p.side} aktywna`;
-
-
-  $("entryWait").textContent=
-    "Pozycja jest automatycznie zarządzana.";
-
-
-  $("runnerTable").innerHTML=`
-
+  $("runnerTable").innerHTML=oneTp?`
     <tr>
-
-      <td class="${sideClass(p.side)}">
-        ${p.side}
-      </td>
-
-      <td>
-        ${p.remainingLot.toFixed(2)}
-      </td>
-
-      <td>
-        ${fmt(p.entry)}
-      </td>
-
-      <td>
-        ${fmt(p.sl)}
-      </td>
-
-      <td>
-        ${fmt(p.tp1)}
-      </td>
-
-      <td>
-        ${fmt(p.tp2)}
-      </td>
-
-      <td>
-        ${fmt(p.tp3)}
-      </td>
-
-      <td class="${p.currentPnl>=0?"buy":"sell"}">
-        ${money(p.currentPnl)}
-      </td>
-
-      <td>
-        OPEN
-      </td>
-
-    </tr>
-
-  `;
+      <td class="${sideClass(p.side)}">${p.side}</td>
+      <td>${p.remainingLot.toFixed(2)}</td>
+      <td>${fmt(p.entry)}</td>
+      <td>${fmt(p.sl)}</td>
+      <td>${fmt(p.tpSingle??p.tp2)}</td>
+      <td class="${p.totalPnl>=0?"buy":"sell"}">${money(p.totalPnl)}</td>
+      <td>OPEN</td>
+    </tr>`:`
+    <tr>
+      <td class="${sideClass(p.side)}">${p.side}</td>
+      <td>${p.remainingLot.toFixed(2)}</td>
+      <td>${fmt(p.entry)}</td>
+      <td>${fmt(p.sl)}</td>
+      <td>${fmt(p.tp1)}</td>
+      <td>${fmt(p.tp2)}</td>
+      <td>${fmt(p.tp3)}</td>
+      <td class="${p.totalPnl>=0?"buy":"sell"}">${money(p.totalPnl)}</td>
+      <td>OPEN</td>
+    </tr>`;
 }
 
 
@@ -3744,206 +3320,54 @@ function renderRunner(){
    ========================================================= */
 
 function renderHistory(){
+  const oneTpHistory=getTpMode()==="1TP";
+  const head=document.querySelector("#historyTable")?.closest("table")?.querySelector("thead");
+  if(head) head.innerHTML=oneTpHistory?`<tr><th>Data</th><th>Side</th><th>Lot</th><th>Entry</th><th>TP</th><th>NET</th><th>Peak</th><th>Max DD</th><th>Giveback</th><th>Reason</th><th>TF</th></tr>`:`<tr><th>Data</th><th>Side</th><th>Lot</th><th>Entry</th><th>TP1</th><th>TP2</th><th>Runner</th><th>NET</th><th>Peak</th><th>Max DD</th><th>Giveback</th><th>Reason</th><th>TF</th>`;
+  const closed=history.length;
+  const wins=history.filter(x=>Number(x.pnl)>0).length;
+  const losses=history.filter(x=>Number(x.pnl)<0).length;
+  const net=history.reduce((s,x)=>s+Number(x.pnl||0),0);
+  const avg=closed?net/closed:0;
+  const maxWin=closed?Math.max(0,...history.map(x=>Number(x.pnl||0))):0;
+  const maxLoss=closed?Math.min(0,...history.map(x=>Number(x.pnl||0))):0;
+  const maxPeak=closed?Math.max(0,...history.map(x=>Number(x.peakPnl||0))):0;
+  const avgGiveback=closed?history.reduce((s,x)=>s+Number(x.giveback||0),0)/closed:0;
 
-  const closed=
-    history.length;
+  $("histClosed").textContent=closed;
+  $("histWin").textContent=wins;
+  $("histLoss").textContent=losses;
+  $("histRate").textContent=closed?(wins/closed*100).toFixed(1)+"%":"0%";
+  $("histNet").textContent=money(net);
+  $("histAvg").textContent=money(avg);
+  $("histMaxWin").textContent=money(maxWin);
+  $("histMaxLoss").textContent=money(maxLoss);
+  $("histMaxPeak").textContent=money(maxPeak);
+  $("histGiveback").textContent=money(avgGiveback);
 
-
-  const wins=
-    history.filter(
-      x=>x.pnl>0
-    ).length;
-
-
-  const losses=
-    history.filter(
-      x=>x.pnl<0
-    ).length;
-
-
-  const net=
-    history.reduce(
-      (s,x)=>
-        s+
-        Number(x.pnl||0),
-      0
-    );
-
-
-  const avg=
-    closed
-      ? net/closed
-      : 0;
-
-
-  const maxWin=
-    closed
-      ? Math.max(
-          0,
-          ...history.map(
-            x=>x.pnl
-          )
-        )
-      : 0;
-
-
-  const maxLoss=
-    closed
-      ? Math.min(
-          0,
-          ...history.map(
-            x=>x.pnl
-          )
-        )
-      : 0;
-
-
-  const maxPeak=
-    closed
-      ? Math.max(
-          0,
-          ...history.map(
-            x=>x.peakPnl||0
-          )
-        )
-      : 0;
-
-
-  const avgGiveback=
-    closed
-      ? history.reduce(
-          (s,x)=>
-            s+
-            Number(
-              x.giveback||0
-            ),
-          0
-        )/closed
-      : 0;
-
-
-  $("histClosed").textContent=
-    closed;
-
-  $("histWin").textContent=
-    wins;
-
-  $("histLoss").textContent=
-    losses;
-
-
-  $("histRate").textContent=
-    closed
-      ? (
-          wins/closed*100
-        ).toFixed(1)+"%"
-      : "0%";
-
-
-  $("histNet").textContent=
-    money(net);
-
-  $("histAvg").textContent=
-    money(avg);
-
-  $("histMaxWin").textContent=
-    money(maxWin);
-
-  $("histMaxLoss").textContent=
-    money(maxLoss);
-
-  $("histMaxPeak").textContent=
-    money(maxPeak);
-
-  $("histGiveback").textContent=
-    money(avgGiveback);
-
-
-  $("historyTable").innerHTML=
-    history
-      .slice(0,100)
-      .map(x=>{
-
-        const snap=
-          x.entrySnapshot ||
-          {};
-
-
-        const tf=[
-
-          snap.M5?.signal || "?",
-
-          snap.M15?.signal || "?",
-
-          snap.M30?.signal || "?",
-
-          snap.H1?.signal || "?"
-
-        ].join("/");
-
-
-        const date=
-          new Date(
-            x.date
-          ).toLocaleString(
-            "pl-PL",
-            {
-              day:"2-digit",
-              month:"2-digit",
-              hour:"2-digit",
-              minute:"2-digit"
-            }
-          );
-
-
-        return`
-
-          <tr>
-
-            <td>
-              ${date}
-            </td>
-
-            <td class="${sideClass(x.side)}">
-              ${x.side}
-            </td>
-
-            <td>
-              ${fmt(x.entry)}
-            </td>
-
-            <td>
-              ${fmt(x.exit)}
-            </td>
-
-            <td class="${x.pnl>=0?"buy":"sell"}">
-              ${money(x.pnl)}
-            </td>
-
-            <td>
-              ${money(x.peakPnl)}
-            </td>
-
-            <td>
-              ${money(x.giveback)}
-            </td>
-
-            <td>
-              ${escapeHtml(x.reason)}
-            </td>
-
-            <td>
-              ${tf}
-            </td>
-
-          </tr>
-
-        `;
-
-      })
-      .join("");
+  $("historyTable").innerHTML=history.slice(0,100).map(x=>{
+    const snap=x.entrySnapshot||{};
+    const tf=[snap.M5?.signal||"?",snap.M15?.signal||"?",snap.M30?.signal||"?",snap.H1?.signal||"?"].join("/");
+    const date=new Date(x.date).toLocaleString("pl-PL",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+    const parts=Array.isArray(x.partials)?x.partials:[];
+    const tp1=Number(x.tp1Realized ?? parts.find(q=>q.type==="TP1")?.pnl ?? 0);
+    const tp2=Number(x.tp2Realized ?? parts.find(q=>q.type==="TP2")?.pnl ?? 0);
+    const run=Number(x.runnerRealized ?? parts.find(q=>q.type==="RUNNER")?.pnl ?? 0);
+    return `
+      <tr>
+        <td>${date}</td>
+        <td class="${sideClass(x.side)}">${x.side}</td>
+        <td>${fmt(x.lot,2)}</td>
+        <td>${fmt(x.entry)}</td>
+        ${oneTpHistory?`<td>${fmt(x.tp??x.tp2??x.tp3)}</td>`:`<td class="${tp1>=0?"buy":"sell"}">${money(tp1)}</td><td class="${tp2>=0?"buy":"sell"}">${money(tp2)}</td><td class="${run>=0?"buy":"sell"}">${money(run)}</td>`}
+        <td class="${x.pnl>=0?"buy":"sell"}"><b>${money(x.pnl)}</b></td>
+        <td>${money(x.peakPnl)}</td>
+        <td>${money(x.maxDrawdownFromPeak||0)}</td>
+        <td>${money(x.giveback)}</td>
+        <td>${escapeHtml(x.reason)}</td>
+        <td>${tf}</td>
+      </tr>`;
+  }).join("");
 }
-
 
 /* =========================================================
    LOOPS
@@ -4005,6 +3429,14 @@ async function analysisLoop(){
 
 async function start(){
 
+  const savedLot=Number(localStorage.getItem("xau_ai_lot") || 0.04);
+  if($("lotInput")) $("lotInput").value=Math.min(1,Math.max(0.01,Number.isFinite(savedLot)?savedLot:0.04)).toFixed(2);
+  $("lotInput")?.addEventListener("change",saveLot);
+  $("lotInput")?.addEventListener("blur",saveLot);
+  if($("tpMode")) $("tpMode").value=localStorage.getItem("xau_ai_tp_mode")||"3TP";
+  $("tpMode")?.addEventListener("change",saveTpMode);
+  renderTpMode();
+
   refreshLevelButtons();
 
   renderHistory();
@@ -4020,63 +3452,3 @@ async function start(){
 
   await loadMacro();
 
-
-  lastAnalysis=
-    Date.now();
-
-  lastMacro=
-    Date.now();
-
-
-  log(
-    "XAU AI uruchomione."
-  );
-
-
-  /*
-    Live price:
-    every 2 seconds.
-  */
-
-  setInterval(
-    fetchLive,
-    2000
-  );
-
-
-  /*
-    Analysis:
-    every 5 seconds checks whether
-    60 seconds passed.
-  */
-
-  setInterval(
-    analysisLoop,
-    5000
-  );
-
-
-  /*
-    Runner:
-    every 3 seconds.
-  */
-
-  setInterval(
-    ()=>{
-      if(
-        runner.on
-      ){
-        updateRunner();
-      }
-    },
-    3000
-  );
-}
-
-
-start();
-
-</script>
-
-</body>
-</html>
