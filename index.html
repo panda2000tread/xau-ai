@@ -3,279 +3,386 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
 <title>XAU AI</title>
 
 <style>
+
 :root{
-  --bg:#080b10;
-  --panel:#0d121a;
-  --card:#111821;
-  --border:#202b38;
-  --text:#f2f5f8;
-  --muted:#8995a6;
-  --green:#69e39a;
-  --red:#ff6d78;
-  --yellow:#e8c65a;
-  --blue:#70a7ff;
+  --bg:#07090d;
+  --panel:#10141b;
+  --panel2:#151b24;
+  --border:#252d39;
+  --text:#f2f4f7;
+  --muted:#8e98a8;
+  --green:#19d67b;
+  --red:#ff4d5d;
+  --yellow:#ffc857;
+  --blue:#55a8ff;
 }
 
 *{
-  box-sizing:border-box
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
 
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
+  padding:12px;
 }
 
 .app{
-  max-width:900px;
-  margin:auto;
-  padding:18px 14px 60px
-}
-
-h1{
-  margin:0;
-  font-size:30px
-}
-
-h2{
-  margin:0 0 14px;
-  font-size:20px
-}
-
-.section{
-  margin-top:16px;
-  padding:16px;
-  border:1px solid var(--border);
-  border-radius:22px;
-  background:var(--panel)
-}
-
-.grid2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px
-}
-
-.grid4{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px
-}
-
-.card{
-  padding:14px;
-  border:1px solid var(--border);
-  border-radius:17px;
-  background:var(--card);
-  min-width:0
-}
-
-.label{
-  color:var(--muted);
-  font-size:12px;
-  letter-spacing:1px;
-  text-transform:uppercase
-}
-
-.value{
-  margin-top:6px;
-  font-size:24px;
-  font-weight:800;
-  word-break:break-word
-}
-
-.small{
-  font-size:14px
-}
-
-.buy{
-  color:var(--green)
-}
-
-.sell{
-  color:var(--red)
-}
-
-.wait{
-  color:var(--yellow)
+  max-width:760px;
+  margin:0 auto;
 }
 
 .header{
   display:flex;
   justify-content:space-between;
-  align-items:center
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.logo span{
+  color:var(--yellow);
 }
 
 .status{
-  padding:10px 14px;
+  padding:7px 10px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  font-size:11px;
+  font-weight:700;
+  color:var(--yellow);
+}
+
+.section{
+  background:var(--panel);
+  border:1px solid var(--border);
   border-radius:14px;
-  background:#111820;
-  font-size:13px
+  padding:13px;
+  margin-bottom:10px;
+}
+
+h2{
+  font-size:13px;
+  margin:0 0 10px;
+  letter-spacing:.5px;
+}
+
+.label{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.7px;
 }
 
 .price{
-  font-size:38px;
-  font-weight:900;
-  margin:12px 0
+  font-size:37px;
+  font-weight:800;
+  margin:3px 0 12px;
+  letter-spacing:-1px;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.grid4{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+
+.card{
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:9px;
+  min-width:0;
+}
+
+.value{
+  margin-top:3px;
+  font-size:15px;
+  font-weight:700;
 }
 
 .signal{
-  text-align:center;
-  padding:20px;
-  border-radius:18px;
-  border:1px solid var(--border);
-  background:#10161e
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
 }
 
 .signal-main{
-  font-size:40px;
-  font-weight:900
+  font-size:31px;
+  font-weight:900;
 }
 
-.signal-sub{
+.buy{
+  color:var(--green);
+}
+
+.sell{
+  color:var(--red);
+}
+
+.wait{
+  color:var(--yellow);
+}
+
+.small{
+  font-size:11px;
   color:var(--muted);
-  margin-top:5px
 }
 
-.tf strong{
-  display:block;
-  margin-top:5px;
-  font-size:22px
+.big{
+  font-size:18px;
+  font-weight:800;
 }
 
-.note{
+.progress{
+  height:7px;
+  background:#222936;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:7px;
+}
+
+.progress > div{
+  height:100%;
+  width:0%;
+  background:var(--blue);
+}
+
+.tfgrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+
+.tf{
+  text-align:center;
+  padding:9px 4px;
+  border-radius:10px;
+  background:var(--panel2);
+  border:1px solid var(--border);
+}
+
+.tf .name{
+  font-size:11px;
   color:var(--muted);
-  font-size:12px;
-  line-height:1.5
+  font-weight:700;
+}
+
+.tf .dir{
+  margin-top:3px;
+  font-size:14px;
+  font-weight:800;
 }
 
 button{
-  border:0;
-  border-radius:14px;
-  padding:14px 10px;
-  font-size:13px;
-  font-weight:800;
-  color:white;
-  background:#1c2733
+  appearance:none;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+  border-radius:10px;
+  padding:10px;
+  font-weight:700;
+  font-size:12px;
 }
 
 button:active{
-  transform:scale(.98)
+  transform:scale(.98);
+}
+
+button.active{
+  border-color:var(--blue);
+  color:var(--blue);
 }
 
 button.green{
-  background:#235e3e
+  border-color:var(--green);
+  color:var(--green);
 }
 
 button.red{
-  background:#66272e
-}
-
-button.yellow{
-  background:#66551d
-}
-
-button.blue{
-  background:#244d7c
+  border-color:var(--red);
+  color:var(--red);
 }
 
 .buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:12px
+  gap:8px;
 }
 
-.range{
+.levels{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+
+.tpModes{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:8px
+  gap:7px;
 }
 
-.activeLevel{
-  outline:2px solid var(--blue)
-}
-
-.metric{
-  font-size:25px;
-  font-weight:900
-}
-
-.runnerStatus{
-  font-size:34px;
-  font-weight:900
-}
-
-.protection{
-  margin-top:12px;
-  padding:13px;
-  border-radius:14px;
-  background:#0a1118;
-  border:1px solid #1b2733
-}
-
-.autoBox{
-  margin-top:12px;
-  padding:13px;
-  border-radius:14px;
-  background:#0b131a;
-  border:1px solid #1c2b38
+input{
+  width:100%;
+  border:1px solid var(--border);
+  background:#0b0f15;
+  color:var(--text);
+  border-radius:9px;
+  padding:10px;
+  font-size:15px;
+  outline:none;
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  font-size:11px
+  font-size:10px;
 }
 
 th{
   color:var(--muted);
   text-align:left;
-  padding:9px 6px;
-  border-bottom:1px solid var(--border)
+  padding:6px 4px;
+  border-bottom:1px solid var(--border);
 }
 
 td{
-  padding:9px 6px;
-  border-bottom:1px solid #18212b
+  padding:7px 4px;
+  border-bottom:1px solid #1d232d;
+  white-space:nowrap;
 }
 
 .log{
-  max-height:320px;
+  max-height:180px;
   overflow:auto;
-  font-family:monospace;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:10px;
+  line-height:1.6;
+  color:#b8c1cf;
+}
+
+.greenText{
+  color:var(--green);
+}
+
+.redText{
+  color:var(--red);
+}
+
+.yellowText{
+  color:var(--yellow);
+}
+
+.blueText{
+  color:var(--blue);
+}
+
+.macro{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.notice{
+  padding:9px;
+  border-radius:9px;
+  background:#0b0f15;
+  border:1px solid var(--border);
   font-size:11px;
-  color:#aeb9c7
+  line-height:1.45;
 }
 
-.log div{
-  padding:5px 0;
-  border-bottom:1px solid #141c25
+.runnerPosition{
+  padding:11px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--panel2);
 }
 
-input,
-select{
-  color:var(--text)
+.runnerHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
 }
 
-@media(max-width:600px){
+.runnerTitle{
+  font-size:14px;
+  font-weight:800;
+}
+
+.pnl{
+  font-size:21px;
+  font-weight:900;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-top:8px;
+}
+
+.stat{
+  padding:8px;
+  border-radius:9px;
+  background:#0d1118;
+}
+
+.stat .v{
+  font-size:13px;
+  font-weight:800;
+  margin-top:2px;
+}
+
+@media(max-width:520px){
 
   .grid4{
-    grid-template-columns:1fr 1fr
-  }
-
-  .value{
-    font-size:20px
+    grid-template-columns:repeat(2,1fr);
   }
 
   .price{
-    font-size:34px
+    font-size:34px;
   }
+
+  .tfgrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
 }
+
 </style>
 </head>
 
@@ -283,4142 +390,4956 @@ select{
 
 <div class="app">
 
-<div class="header">
+  <div class="header">
 
-<div>
-<h1>XAU AI</h1>
-<div class="note">
-XAUUSD - dynamic analysis & paper runner
-</div>
-</div>
+    <div class="logo">
+      XAU <span>AI</span>
+    </div>
 
-<div id="connection" class="status">
-Laczenie...
-</div>
+    <div id="connection" class="status">
+      Laczenie...
+    </div>
 
-</div>
+  </div>
 
 
-<!-- PRICE -->
+  <div class="section">
 
-<div class="section">
+    <div class="label">XAUUSD</div>
 
-<div class="label">
-XAUUSD
-</div>
+    <div id="price" class="price">---</div>
 
-<div id="price" class="price">
----
-</div>
+    <div class="grid4">
 
-<div class="grid4">
+      <div class="card">
+        <div class="label">BID</div>
+        <div id="bid" class="value">---</div>
+      </div>
 
-<div class="card">
-<div class="label">BID</div>
-<div id="bid" class="value">---</div>
-</div>
+      <div class="card">
+        <div class="label">ASK</div>
+        <div id="ask" class="value">---</div>
+      </div>
 
-<div class="card">
-<div class="label">ASK</div>
-<div id="ask" class="value">---</div>
-</div>
+      <div class="card">
+        <div class="label">SPREAD</div>
+        <div id="spread" class="value">---</div>
+      </div>
 
-<div class="card">
-<div class="label">SPREAD</div>
-<div id="spread" class="value">---</div>
-</div>
+      <div class="card">
+        <div class="label">AGE</div>
+        <div id="age" class="value">---</div>
+      </div>
 
-<div class="card">
-<div class="label">AGE</div>
-<div id="age" class="value">---</div>
-</div>
+    </div>
 
-</div>
-</div>
+  </div>
 
 
-<!-- SIGNAL -->
+  <div class="section">
 
-<div class="section">
+    <h2>SYGNAL</h2>
 
-<h2>SYGNAL</h2>
+    <div class="signal">
 
-<div class="signal">
+      <div id="signal" class="signal-main wait">
+        WAIT
+      </div>
 
-<div id="signal" class="signal-main wait">
-WAIT
-</div>
+      <div style="text-align:right">
 
-<div id="signalReason" class="signal-sub">
-Oczekiwanie na dane
-</div>
+        <div class="label">SCORE</div>
 
-</div>
+        <div id="score" class="big">
+          0
+        </div>
 
-<div class="grid2" style="margin-top:10px">
+      </div>
 
-<div class="card">
-<div class="label">ENTRY</div>
-<div id="entry" class="value">---</div>
-</div>
+    </div>
 
-<div class="card">
-<div class="label">SL</div>
-<div id="sl" class="value">---</div>
-</div>
+    <div class="small" id="signalReason">
+      Brak analizy.
+    </div>
 
-<div class="card">
-<div class="label">TP1</div>
-<div id="tp1" class="value">---</div>
-</div>
+  </div>
 
-<div class="card">
-<div class="label">TP2</div>
-<div id="tp2" class="value">---</div>
-</div>
 
-<div class="card">
-<div class="label" id="tp3Label">TP3</div>
-<div id="tp3" class="value">---</div>
-</div>
+  <div class="section">
 
-<div class="card">
-<div class="label">SCORE</div>
-<div id="score" class="value">---</div>
-</div>
+    <h2>TIMEFRAMES</h2>
 
-</div>
-</div>
+    <div class="tfgrid">
 
+      <div class="tf">
 
-<!-- TIMEFRAMES -->
+        <div class="name">
+          M5
+        </div>
 
-<div class="section">
+        <div id="tfM5" class="dir wait">
+          WAIT
+        </div>
 
-<h2>TIMEFRAMES</h2>
+      </div>
 
-<div class="grid4">
 
-<div class="card tf">
-<div class="label">M5</div>
-<strong id="m5">---</strong>
-<div id="m5detail" class="note"></div>
-</div>
+      <div class="tf">
 
-<div class="card tf">
-<div class="label">M15</div>
-<strong id="m15">---</strong>
-<div id="m15detail" class="note"></div>
-</div>
+        <div class="name">
+          M15
+        </div>
 
-<div class="card tf">
-<div class="label">M30</div>
-<strong id="m30">---</strong>
-<div id="m30detail" class="note"></div>
-</div>
+        <div id="tfM15" class="dir wait">
+          WAIT
+        </div>
 
-<div class="card tf">
-<div class="label">H1</div>
-<strong id="h1">---</strong>
-<div id="h1detail" class="note"></div>
-</div>
+      </div>
 
-</div>
-</div>
 
+      <div class="tf">
 
-<!-- MARKET -->
+        <div class="name">
+          M30
+        </div>
 
-<div class="section">
+        <div id="tfM30" class="dir wait">
+          WAIT
+        </div>
 
-<h2>MARKET</h2>
+      </div>
 
-<div class="grid2">
 
-<div class="card">
-<div class="label">REGIME</div>
-<div id="regime" class="value">---</div>
-</div>
+      <div class="tf">
 
-<div class="card">
-<div class="label">IMPULSE</div>
-<div id="impulse" class="value">---</div>
-</div>
+        <div class="name">
+          H1
+        </div>
 
-<div class="card">
-<div class="label">STRUCTURE</div>
-<div id="structure" class="value">---</div>
-</div>
+        <div id="tfH1" class="dir wait">
+          WAIT
+        </div>
 
-<div class="card">
-<div class="label">ATR M15</div>
-<div id="atr" class="value">---</div>
-</div>
+      </div>
 
-</div>
-</div>
+    </div>
 
+  </div>
 
-<!-- MACRO -->
 
-<div class="section">
+  <div class="section">
 
-<h2>USA MACRO / NEWS</h2>
+    <h2>PARAMETRY</h2>
 
-<div class="grid2">
+    <div class="grid3">
 
-<div class="card">
-<div class="label">BIAS</div>
-<div id="macroBias" class="value">---</div>
-</div>
+      <div class="card">
 
-<div class="card">
-<div class="label">SCORE</div>
-<div id="macroScore" class="value">---</div>
-</div>
+        <div class="label">
+          ENTRY
+        </div>
 
-<div class="card">
-<div class="label">NEWS RISK</div>
-<div id="newsRisk" class="value">---</div>
-</div>
+        <div id="entry" class="value">
+          ---
+        </div>
 
-<div class="card">
-<div class="label">NEXT EVENT</div>
-<div id="nextEvent" class="value small">---</div>
-</div>
+      </div>
 
-</div>
-</div>
 
+      <div class="card">
 
-<!-- LEVEL -->
+        <div class="label">
+          SL
+        </div>
 
-<div class="section">
+        <div id="sl" class="value">
+          ---
+        </div>
 
-<h2>ANALYSIS LEVEL</h2>
+      </div>
 
-<div class="range">
 
-<button id="level1" onclick="setLevel(1)">
-1 FAST
-</button>
+      <div class="card">
 
-<button id="level2" onclick="setLevel(2)">
-2 STANDARD
-</button>
+        <div class="label">
+          TP
+        </div>
 
-<button id="level3" onclick="setLevel(3)">
-3 ADVANCED
-</button>
+        <div id="tp" class="value">
+          ---
+        </div>
 
-<button id="level4" onclick="setLevel(4)">
-4 PRO
-</button>
+      </div>
 
-</div>
-</div>
+    </div>
 
+    <div class="grid3" style="margin-top:8px">
 
-<!-- RUNNER -->
+      <div class="card">
 
-<div class="section">
+        <div class="label">
+          TP1
+        </div>
 
-<h2>RUNNER - PAPER MODE</h2>
+        <div id="tp1" class="value">
+          ---
+        </div>
 
-<div class="grid2">
+      </div>
 
-<div class="card">
-<div class="label">STATUS</div>
-<div id="runnerStatus" class="runnerStatus">
-OFF
-</div>
-</div>
 
-<div class="card">
-<div class="label">POZYCJA</div>
-<div id="runnerPosition" class="value">
-BRAK
-</div>
-</div>
+      <div class="card">
 
-<div class="card">
-<div class="label">REALIZED</div>
-<div id="runnerRealized" class="value">
-$0.00
-</div>
-</div>
+        <div class="label">
+          TP2
+        </div>
 
-<div class="card">
-<div class="label">TOTAL P/L</div>
-<div id="runnerTotal" class="value">
-$0.00
-</div>
-</div>
+        <div id="tp2" class="value">
+          ---
+        </div>
 
-<div class="card">
-<div class="label">PEAK P/L</div>
-<div id="runnerPeak" class="value">
-$0.00
-</div>
-</div>
+      </div>
 
-<div class="card">
-<div class="label">ODDANE OD PEAK</div>
-<div id="runnerGiveback" class="value">
-$0.00
-</div>
-</div>
 
-</div>
+      <div class="card">
 
+        <div class="label">
+          TP3
+        </div>
 
-<div class="autoBox">
+        <div id="tp3" class="value">
+          ---
+        </div>
 
-<div class="label">
-PARAMETRY POZYCJI
-</div>
+      </div>
 
-<div class="grid2" style="margin-top:10px">
+    </div>
 
-<div class="card">
+  </div>
 
-<div class="label">
-LOT
-</div>
 
-<input
-id="lotInput"
-type="number"
-min="0.01"
-max="1"
-step="0.01"
-value="0.04"
-style="width:100%;margin-top:7px;padding:12px;border-radius:12px;border:1px solid var(--border);background:#0a1118;font-size:18px;font-weight:800">
+  <div class="section">
 
-</div>
+    <h2>TP MODE</h2>
 
+    <div class="tpModes">
 
-<div class="card">
+      <button
+        id="tpMode1"
+        onclick="setTpMode('ONE')"
+      >
+        1 TP — CALA POZYCJA
+      </button>
 
-<div class="label">
-MODEL RYZYKA
-</div>
+      <button
+        id="tpMode3"
+        onclick="setTpMode('THREE')"
+      >
+        3 TP + RUNNER
+      </button>
 
-<div id="riskModel" class="value small">
-ATR + STRUKTURA
-</div>
+    </div>
 
-</div>
+    <div
+      class="small"
+      id="tpModeText"
+      style="margin-top:8px"
+    >
+      ---
+    </div>
 
+  </div>
 
-<div class="card">
 
-<div class="label">
-TAKE PROFIT
-</div>
+  <div class="section">
 
-<select
-id="tpMode"
-style="width:100%;margin-top:7px;padding:12px;border-radius:12px;border:1px solid var(--border);background:#0a1118;font-size:16px;font-weight:800">
+    <h2>LOT</h2>
 
-<option value="3TP">
-3 TP + RUNNER
-</option>
+    <div class="grid2">
 
-<option value="1TP">
-1 TP - CALA POZYCJA
-</option>
+      <div>
 
-</select>
+        <div class="label">
+          LOT UZYWANY PRZEZ RUNNER
+        </div>
 
-</div>
+        <input
+          id="lot"
+          type="number"
+          min="0.01"
+          step="0.01"
+          value="0.04"
+        >
 
-</div>
+      </div>
 
 
-<div class="note" style="margin-top:8px">
+      <div>
 
-Lot ustawia uzytkownik. Tolerancja ruchu skaluje sie do lota, ATR, SL i struktury.
+        <div class="label">
+          MIN PROFIT
+        </div>
 
-</div>
+        <div class="value">
+          +$0.15
+        </div>
 
+      </div>
 
-<div style="margin-top:14px">
+    </div>
 
-<div class="label">
-AUTOMATYCZNE WEJSCIA
-</div>
+  </div>
 
-<div id="autoStatus" class="note">
-Runner OFF
-</div>
 
-<div id="entryWait" class="note" style="margin-top:5px">
----
-</div>
+  <div class="section">
 
-</div>
+    <h2>POZIOM ANALIZY</h2>
 
-</div>
+    <div class="levels">
 
+      <button
+        id="level1"
+        onclick="setLevel(1)"
+      >
+        FAST
+      </button>
 
-<div class="buttons">
+      <button
+        id="level2"
+        onclick="setLevel(2)"
+      >
+        STANDARD
+      </button>
 
-<button class="green" onclick="toggleRunner()">
-RUNNER ON/OFF
-</button>
+      <button
+        id="level3"
+        onclick="setLevel(3)"
+      >
+        ADVANCED
+      </button>
 
-<button class="green" onclick="testEntry()">
-TEST ENTRY
-</button>
+      <button
+        id="level4"
+        onclick="setLevel(4)"
+      >
+        PRO
+      </button>
 
-<button class="red" onclick="closeRunner('MANUAL CLOSE')">
-CLOSE POSITION
-</button>
+    </div>
 
-<button class="yellow" onclick="resetRunner()">
-RESET
-</button>
+    <div
+      class="small"
+      id="levelText"
+      style="margin-top:8px"
+    >
+      ---
+    </div>
 
-</div>
+  </div>
 
 
-<div class="protection">
+  <div class="section">
 
-<div class="label">
-DYNAMIC PROTECTION
-</div>
+    <h2>MACRO / USA</h2>
 
-<div id="runnerProtection" class="note">
-Brak aktywnej pozycji.
-</div>
+    <div class="macro">
 
-</div>
+      <div class="card">
 
+        <div class="label">
+          BIAS
+        </div>
 
-<div style="margin-top:15px;overflow:auto">
+        <div
+          id="macroBias"
+          class="value"
+        >
+          NEUTRAL
+        </div>
 
-<table>
+      </div>
 
-<thead id="runnerHead">
-</thead>
 
-<tbody id="runnerTable">
-</tbody>
+      <div class="card">
 
-</table>
+        <div class="label">
+          RISK
+        </div>
 
-</div>
+        <div
+          id="macroRisk"
+          class="value"
+        >
+          LOW
+        </div>
 
-</div>
+      </div>
 
+    </div>
 
-<!-- HISTORY -->
+    <div
+      id="macroNext"
+      class="notice"
+      style="margin-top:8px"
+    >
+      Brak danych.
+    </div>
 
-<div class="section">
+  </div>
 
-<h2>HISTORIA TRANSAKCJI</h2>
 
-<div class="grid4">
+  <div class="section">
 
-<div class="card">
-<div class="label">ZAMKNIETE</div>
-<div id="histClosed" class="metric">0</div>
-</div>
+    <h2>RUNNER</h2>
 
-<div class="card">
-<div class="label">WIN</div>
-<div id="histWin" class="metric buy">0</div>
-</div>
+    <div id="autoStatus" class="notice">
+      Runner OFF
+    </div>
 
-<div class="card">
-<div class="label">LOSS</div>
-<div id="histLoss" class="metric sell">0</div>
-</div>
+    <div
+      class="buttons"
+      style="margin-top:8px"
+    >
 
-<div class="card">
-<div class="label">WIN RATE</div>
-<div id="histRate" class="metric">0%</div>
-</div>
+      <button
+        id="runnerToggle"
+        onclick="toggleRunner()"
+      >
+        WLACZ RUNNER
+      </button>
 
-<div class="card">
-<div class="label">NET</div>
-<div id="histNet" class="metric">$0</div>
-</div>
+      <button
+        onclick="resetRunner()"
+      >
+        RESET RUNNER
+      </button>
 
-<div class="card">
-<div class="label">AVG / TRADE</div>
-<div id="histAvg" class="metric">$0</div>
-</div>
+    </div>
 
-<div class="card">
-<div class="label">MAX WIN</div>
-<div id="histMaxWin" class="metric">$0</div>
-</div>
+    <div
+      style="margin-top:8px"
+    >
 
-<div class="card">
-<div class="label">MAX LOSS</div>
-<div id="histMaxLoss" class="metric">$0</div>
-</div>
+      <button
+        class="green"
+        style="width:100%"
+        onclick="testEntry()"
+      >
+        TEST ENTRY
+      </button>
 
-<div class="card">
-<div class="label">MAX PEAK</div>
-<div id="histMaxPeak" class="metric">$0</div>
-</div>
+    </div>
 
-<div class="card">
-<div class="label">AVG GIVEBACK</div>
-<div id="histGiveback" class="metric">$0</div>
-</div>
+  </div>
 
-</div>
 
+  <div class="section">
 
-<div style="margin-top:15px;overflow:auto">
+    <h2>AKTYWNA POZYCJA</h2>
 
-<table>
+    <div id="runnerBox">
 
-<thead id="historyHead">
-</thead>
+      <div class="notice">
+        Brak aktywnej pozycji.
+      </div>
 
-<tbody id="historyTable">
-</tbody>
+    </div>
 
-</table>
+  </div>
 
-</div>
 
-</div>
+  <div class="section">
 
+    <h2>HISTORIA</h2>
 
-<!-- LOG -->
+    <div
+      id="historyStats"
+      class="notice"
+      style="margin-bottom:8px"
+    >
+      Brak transakcji.
+    </div>
 
-<div class="section">
+    <div style="overflow:auto">
 
-<h2>LOG</h2>
+      <table>
 
-<div id="log" class="log">
-</div>
+        <thead>
 
-</div>
+          <tr>
 
+            <th>DATA</th>
+            <th>STR</th>
+            <th>ENTRY</th>
+            <th>EXIT</th>
+            <th>NET</th>
+            <th>PEAK</th>
+            <th>EXIT</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="historyBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <h2>LOG</h2>
+
+    <div
+      id="log"
+      class="log"
+    ></div>
+
+  </div>
 
 </div>
 
 
 <script>
 
-const API =
-"https://biquote.io/api/XAUUSD";
-
-const HISTORY_KEY =
-"xau_ai_trade_history_v6";
-
-const RUNNER_KEY =
-"xau_ai_runner_v6";
+"use strict";
 
 
-let level =
-Number(localStorage.getItem("xau_ai_level") || 3);
-
-let analysis = null;
-
-let lastAnalysis = 0;
-
-let lastMacro = 0;
-
-
-let live = {
-bid:null,
-ask:null,
-mid:null,
-spread:null,
-timestamp:null
-};
-
-
-let data = {
-M5:[],
-M15:[],
-M30:[],
-H1:[]
-};
-
-
-let macro = {
-score:0,
-bias:"NEUTRAL",
-risk:"LOW",
-next:"---"
-};
-
-
-let signalMemory = {
-last:null,
-count:0
-};
-
-
-let runner = {
-on:false,
-position:null,
-realized:0,
-cooldownUntil:0
-};
-
-
-let history = [];
-
-
-try{
-
-history =
-JSON.parse(
-localStorage.getItem(HISTORY_KEY) || "[]"
-);
-
-if(!Array.isArray(history))
-history=[];
-
-}catch(e){
-
-history=[];
-
-}
-
-
-try{
-
-const saved =
-JSON.parse(
-localStorage.getItem(RUNNER_KEY) || "null"
-);
-
-if(saved)
-runner=saved;
-
-}catch(e){}
-
-
-/* HELPERS */
+/* =========================================================
+   HELPERS
+   ========================================================= */
 
 function $(id){
 
-return document.getElementById(id);
+  return document.getElementById(id);
 
 }
 
 
-function log(message){
+function log(msg){
 
-const el=$("log");
+  const el=$("log");
 
-const time=
-new Date().toLocaleTimeString();
+  const t=
+    new Date().toLocaleTimeString();
 
-el.innerHTML =
-`<div>[${time}] ${escapeHtml(message)}</div>` +
-el.innerHTML;
-
-}
-
-
-function escapeHtml(value){
-
-return String(value)
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;");
+  el.innerHTML=
+    `<div>[${t}] ${escapeHtml(msg)}</div>`+
+    el.innerHTML;
 
 }
 
 
-function fmt(number, decimals=2){
+function escapeHtml(v){
 
-if(
-number===null ||
-number===undefined ||
-!Number.isFinite(Number(number))
-){
-
-return "---";
-
-}
-
-return Number(number).toFixed(decimals);
+  return String(v)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;");
 
 }
 
 
-function money(number){
+function fmt(n,d=2){
 
-const x=Number(number||0);
+  if(
+    n===null ||
+    n===undefined ||
+    !Number.isFinite(Number(n))
+  ){
 
-return (
-x>=0 ? "+$" : "-$"
-)+Math.abs(x).toFixed(2);
+    return "---";
+
+  }
+
+  return Number(n).toFixed(d);
+
+}
+
+
+function money(n){
+
+  const x=Number(n||0);
+
+  return(
+    x>=0 ? "+$" : "-$"
+  )+
+  Math.abs(x).toFixed(2);
 
 }
 
 
 function sideClass(side){
 
-if(side==="BUY")
-return "buy";
+  if(side==="BUY") return "buy";
 
-if(side==="SELL")
-return "sell";
+  if(side==="SELL") return "sell";
 
-return "wait";
+  return "wait";
 
 }
 
 
 function saveRunner(){
 
-localStorage.setItem(
-RUNNER_KEY,
-JSON.stringify(runner)
-);
+  localStorage.setItem(
+    RUNNER_KEY,
+    JSON.stringify(runner)
+  );
 
 }
 
 
 function saveHistory(){
 
-localStorage.setItem(
-HISTORY_KEY,
-JSON.stringify(history)
-);
+  localStorage.setItem(
+    HISTORY_KEY,
+    JSON.stringify(history)
+  );
 
 }
 
 
-/* LEVEL */
+/* =========================================================
+   API / STORAGE
+   ========================================================= */
 
-function setLevel(number){
+const API=
+  "https://biquote.io/api/XAUUSD";
 
-level=number;
+const API_LATEST=
+  "https://biquote.io/api/latest?symbols=XAUUSD";
 
-localStorage.setItem(
-"xau_ai_level",
-String(number)
-);
+const HISTORY_KEY=
+  "xau_ai_trade_history_v4";
 
-refreshLevelButtons();
-
-analyzeAll();
-
-}
-
-
-function refreshLevelButtons(){
-
-for(let i=1;i<=4;i++){
-
-$("level"+i)
-.classList
-.toggle(
-"activeLevel",
-i===level
-);
-
-}
-
-}
+const RUNNER_KEY=
+  "xau_ai_runner_v4";
 
 
-/* API */
-
-async function fetchJSON(url){
-
-const response =
-await fetch(
-url,
-{
-cache:"no-store"
-}
-);
-
-if(!response.ok){
-
-throw new Error(
-"HTTP "+response.status
-);
-
-}
-
-return await response.json();
-
-}
+let level=
+  Number(
+    localStorage.getItem(
+      "xau_ai_level"
+    ) || 3
+  );
 
 
-/* LIVE */
+let tpMode=
+  localStorage.getItem(
+    "xau_ai_tp_mode"
+  ) || "THREE";
 
-async function fetchLive(){
+
+let live={
+
+  bid:null,
+  ask:null,
+  mid:null,
+  spread:null,
+  timestamp:null
+
+};
+
+
+let data={
+
+  M5:[],
+  M15:[],
+  M30:[],
+  H1:[]
+
+};
+
+
+let analysis=null;
+
+
+let macro={
+
+  score:0,
+  bias:"NEUTRAL",
+  risk:"LOW",
+  next:"---"
+
+};
+
+
+let signalMemory={
+
+  last:null,
+  count:0,
+  time:0
+
+};
+
+
+let runner={
+
+  on:false,
+  position:null,
+  realized:0,
+  cooldownUntil:0
+
+};
+
+
+let history=[];
+
 
 try{
 
-const json =
-await fetchJSON(
-API+"?allowStale=false"
-);
+  history=
+    JSON.parse(
+      localStorage.getItem(
+        HISTORY_KEY
+      ) || "[]"
+    );
+
+}catch(e){
+
+  history=[];
+
+}
 
 
-live.bid =
-Number(json.bid);
+try{
+
+  const saved=
+    JSON.parse(
+      localStorage.getItem(
+        RUNNER_KEY
+      ) || "null"
+    );
+
+  if(saved){
+
+    runner=saved;
+
+  }
+
+}catch(e){}
 
 
-live.ask =
-Number(json.ask);
+/* =========================================================
+   FETCH JSON
+   ========================================================= */
 
+/*
+  IMPORTANT:
+  Every request has an 8 second timeout.
+  This prevents Safari from staying forever on
+  "Laczenie..." when an API request hangs.
+*/
 
-live.mid =
-Number(
-json.mid ||
-((live.bid+live.ask)/2)
-);
-
-
-live.spread =
-Number(
-json.spread ||
-(live.ask-live.bid)
-);
-
-
-live.timestamp =
-json.timestamp ||
-Date.now();
-
-
-$("price").textContent =
-fmt(live.mid);
-
-
-$("bid").textContent =
-fmt(live.bid);
-
-
-$("ask").textContent =
-fmt(live.ask);
-
-
-$("spread").textContent =
-fmt(live.spread,3);
-
-
-let age =
-json.quoteAgeSeconds;
-
-
-if(
-age===undefined &&
-json.timestamp
+async function fetchJSON(
+  url,
+  timeoutMs=8000
 ){
 
-age =
-(
-Date.now() -
-new Date(json.timestamp).getTime()
-)/1000;
+  const controller=
+    new AbortController();
+
+  const timer=
+    setTimeout(
+      ()=>{
+        controller.abort();
+      },
+      timeoutMs
+    );
+
+
+  try{
+
+    const r=
+      await fetch(
+        url,
+        {
+          cache:"no-store",
+          signal:controller.signal
+        }
+      );
+
+
+    if(!r.ok){
+
+      throw new Error(
+        "HTTP "+r.status
+      );
+
+    }
+
+
+    return await r.json();
+
+
+  }catch(e){
+
+    if(
+      e &&
+      e.name==="AbortError"
+    ){
+
+      throw new Error(
+        "TIMEOUT po "+
+        (timeoutMs/1000)+
+        "s"
+      );
+
+    }
+
+
+    throw e;
+
+
+  }finally{
+
+    clearTimeout(timer);
+
+  }
 
 }
 
 
-$("age").textContent =
-Number.isFinite(Number(age))
-?
-Number(age).toFixed(1)+"s"
-:
-"---";
+/* =========================================================
+   LIVE PRICE
+   ========================================================= */
+
+async function fetchLive(){
+
+  try{
+
+    /*
+      Use BiQuote latest endpoint.
+
+      Expected response:
+
+      {
+        "XAUUSD":{
+          "bid": ...,
+          "ask": ...,
+          "mid": ...,
+          ...
+        }
+      }
+
+      The fallback also accepts a direct quote object.
+    */
+
+    const j=
+      await fetchJSON(
+        API_LATEST,
+        8000
+      );
 
 
-$("connection").textContent =
-json.stale
-?
-"STALE"
-:
-"LIVE";
+    const tick=
+      j &&
+      j.XAUUSD
+        ? j.XAUUSD
+        : j;
 
 
-$("connection").style.color =
-json.stale
-?
-"var(--red)"
-:
-"var(--green)";
+    const bid=
+      Number(
+        tick &&
+        tick.bid
+      );
 
 
-updateRunner();
+    const ask=
+      Number(
+        tick &&
+        tick.ask
+      );
 
 
-}catch(error){
+    const midRaw=
+      Number(
+        tick &&
+        tick.mid
+      );
 
-$("connection").textContent =
-"BLAD API";
 
-$("connection").style.color =
-"var(--red)";
+    if(
+      !Number.isFinite(bid) ||
+      !Number.isFinite(ask)
+    ){
 
-log(
-"Live error: "+error.message
-);
+      throw new Error(
+        "Brak poprawnego BID/ASK"
+      );
+
+    }
+
+
+    live.bid=
+      bid;
+
+    live.ask=
+      ask;
+
+
+    live.mid=
+      Number.isFinite(midRaw)
+        ? midRaw
+        : (bid+ask)/2;
+
+
+    const spreadRaw=
+      Number(
+        tick &&
+        tick.spread
+      );
+
+
+    live.spread=
+      Number.isFinite(spreadRaw)
+        ? spreadRaw
+        : ask-bid;
+
+
+    live.timestamp=
+      tick &&
+      tick.timestamp
+        ? tick.timestamp
+        : Date.now();
+
+
+    $("price").textContent=
+      fmt(live.mid);
+
+
+    $("bid").textContent=
+      fmt(live.bid);
+
+
+    $("ask").textContent=
+      fmt(live.ask);
+
+
+    $("spread").textContent=
+      fmt(
+        live.spread,
+        3
+      );
+
+
+    let age=
+      tick &&
+      tick.quoteAgeSeconds;
+
+
+    if(
+      age===undefined &&
+      tick &&
+      tick.timestamp
+    ){
+
+      age=
+        (
+          Date.now()-
+          new Date(
+            tick.timestamp
+          ).getTime()
+        )/1000;
+
+    }
+
+
+    $("age").textContent=
+      Number.isFinite(
+        Number(age)
+      )
+        ? Number(age).toFixed(1)+"s"
+        : "---";
+
+
+    const stale=
+      !!(
+        tick &&
+        tick.stale
+      );
+
+
+    $("connection").textContent=
+      stale
+        ? "STALE"
+        : "LIVE";
+
+
+    $("connection").style.color=
+      stale
+        ? "var(--red)"
+        : "var(--green)";
+
+
+    updateRunner();
+
+
+  }catch(e){
+
+    const msg=
+      e &&
+      e.message
+        ? e.message
+        : String(e);
+
+
+    $("connection").textContent=
+      "API: "+msg;
+
+
+    $("connection").style.color=
+      "var(--red)";
+
+
+    log(
+      "Live error: "+
+      msg
+    );
+
+  }
 
 }
 
-}
 
-
-/* OHLC */
+/* =========================================================
+   OHLC
+   ========================================================= */
 
 function normalizeBars(raw){
 
-let array =
-Array.isArray(raw)
-?
-raw
-:
-raw && Array.isArray(raw.bars)
-?
-raw.bars
-:
-[];
+  let arr=raw;
 
 
-return array
-.map(bar=>({
+  if(
+    raw &&
+    Array.isArray(raw.bars)
+  ){
 
-time:
-new Date(
-bar.openTime ??
-bar.timestamp ??
-bar.time ??
-bar.date
-).getTime(),
+    arr=
+      raw.bars;
 
-open:
-Number(
-bar.open ??
-bar.o
-),
+  }
 
-high:
-Number(
-bar.high ??
-bar.h
-),
 
-low:
-Number(
-bar.low ??
-bar.l
-),
+  if(!Array.isArray(arr)){
 
-close:
-Number(
-bar.close ??
-bar.c
-),
+    return [];
 
-isOpen:
-Boolean(bar.isOpen)
+  }
 
-}))
-.filter(bar=>
 
-Number.isFinite(bar.time) &&
+  return arr
+    .map(b=>{
 
-Number.isFinite(bar.open) &&
+      const time=
+        b.openTime ??
+        b.timestamp ??
+        b.time ??
+        b.date;
 
-Number.isFinite(bar.high) &&
 
-Number.isFinite(bar.low) &&
+      return{
 
-Number.isFinite(bar.close)
+        time:
+          new Date(time).getTime(),
 
-)
-.sort(
-(a,b)=>a.time-b.time
-);
+        open:
+          Number(b.open),
+
+        high:
+          Number(b.high),
+
+        low:
+          Number(b.low),
+
+        close:
+          Number(b.close),
+
+        volume:
+          Number(
+            b.volume ||
+            b.tickVolume ||
+            0
+          ),
+
+        isOpen:
+          b.isOpen===true
+
+      };
+
+    })
+    .filter(b=>
+      Number.isFinite(b.time) &&
+      Number.isFinite(b.open) &&
+      Number.isFinite(b.high) &&
+      Number.isFinite(b.low) &&
+      Number.isFinite(b.close)
+    )
+    .filter(b=>
+      b.isOpen!==true
+    )
+    .sort(
+      (a,b)=>
+        a.time-b.time
+    );
 
 }
 
 
-async function fetchBars(tf,interval){
+async function fetchBars(
+  tf,
+  interval
+){
 
-const json =
-await fetchJSON(
-API+
-"/ohlc?interval="+
-interval+
-"&limit=500"
-);
-
-
-let bars =
-normalizeBars(json);
+  const url=
+    API+
+    "/ohlc?interval="+
+    encodeURIComponent(interval)+
+    "&limit=500";
 
 
-bars =
-bars.filter(
-bar=>bar.isOpen!==true
-);
+  const raw=
+    await fetchJSON(
+      url,
+      10000
+    );
 
 
-data[tf] =
-bars.slice(-300);
+  const bars=
+    normalizeBars(raw);
+
+
+  data[tf]=
+    bars;
+
+
+  return bars;
 
 }
 
 
 async function loadAllBars(){
 
-try{
+  try{
 
-await Promise.all([
+    await Promise.all([
 
-fetchBars("M5","5m"),
+      fetchBars(
+        "M5",
+        "5m"
+      ),
 
-fetchBars("M15","15m"),
+      fetchBars(
+        "M15",
+        "15m"
+      ),
 
-fetchBars("M30","30m"),
+      fetchBars(
+        "M30",
+        "30m"
+      ),
 
-fetchBars("H1","1h")
+      fetchBars(
+        "H1",
+        "1h"
+      )
 
-]);
-
-
-log(
-`Swiece: M5 ${data.M5.length} / M15 ${data.M15.length} / M30 ${data.M30.length} / H1 ${data.H1.length}`
-);
-
-
-analyzeAll();
+    ]);
 
 
-}catch(error){
+    log(
+      "Swiece: M5 "+
+      data.M5.length+
+      " / M15 "+
+      data.M15.length+
+      " / M30 "+
+      data.M30.length+
+      " / H1 "+
+      data.H1.length
+    );
 
-log(
-"OHLC error: "+error.message
-);
+
+    analyzeAll();
+
+
+  }catch(e){
+
+    log(
+      "OHLC error: "+
+      e.message
+    );
+
+  }
 
 }
 
-}
 
+/* =========================================================
+   INDICATORS
+   ========================================================= */
 
-/* INDICATORS */
-
-function ema(values,period){
-
-if(values.length<period)
-return null;
-
-
-const k =
-2/(period+1);
-
-
-let result =
-values
-.slice(0,period)
-.reduce(
-(a,b)=>a+b,
-0
-)/period;
-
-
-for(
-let i=period;
-i<values.length;
-i++
+function ema(
+  values,
+  period
 ){
 
-result =
-values[i]*k +
-result*(1-k);
+  if(
+    values.length<
+    period
+  ){
+
+    return null;
+
+  }
+
+
+  const k=
+    2/(period+1);
+
+
+  let e=
+    values
+      .slice(
+        0,
+        period
+      )
+      .reduce(
+        (a,b)=>
+          a+b,
+        0
+      )/
+      period;
+
+
+  for(
+    let i=period;
+    i<values.length;
+    i++
+  ){
+
+    e=
+      values[i]*k+
+      e*(1-k);
+
+  }
+
+
+  return e;
 
 }
 
 
-return result;
-
-}
-
-
-function atr(bars,period=14){
-
-if(
-bars.length<
-period+1
+function atr(
+  bars,
+  period=14
 ){
 
-return null;
+  if(
+    bars.length<
+    period+1
+  ){
+
+    return null;
+
+  }
+
+
+  const tr=[];
+
+
+  for(
+    let i=1;
+    i<bars.length;
+    i++
+  ){
+
+    const b=
+      bars[i];
+
+    const p=
+      bars[i-1];
+
+
+    tr.push(
+      Math.max(
+
+        b.high-b.low,
+
+        Math.abs(
+          b.high-p.close
+        ),
+
+        Math.abs(
+          b.low-p.close
+        )
+
+      )
+    );
+
+  }
+
+
+  if(
+    tr.length<
+    period
+  ){
+
+    return null;
+
+  }
+
+
+  let a=
+    tr
+      .slice(
+        0,
+        period
+      )
+      .reduce(
+        (x,y)=>
+          x+y,
+        0
+      )/
+      period;
+
+
+  for(
+    let i=period;
+    i<tr.length;
+    i++
+  ){
+
+    a=
+      (
+        a*(period-1)+
+        tr[i]
+      )/
+      period;
+
+  }
+
+
+  return a;
 
 }
 
 
-const trs=[];
-
-
-for(
-let i=1;
-i<bars.length;
-i++
+function rsi(
+  closes,
+  period=14
 ){
 
-const current =
-bars[i];
+  if(
+    closes.length<
+    period+1
+  ){
 
-const previous =
-bars[i-1];
+    return null;
+
+  }
 
 
-trs.push(
+  let gain=0;
+  let loss=0;
 
-Math.max(
 
-current.high-current.low,
+  for(
+    let i=1;
+    i<=period;
+    i++
+  ){
 
-Math.abs(
-current.high-previous.close
-),
+    const diff=
+      closes[i]-
+      closes[i-1];
 
-Math.abs(
-current.low-previous.close
-)
 
-)
+    if(diff>=0){
 
-);
+      gain+=diff;
+
+    }else{
+
+      loss+=
+        Math.abs(diff);
+
+    }
+
+  }
+
+
+  let avgGain=
+    gain/period;
+
+  let avgLoss=
+    loss/period;
+
+
+  for(
+    let i=period+1;
+    i<closes.length;
+    i++
+  ){
+
+    const diff=
+      closes[i]-
+      closes[i-1];
+
+
+    const g=
+      diff>0
+        ? diff
+        : 0;
+
+
+    const l=
+      diff<0
+        ? Math.abs(diff)
+        : 0;
+
+
+    avgGain=
+      (
+        avgGain*(period-1)+
+        g
+      )/
+      period;
+
+
+    avgLoss=
+      (
+        avgLoss*(period-1)+
+        l
+      )/
+      period;
+
+  }
+
+
+  if(avgLoss===0){
+
+    return 100;
+
+  }
+
+
+  const rs=
+    avgGain/avgLoss;
+
+
+  return 100-
+    100/(1+rs);
 
 }
 
 
-return trs
-.slice(-period)
-.reduce(
-(a,b)=>a+b,
-0
-)/period;
-
-}
-
-
-function rsi(bars,period=14){
-
-if(
-bars.length<
-period+1
+function macd(
+  closes
 ){
 
-return null;
+  if(
+    closes.length<
+    40
+  ){
+
+    return{
+
+      macd:null,
+      signal:null,
+      hist:null
+
+    };
+
+  }
+
+
+  const fast=[];
+  const slow=[];
+
+
+  for(
+    let i=0;
+    i<closes.length;
+    i++
+  ){
+
+    const ef=
+      ema(
+        closes.slice(
+          0,
+          i+1
+        ),
+        12
+      );
+
+
+    const es=
+      ema(
+        closes.slice(
+          0,
+          i+1
+        ),
+        26
+      );
+
+
+    if(
+      ef!==null &&
+      es!==null
+    ){
+
+      fast.push(
+        ef-es
+      );
+
+    }
+
+  }
+
+
+  const m=
+    fast.length
+      ? fast[fast.length-1]
+      : null;
+
+
+  const sig=
+    fast.length>=9
+      ? ema(
+          fast,
+          9
+        )
+      : null;
+
+
+  return{
+
+    macd:m,
+
+    signal:sig,
+
+    hist:
+      m!==null &&
+      sig!==null
+        ? m-sig
+        : null
+
+  };
 
 }
 
 
-let gains=0;
+/* =========================================================
+   STRUCTURE
+   ========================================================= */
 
-let losses=0;
-
-
-for(
-let i=bars.length-period;
-i<bars.length;
-i++
+function structure(
+  bars
 ){
 
-const diff =
-bars[i].close -
-bars[i-1].close;
+  if(
+    bars.length<
+    12
+  ){
+
+    return{
+
+      direction:"WAIT",
+      strength:0
+
+    };
+
+  }
 
 
-if(diff>0){
+  const recent=
+    bars.slice(-12);
 
-gains+=diff;
 
-}else{
+  const highs=
+    recent.map(
+      b=>b.high
+    );
 
-losses-=diff;
+
+  const lows=
+    recent.map(
+      b=>b.low
+    );
+
+
+  const closes=
+    recent.map(
+      b=>b.close
+    );
+
+
+  let score=0;
+
+
+  const h1=
+    highs
+      .slice(0,6)
+      .reduce(
+        (a,b)=>a+b,
+        0
+      )/6;
+
+
+  const h2=
+    highs
+      .slice(6)
+      .reduce(
+        (a,b)=>a+b,
+        0
+      )/6;
+
+
+  const l1=
+    lows
+      .slice(0,6)
+      .reduce(
+        (a,b)=>a+b,
+        0
+      )/6;
+
+
+  const l2=
+    lows
+      .slice(6)
+      .reduce(
+        (a,b)=>a+b,
+        0
+      )/6;
+
+
+  if(
+    h2>h1 &&
+    l2>l1
+  ){
+
+    score+=2;
+
+  }
+
+
+  if(
+    h2<h1 &&
+    l2<l1
+  ){
+
+    score-=2;
+
+  }
+
+
+  const c=
+    closes[closes.length-1];
+
+
+  const mid=
+    (
+      h2+l2
+    )/2;
+
+
+  if(c>mid){
+
+    score++;
+
+  }else{
+
+    score--;
+
+  }
+
+
+  if(score>=2){
+
+    return{
+
+      direction:"BUY",
+      strength:score
+
+    };
+
+  }
+
+
+  if(score<=-2){
+
+    return{
+
+      direction:"SELL",
+      strength:Math.abs(score)
+
+    };
+
+  }
+
+
+  return{
+
+    direction:"WAIT",
+    strength:0
+
+  };
 
 }
 
-}
 
+/* =========================================================
+   CANDLE / IMPULSE
+   ========================================================= */
 
-if(losses===0)
-return 100;
-
-
-const rs =
-(gains/period) /
-(losses/period);
-
-
-return 100 -
-(100/(1+rs));
-
-}
-
-
-function macd(bars){
-
-if(bars.length<40)
-return 0;
-
-
-const closes =
-bars.map(
-x=>x.close
-);
-
-
-const fast =
-ema(closes,12);
-
-
-const slow =
-ema(closes,26);
-
-
-if(
-fast===null ||
-slow===null
+function candlePower(
+  bars
 ){
 
-return 0;
+  if(!bars.length){
+
+    return{
+
+      direction:"WAIT",
+      power:0
+
+    };
+
+  }
+
+
+  const b=
+    bars[bars.length-1];
+
+
+  const range=
+    b.high-b.low;
+
+
+  if(range<=0){
+
+    return{
+
+      direction:"WAIT",
+      power:0
+
+    };
+
+  }
+
+
+  const body=
+    Math.abs(
+      b.close-b.open
+    );
+
+
+  const power=
+    body/range;
+
+
+  if(
+    b.close>b.open
+  ){
+
+    return{
+
+      direction:"BUY",
+      power
+
+    };
+
+  }
+
+
+  if(
+    b.close<b.open
+  ){
+
+    return{
+
+      direction:"SELL",
+      power
+
+    };
+
+  }
+
+
+  return{
+
+    direction:"WAIT",
+    power:0
+
+  };
 
 }
 
 
-return fast-slow;
-
-}
-
-
-/* STRUCTURE */
-
-function structure(bars){
-
-if(bars.length<20){
-
-return {
-
-text:"UNKNOWN",
-
-direction:0,
-
-highs:[],
-
-lows:[]
-
-};
-
-}
-
-
-const recent =
-bars.slice(-20);
-
-
-const highs=[];
-
-const lows=[];
-
-
-for(
-let i=2;
-i<recent.length-2;
-i++
+function impulse(
+  bars
 ){
 
-if(
+  if(
+    bars.length<
+    6
+  ){
 
-recent[i].high >
-recent[i-1].high &&
+    return{
 
-recent[i].high >
-recent[i+1].high &&
+      direction:"WAIT",
+      strength:0
 
-recent[i].high >=
-recent[i-2].high &&
+    };
 
-recent[i].high >=
-recent[i+2].high
+  }
 
+
+  const c=
+    bars.map(
+      b=>b.close
+    );
+
+
+  const now=
+    c[c.length-1];
+
+
+  const old=
+    c[c.length-6];
+
+
+  const diff=
+    now-old;
+
+
+  if(
+    diff>0
+  ){
+
+    return{
+
+      direction:"BUY",
+      strength:diff
+
+    };
+
+  }
+
+
+  if(
+    diff<0
+  ){
+
+    return{
+
+      direction:"SELL",
+      strength:Math.abs(diff)
+
+    };
+
+  }
+
+
+  return{
+
+    direction:"WAIT",
+    strength:0
+
+  };
+
+}
+
+
+/* =========================================================
+   TIMEFRAME ANALYSIS
+   ========================================================= */
+
+function analyzeTF(
+  bars
 ){
 
-highs.push(
-recent[i].high
-);
+  if(
+    !bars ||
+    bars.length<
+    60
+  ){
+
+    return{
+
+      direction:"WAIT",
+      score:0,
+      ema20:null,
+      ema50:null,
+      atr:null,
+      rsi:null,
+      macd:null,
+      structure:null,
+      candle:null,
+      impulse:null
+
+    };
+
+  }
+
+
+  const closes=
+    bars.map(
+      b=>b.close
+    );
+
+
+  const last=
+    closes[
+      closes.length-1
+    ];
+
+
+  const e20=
+    ema(
+      closes,
+      20
+    );
+
+
+  const e50=
+    ema(
+      closes,
+      50
+    );
+
+
+  const a=
+    atr(
+      bars,
+      14
+    );
+
+
+  const r=
+    rsi(
+      closes,
+      14
+    );
+
+
+  const m=
+    macd(
+      closes
+    );
+
+
+  const st=
+    structure(
+      bars
+    );
+
+
+  const cp=
+    candlePower(
+      bars
+    );
+
+
+  const im=
+    impulse(
+      bars
+    );
+
+
+  let score=0;
+
+
+  if(
+    e20!==null &&
+    e50!==null
+  ){
+
+    if(
+      last>e20 &&
+      e20>e50
+    ){
+
+      score+=2;
+
+    }
+
+
+    if(
+      last<e20 &&
+      e20<e50
+    ){
+
+      score-=2;
+
+    }
+
+  }
+
+
+  if(
+    r!==null
+  ){
+
+    if(r>55){
+
+      score++;
+
+    }
+
+
+    if(r<45){
+
+      score--;
+
+    }
+
+  }
+
+
+  if(
+    m.hist!==null
+  ){
+
+    if(
+      m.hist>0
+    ){
+
+      score++;
+
+    }
+
+
+    if(
+      m.hist<0
+    ){
+
+      score--;
+
+    }
+
+  }
+
+
+  if(
+    st.direction==="BUY"
+  ){
+
+    score+=2;
+
+  }
+
+
+  if(
+    st.direction==="SELL"
+  ){
+
+    score-=2;
+
+  }
+
+
+  if(
+    cp.power>=0.55
+  ){
+
+    if(
+      cp.direction==="BUY"
+    ){
+
+      score++;
+
+    }
+
+
+    if(
+      cp.direction==="SELL"
+    ){
+
+      score--;
+
+    }
+
+  }
+
+
+  if(
+    im.direction==="BUY"
+  ){
+
+    score++;
+
+  }
+
+
+  if(
+    im.direction==="SELL"
+  ){
+
+    score--;
+
+  }
+
+
+  let direction=
+    "WAIT";
+
+
+  if(score>=3){
+
+    direction="BUY";
+
+  }
+
+
+  if(score<=-3){
+
+    direction="SELL";
+
+  }
+
+
+  return{
+
+    direction,
+    score,
+    ema20:e20,
+    ema50:e50,
+    atr:a,
+    rsi:r,
+    macd:m,
+    structure:st,
+    candle:cp,
+    impulse:im
+
+  };
 
 }
 
 
-if(
-
-recent[i].low <
-recent[i-1].low &&
-
-recent[i].low <
-recent[i+1].low &&
-
-recent[i].low <=
-recent[i-2].low &&
-
-recent[i].low <=
-recent[i+2].low
-
-){
-
-lows.push(
-recent[i].low
-);
-
-}
-
-}
-
-
-let direction=0;
-
-let text="RANGE";
-
-
-if(
-highs.length>=2 &&
-lows.length>=2
-){
-
-const hh =
-highs[highs.length-1] >
-highs[highs.length-2];
-
-
-const hl =
-lows[lows.length-1] >
-lows[lows.length-2];
-
-
-const lh =
-highs[highs.length-1] <
-highs[highs.length-2];
-
-
-const ll =
-lows[lows.length-1] <
-lows[lows.length-2];
-
-
-if(hh && hl){
-
-direction=1;
-
-text="HH / HL";
-
-
-}else if(lh && ll){
-
-direction=-1;
-
-text="LH / LL";
-
-
-}else{
-
-text="MIXED";
-
-}
-
-}
-
-
-return {
-
-text,
-
-direction,
-
-highs,
-
-lows
-
-};
-
-}
-
-
-/* MOMENTUM */
-
-function candlePower(bars){
-
-if(bars.length<3)
-return 0;
-
-
-const bar =
-bars[bars.length-1];
-
-
-const range =
-bar.high-bar.low;
-
-
-if(range<=0)
-return 0;
-
-
-const body =
-Math.abs(
-bar.close-bar.open
-);
-
-
-const ratio =
-body/range;
-
-
-if(bar.close>bar.open)
-return ratio;
-
-
-if(bar.close<bar.open)
-return -ratio;
-
-
-return 0;
-
-}
-
-
-function impulse(bars){
-
-if(bars.length<8)
-return 0;
-
-
-const current =
-bars[bars.length-1].close;
-
-
-const previous =
-bars[bars.length-6].close;
-
-
-if(current>previous)
-return 1;
-
-
-if(current<previous)
-return -1;
-
-
-return 0;
-
-}
-
-
-/* TIMEFRAME */
-
-function analyzeTF(bars){
-
-if(bars.length<60){
-
-return {
-
-signal:"WAIT",
-
-score:0,
-
-rsi:50,
-
-atr:0,
-
-structure:"UNKNOWN",
-
-direction:0,
-
-impulse:0,
-
-candle:0,
-
-ema20:null,
-
-ema50:null,
-
-macd:0
-
-};
-
-}
-
-
-const closes =
-bars.map(
-x=>x.close
-);
-
-
-const e20 =
-ema(closes,20);
-
-
-const e50 =
-ema(closes,50);
-
-
-const rr =
-rsi(bars);
-
-
-const aa =
-atr(bars);
-
-
-const st =
-structure(bars);
-
-
-const im =
-impulse(bars);
-
-
-const cp =
-candlePower(bars);
-
-
-const mm =
-macd(bars);
-
-
-let score=0;
-
-
-if(e20>e50)
-score+=1;
-
-if(e20<e50)
-score-=1;
-
-
-if(rr>55)
-score+=1;
-
-if(rr<45)
-score-=1;
-
-
-if(st.direction>0)
-score+=2;
-
-if(st.direction<0)
-score-=2;
-
-
-if(im>0)
-score+=1;
-
-if(im<0)
-score-=1;
-
-
-if(cp>0.55)
-score+=1;
-
-if(cp<-0.55)
-score-=1;
-
-
-if(mm>0)
-score+=1;
-
-if(mm<0)
-score-=1;
-
-
-const threshold = {
-
-1:2,
-
-2:3,
-
-3:4,
-
-4:5
-
-}[level] || 4;
-
-
-let signal="WAIT";
-
-
-if(score>=threshold)
-signal="BUY";
-
-
-if(score<=-threshold)
-signal="SELL";
-
-
-return {
-
-signal,
-
-score,
-
-rsi:rr,
-
-atr:aa,
-
-structure:st.text,
-
-direction:st.direction,
-
-impulse:im,
-
-candle:cp,
-
-ema20:e20,
-
-ema50:e50,
-
-macd:mm
-
-};
-
-}
-
-
-/* MACRO */
+/* =========================================================
+   MACRO
+   ========================================================= */
 
 async function loadMacro(){
 
-try{
+  try{
 
-const json =
-await fetchJSON(
-"https://biquote.io/api/calendar/upcoming?countries=US&importance=high"
-);
+    const url=
+      "https://biquote.io/api/calendar/upcoming?countries=US&importance=high";
 
 
-let events=[];
+    const j=
+      await fetchJSON(
+        url,
+        10000
+      );
 
 
-if(Array.isArray(json)){
+    let events=[];
 
-events=json;
 
-}else if(
-Array.isArray(json.events)
-){
+    if(
+      Array.isArray(j)
+    ){
 
-events=json.events;
+      events=j;
 
-}else if(
-Array.isArray(json.data)
-){
+    }else if(
+      Array.isArray(j.events)
+    ){
 
-events=json.data;
+      events=j.events;
+
+    }else if(
+      Array.isArray(j.data)
+    ){
+
+      events=j.data;
+
+    }
+
+
+    events=
+      events
+        .map(e=>{
+
+          const time=
+            e.timestamp ??
+            e.time ??
+            e.date;
+
+
+          return{
+
+            name:
+              e.name ||
+              "US event",
+
+            time:
+              new Date(time)
+                .getTime(),
+
+            actual:
+              Number(e.actual),
+
+            forecast:
+              Number(e.forecast),
+
+            previous:
+              Number(e.previous),
+
+            importance:
+              e.importance
+
+          };
+
+        })
+        .filter(
+          e=>
+            Number.isFinite(
+              e.time
+            )
+        )
+        .sort(
+          (a,b)=>
+            a.time-b.time
+        );
+
+
+    const now=
+      Date.now();
+
+
+    const future=
+      events.filter(
+        e=>e.time>=now
+      );
+
+
+    let score=0;
+
+
+    /*
+      Macro is deliberately conservative.
+      Unknown / not-yet-released data does not create
+      an aggressive directional bias.
+    */
+
+    for(
+      const e of future.slice(0,5)
+    ){
+
+      if(
+        e.forecast===e.forecast &&
+        e.actual===e.actual
+      ){
+
+        if(
+          e.actual>
+          e.forecast
+        ){
+
+          score-=1;
+
+        }
+
+
+        if(
+          e.actual<
+          e.forecast
+        ){
+
+          score+=1;
+
+        }
+
+      }
+
+    }
+
+
+    macro.score=
+      Math.max(
+        -3,
+        Math.min(
+          3,
+          score
+        )
+      );
+
+
+    if(
+      macro.score>=2
+    ){
+
+      macro.bias=
+        "BULLISH GOLD";
+
+    }else if(
+      macro.score<=-2
+    ){
+
+      macro.bias=
+        "BEARISH GOLD";
+
+    }else{
+
+      macro.bias=
+        "NEUTRAL";
+
+    }
+
+
+    const next=
+      future[0];
+
+
+    if(next){
+
+      macro.next=
+        next.name+
+        " — "+
+        new Date(
+          next.time
+        ).toLocaleString();
+
+    }else{
+
+      macro.next=
+        "Brak nadchodzacych wydarzen US.";
+
+    }
+
+
+    const soon=
+      future.find(
+        e=>
+          e.time-now<
+          60*60*1000
+      );
+
+
+    macro.risk=
+      soon
+        ? "HIGH"
+        : "LOW";
+
+
+    renderMacro();
+
+
+    log(
+      "Macro zaladowane: "+
+      macro.bias+
+      " / "+
+      macro.risk
+    );
+
+
+  }catch(e){
+
+    macro.risk=
+      "UNKNOWN";
+
+
+    macro.bias=
+      "NEUTRAL";
+
+
+    macro.next=
+      "Macro error: "+
+      e.message;
+
+
+    renderMacro();
+
+
+    log(
+      "Macro error: "+
+      e.message
+    );
+
+  }
 
 }
 
 
-events =
-events
-.map(event=>({
+function renderMacro(){
 
-name:
-event.name ||
-"US event",
-
-time:
-new Date(
-event.timestamp ??
-event.time ??
-event.date
-).getTime(),
-
-actual:
-Number(event.actual),
-
-forecast:
-Number(event.forecast)
-
-}))
-.filter(
-event=>Number.isFinite(event.time)
-);
+  $("macroBias").textContent=
+    macro.bias;
 
 
-const now =
-Date.now();
+  $("macroRisk").textContent=
+    macro.risk;
 
 
-const future =
-events
-.filter(
-event=>event.time>now
-)
-.sort(
-(a,b)=>a.time-b.time
-);
+  $("macroRisk").className=
+    "value "+
+    (
+      macro.risk==="HIGH"
+        ? "redText"
+        : macro.risk==="LOW"
+          ? "greenText"
+          : "yellowText"
+    );
 
 
-if(future.length){
-
-$("nextEvent").textContent =
-future[0].name;
-
-
-const minutes =
-(
-future[0].time-now
-)/60000;
-
-
-macro.risk =
-minutes<=60
-?
-"HIGH"
-:
-minutes<=180
-?
-"MEDIUM"
-:
-"LOW";
-
-
-}else{
-
-$("nextEvent").textContent =
-"Brak";
-
-macro.risk="LOW";
+  $("macroNext").textContent=
+    macro.next;
 
 }
 
 
-let score=0;
-
-
-for(
-const event of events
-){
-
-if(
-!Number.isFinite(event.actual) ||
-!Number.isFinite(event.forecast)
-){
-
-continue;
-
-}
-
-
-const difference =
-event.actual -
-event.forecast;
-
-
-if(
-Math.abs(difference)<0.000001
-){
-
-continue;
-
-}
-
-
-/*
-Stronger US data:
-pressure on gold.
-
-Weaker US data:
-support for gold.
-*/
-
-if(difference>0)
-score-=0.5;
-
-if(difference<0)
-score+=0.5;
-
-}
-
-
-score =
-Math.max(
--3,
-Math.min(3,score)
-);
-
-
-macro.score =
-score;
-
-
-if(score>0.5){
-
-macro.bias =
-"GOLD BULLISH";
-
-}else if(score<-0.5){
-
-macro.bias =
-"GOLD BEARISH";
-
-}else{
-
-macro.bias =
-"NEUTRAL";
-
-}
-
-
-$("macroBias").textContent =
-macro.bias;
-
-
-$("macroScore").textContent =
-score.toFixed(1);
-
-
-$("newsRisk").textContent =
-macro.risk;
-
-
-}catch(error){
-
-log(
-"Macro: "+error.message
-);
-
-}
-
-}
-
-
-/* COMPLETE ANALYSIS */
+/* =========================================================
+   COMPLETE ANALYSIS
+   ========================================================= */
 
 function analyzeAll(){
 
-const a5 =
-analyzeTF(data.M5);
+  const a5=
+    analyzeTF(
+      data.M5
+    );
 
 
-const a15 =
-analyzeTF(data.M15);
+  const a15=
+    analyzeTF(
+      data.M15
+    );
 
 
-const a30 =
-analyzeTF(data.M30);
+  const a30=
+    analyzeTF(
+      data.M30
+    );
 
 
-const a1 =
-analyzeTF(data.H1);
+  const a1=
+    analyzeTF(
+      data.H1
+    );
 
 
-if(
+  let score=
+    a5.score+
+    a15.score+
+    a30.score+
+    a1.score;
 
-data.M5.length<60 ||
-data.M15.length<60 ||
-data.M30.length<60 ||
-data.H1.length<60
 
+  /*
+    Higher timeframe gets additional importance.
+  */
+
+  if(
+    a1.direction==="BUY"
+  ){
+
+    score+=2;
+
+  }
+
+
+  if(
+    a1.direction==="SELL"
+  ){
+
+    score-=2;
+
+  }
+
+
+  if(
+    a30.direction==="BUY"
+  ){
+
+    score+=1;
+
+  }
+
+
+  if(
+    a30.direction==="SELL"
+  ){
+
+    score-=1;
+
+  }
+
+
+  /*
+    Macro filter.
+  */
+
+  if(
+    macro.bias==="BULLISH GOLD"
+  ){
+
+    score+=1;
+
+  }
+
+
+  if(
+    macro.bias==="BEARISH GOLD"
+  ){
+
+    score-=1;
+
+  }
+
+
+  let signal=
+    "WAIT";
+
+
+  const threshold=
+    level===1
+      ? 5
+      : level===2
+        ? 7
+        : level===3
+          ? 9
+          : 10;
+
+
+  if(
+    score>=threshold
+  ){
+
+    signal=
+      "BUY";
+
+  }
+
+
+  if(
+    score<=-threshold
+  ){
+
+    signal=
+      "SELL";
+
+  }
+
+
+  /*
+    PRO level:
+    high-impact US event risk blocks new entries.
+  */
+
+  if(
+    level>=4 &&
+    macro.risk==="HIGH"
+  ){
+
+    signal=
+      "WAIT";
+
+  }
+
+
+  const allAtr=[
+    a5.atr,
+    a15.atr,
+    a30.atr,
+    a1.atr
+  ]
+  .filter(
+    x=>
+      Number.isFinite(x)
+  );
+
+
+  const avgAtr=
+    allAtr.length
+      ? allAtr.reduce(
+          (a,b)=>
+            a+b,
+          0
+        )/
+        allAtr.length
+      : 2;
+
+
+  let entry=
+    live.mid;
+
+
+  if(
+    signal==="BUY"
+  ){
+
+    entry=
+      live.ask ||
+      live.mid;
+
+  }
+
+
+  if(
+    signal==="SELL"
+  ){
+
+    entry=
+      live.bid ||
+      live.mid;
+
+  }
+
+
+  if(
+    !Number.isFinite(
+      entry
+    )
+  ){
+
+    entry=null;
+
+  }
+
+
+  let sl=null;
+  let tp=null;
+  let tp1=null;
+  let tp2=null;
+  let tp3=null;
+
+
+  if(
+    entry!==null &&
+    signal!=="WAIT"
+  ){
+
+    /*
+      Structure + ATR based protection.
+      Not a fixed dollar stop.
+    */
+
+    const recent5=
+      data.M5
+        .slice(-12);
+
+
+    if(
+      recent5.length
+    ){
+
+      const lows=
+        recent5.map(
+          b=>b.low
+        );
+
+
+      const highs=
+        recent5.map(
+          b=>b.high
+        );
+
+
+      const structuralLow=
+        Math.min(...lows);
+
+
+      const structuralHigh=
+        Math.max(...highs);
+
+
+      if(
+        signal==="BUY"
+      ){
+
+        sl=
+          Math.min(
+            structuralLow,
+            entry-
+            avgAtr*1.2
+          );
+
+      }else{
+
+        sl=
+          Math.max(
+            structuralHigh,
+            entry+
+            avgAtr*1.2
+          );
+
+      }
+
+    }else{
+
+      if(
+        signal==="BUY"
+      ){
+
+        sl=
+          entry-
+          avgAtr*1.5;
+
+      }else{
+
+        sl=
+          entry+
+          avgAtr*1.5;
+
+      }
+
+    }
+
+
+    /*
+      Dynamic TP.
+      No fixed R:R.
+    */
+
+    const tpDistance=
+      Math.max(
+        avgAtr*1.8,
+        0.15
+      );
+
+
+    if(
+      signal==="BUY"
+    ){
+
+      tp=
+        entry+
+        tpDistance;
+
+    }else{
+
+      tp=
+        entry-
+        tpDistance;
+
+    }
+
+
+    /*
+      3 TP mode.
+    */
+
+    if(
+      signal==="BUY"
+    ){
+
+      tp1=
+        entry+
+        Math.max(
+          avgAtr*0.9,
+          0.15
+        );
+
+
+      tp2=
+        entry+
+        Math.max(
+          avgAtr*1.4,
+          0.15
+        );
+
+
+      tp3=
+        entry+
+        Math.max(
+          avgAtr*2.1,
+          0.15
+        );
+
+    }else{
+
+      tp1=
+        entry-
+        Math.max(
+          avgAtr*0.9,
+          0.15
+        );
+
+
+      tp2=
+        entry-
+        Math.max(
+          avgAtr*1.4,
+          0.15
+        );
+
+
+      tp3=
+        entry-
+        Math.max(
+          avgAtr*2.1,
+          0.15
+        );
+
+    }
+
+  }
+
+
+  analysis={
+
+    signal,
+    score,
+    threshold,
+
+    entry,
+    sl,
+    tp,
+
+    tp1,
+    tp2,
+    tp3,
+
+    avgAtr,
+
+    M5:a5,
+    M15:a15,
+    M30:a30,
+    H1:a1,
+
+    time:
+      Date.now(),
+
+    reason:
+      buildReason(
+        signal,
+        score,
+        threshold,
+        a5,
+        a15,
+        a30,
+        a1
+      )
+
+  };
+
+
+  renderAnalysis();
+
+
+  return analysis;
+
+}
+
+
+/* =========================================================
+   REASON
+   ========================================================= */
+
+function buildReason(
+  signal,
+  score,
+  threshold,
+  a5,
+  a15,
+  a30,
+  a1
 ){
 
-$("signal").textContent =
-"WAIT";
+  if(
+    signal==="WAIT"
+  ){
+
+    return(
+      "WAIT — score "+
+      score+
+      " / wymagane "+
+      threshold+
+      ". "+
+      "M5 "+
+      a5.direction+
+      ", M15 "+
+      a15.direction+
+      ", M30 "+
+      a30.direction+
+      ", H1 "+
+      a1.direction+
+      "."
+    );
+
+  }
 
 
-$("signal").className =
-"signal-main wait";
-
-
-$("signalReason").textContent =
-"Oczekiwanie na komplet danych M5/M15/M30/H1";
-
-
-return;
+  return(
+    signal+
+    " — score "+
+    score+
+    " / "+
+    threshold+
+    ". "+
+    "M5 "+
+    a5.direction+
+    ", M15 "+
+    a15.direction+
+    ", M30 "+
+    a30.direction+
+    ", H1 "+
+    a1.direction+
+    "."
+  );
 
 }
 
 
-$("m5").textContent =
-a5.signal;
+/* =========================================================
+   RENDER ANALYSIS
+   ========================================================= */
 
-$("m15").textContent =
-a15.signal;
+function renderAnalysis(){
 
-$("m30").textContent =
-a30.signal;
+  if(!analysis){
 
-$("h1").textContent =
-a1.signal;
+    return;
 
-
-$("m5").className =
-sideClass(a5.signal);
-
-$("m15").className =
-sideClass(a15.signal);
-
-$("m30").className =
-sideClass(a30.signal);
-
-$("h1").className =
-sideClass(a1.signal);
+  }
 
 
-$("m5detail").textContent =
-`RSI ${fmt(a5.rsi,1)} - ${a5.structure}`;
-
-$("m15detail").textContent =
-`RSI ${fmt(a15.rsi,1)} - ${a15.structure}`;
-
-$("m30detail").textContent =
-`RSI ${fmt(a30.rsi,1)} - ${a30.structure}`;
-
-$("h1detail").textContent =
-`RSI ${fmt(a1.rsi,1)} - ${a1.structure}`;
+  const s=
+    analysis.signal;
 
 
-$("structure").textContent =
-a1.structure;
+  $("signal").textContent=
+    s;
 
 
-$("atr").textContent =
-fmt(a15.atr);
+  $("signal").className=
+    "signal-main "+
+    sideClass(s);
 
 
-$("impulse").textContent =
-a5.impulse>0
-?
-"BULLISH"
-:
-a5.impulse<0
-?
-"BEARISH"
-:
-"NEUTRAL";
+  $("score").textContent=
+    analysis.score;
 
 
-/*
-H1 = context
-M30 = setup
-M15 = confirmation
-M5 = timing
-*/
-
-let total=0;
+  $("signalReason").textContent=
+    analysis.reason;
 
 
-total +=
-a1.score*1.5;
+  renderTf(
+    "tfM5",
+    analysis.M5.direction
+  );
 
 
-total +=
-a30.score*1.4;
+  renderTf(
+    "tfM15",
+    analysis.M15.direction
+  );
 
 
-total +=
-a15.score*1.2;
+  renderTf(
+    "tfM30",
+    analysis.M30.direction
+  );
 
 
-total +=
-a5.score*0.8;
+  renderTf(
+    "tfH1",
+    analysis.H1.direction
+  );
 
 
-total +=
-macro.score;
+  $("entry").textContent=
+    fmt(
+      analysis.entry
+    );
 
 
-/*
-Disagreement penalty.
-*/
+  $("sl").textContent=
+    fmt(
+      analysis.sl
+    );
 
-if(
-a1.signal==="BUY" &&
-a15.signal==="SELL"
+
+  $("tp").textContent=
+    fmt(
+      analysis.tp
+    );
+
+
+  $("tp1").textContent=
+    fmt(
+      analysis.tp1
+    );
+
+
+  $("tp2").textContent=
+    fmt(
+      analysis.tp2
+    );
+
+
+  $("tp3").textContent=
+    fmt(
+      analysis.tp3
+    );
+
+
+  renderTpMode();
+
+}
+
+
+function renderTf(
+  id,
+  dir
 ){
 
-total-=2;
+  const el=$(id);
+
+  el.textContent=
+    dir;
+
+
+  el.className=
+    "dir "+
+    sideClass(dir);
 
 }
 
 
-if(
-a1.signal==="SELL" &&
-a15.signal==="BUY"
-){
+/* =========================================================
+   LEVEL
+   ========================================================= */
 
-total+=2;
+function setLevel(v){
 
-}
-
-
-const threshold = {
-
-1:5,
-
-2:7,
-
-3:9,
-
-4:11
-
-}[level] || 9;
+  level=
+    Number(v);
 
 
-let signal="WAIT";
+  localStorage.setItem(
+    "xau_ai_level",
+    String(level)
+  );
 
 
-if(total>=threshold)
-signal="BUY";
+  refreshLevelButtons();
 
 
-if(total<=-threshold)
-signal="SELL";
+  log(
+    "Poziom analizy: "+
+    level
+  );
 
 
-/*
-PRO blocks fresh entries
-near high impact event.
-*/
-
-if(
-level===4 &&
-macro.risk==="HIGH"
-){
-
-signal="WAIT";
+  analyzeAll();
 
 }
 
 
-const price =
-live.mid;
+function refreshLevelButtons(){
+
+  for(
+    let i=1;
+    i<=4;
+    i++
+  ){
+
+    const b=
+      $("level"+i);
 
 
-if(!Number.isFinite(price))
-return;
+    if(b){
+
+      b.classList.toggle(
+        "active",
+        level===i
+      );
+
+    }
+
+  }
 
 
-const aa =
-a15.atr ||
-a30.atr ||
-10;
+  const text={
+
+    1:
+      "FAST — szybszy filtr sygnalu.",
+
+    2:
+      "STANDARD — podstawowa analiza wielointerwalowa.",
+
+    3:
+      "ADVANCED — struktura, momentum, ATR i macro.",
+
+    4:
+      "PRO — dodatkowo blokada wejsc przy wysokim ryzyku US."
+
+  };
 
 
-let sl=null;
-
-let tp1=null;
-
-let tp2=null;
-
-let tp3=null;
-
-
-if(signal==="BUY"){
-
-sl =
-price-aa*1.35;
-
-tp1 =
-price+aa*0.9;
-
-tp2 =
-price+aa*1.55;
-
-tp3 =
-price+aa*2.2;
-
-}else if(signal==="SELL"){
-
-sl =
-price+aa*1.35;
-
-tp1 =
-price-aa*0.9;
-
-tp2 =
-price-aa*1.55;
-
-tp3 =
-price-aa*2.2;
+  $("levelText").textContent=
+    text[level] ||
+    text[3];
 
 }
 
 
-let reason =
-signal==="BUY"
-?
-"MULTI-TF BULLISH"
-:
-signal==="SELL"
-?
-"MULTI-TF BEARISH"
-:
-"BRAK WYSTARCZAJACEGO POTWIERDZENIA";
-
-
-analysis = {
-
-signal,
-
-score:total,
-
-entry:price,
-
-sl,
-
-tp1,
-
-tp2,
-
-tp3,
-
-atr:aa,
-
-M5:a5,
-
-M15:a15,
-
-M30:a30,
-
-H1:a1,
-
-macro:{
-...macro
-},
-
-reason,
-
-time:Date.now()
-
-};
-
-
-updateSignalMemory();
-
-renderAnalysis();
-
-automaticEntryCheck();
-
-updateRunner();
-
-}
-
-
-/* SIGNAL MEMORY */
-
-function updateSignalMemory(){
-
-if(
-!analysis ||
-analysis.signal==="WAIT"
-){
-
-signalMemory = {
-last:null,
-count:0
-};
-
-
-$("entryWait").textContent =
-"Brak wystarczajacego sygnalu.";
-
-
-return;
-
-}
-
-
-if(
-signalMemory.last===
-analysis.signal
-){
-
-signalMemory.count++;
-
-}else{
-
-signalMemory.last =
-analysis.signal;
-
-signalMemory.count=1;
-
-}
-
-
-$("entryWait").textContent =
-`${analysis.signal} - potwierdzenia ${signalMemory.count}/2`;
-
-}
-
-
-/* TP MODE */
+/* =========================================================
+   TP MODE
+   ========================================================= */
 
 function getTpMode(){
 
-return (
-$("tpMode").value ||
-localStorage.getItem("xau_ai_tp_mode") ||
-"3TP"
-);
+  return tpMode;
+
+}
+
+
+function setTpMode(mode){
+
+  tpMode=
+    mode==="ONE"
+      ? "ONE"
+      : "THREE";
+
+
+  localStorage.setItem(
+    "xau_ai_tp_mode",
+    tpMode
+  );
+
+
+  renderTpMode();
+
+
+  if(analysis){
+
+    renderAnalysis();
+
+  }
+
+
+  log(
+    tpMode==="ONE"
+      ? "TP MODE: 1 TP — cala pozycja"
+      : "TP MODE: 3 TP + RUNNER"
+  );
 
 }
 
 
 function renderTpMode(){
 
-const one =
-getTpMode()==="1TP";
+  const one=
+    $("tpMode1");
 
 
-$("tpMode").value =
-one
-?
-"1TP"
-:
-"3TP";
+  const three=
+    $("tpMode3");
 
 
-["tp1","tp2"].forEach(
-id=>{
+  if(one){
 
-$(id)
-.parentElement
-.style.display =
-one
-?
-"none"
-:
-"";
+    one.classList.toggle(
+      "active",
+      tpMode==="ONE"
+    );
 
-});
+  }
 
 
-$("tp3Label").textContent =
-one
-?
-"TP"
-:
-"TP3";
+  if(three){
 
-}
+    three.classList.toggle(
+      "active",
+      tpMode==="THREE"
+    );
 
-
-/* RENDER ANALYSIS */
-
-function renderAnalysis(){
-
-if(!analysis)
-return;
+  }
 
 
-$("signal").textContent =
-analysis.signal;
-
-
-$("signal").className =
-"signal-main "+
-sideClass(
-analysis.signal
-);
-
-
-$("signalReason").textContent =
-`${analysis.reason} - score ${analysis.score.toFixed(1)}`;
-
-
-$("entry").textContent =
-fmt(analysis.entry);
-
-
-$("sl").textContent =
-fmt(analysis.sl);
-
-
-const one =
-getTpMode()==="1TP";
-
-
-$("tp1").textContent =
-one
-?
-"---"
-:
-fmt(analysis.tp1);
-
-
-$("tp2").textContent =
-one
-?
-"---"
-:
-fmt(analysis.tp2);
-
-
-$("tp3").textContent =
-fmt(analysis.tp3);
-
-
-$("score").textContent =
-analysis.score.toFixed(1);
-
-
-$("regime").textContent =
-analysis.atr>25
-?
-"HIGH VOL"
-:
-analysis.atr>12
-?
-"NORMAL"
-:
-"QUIET";
-
-
-renderTpMode();
+  $("tpModeText").textContent=
+    tpMode==="ONE"
+      ? "Jedno dynamiczne TP. 100% pozycji zamykane na TP."
+      : "TP1 zamyka 25%, TP2 zamyka 25%, pozostale 50% pracuje do TP3.";
 
 }
 
 
-/* P/L */
-
-function pnlFor(
-position,
-price,
-lot=position.remainingLot
-){
-
-if(
-!position ||
-!Number.isFinite(Number(price))
-){
-
-return 0;
-
-}
-
-
-const direction =
-position.side==="BUY"
-?
-1
-:
--1;
-
-
-const difference =
-(
-Number(price) -
-Number(position.entry)
-) *
-direction;
-
-
-return (
-difference *
-(
-Number(lot||0)/0.01
-)
-);
-
-}
-
-
-function totalTradePnl(
-position,
-price
-){
-
-return (
-Number(position.realized||0) +
-pnlFor(
-position,
-price,
-position.remainingLot
-)
-);
-
-}
-
-
-/* LOT */
+/* =========================================================
+   POSITION SIZE
+   ========================================================= */
 
 function getLot(){
 
-const raw =
-Number(
-$("lotInput").value ||
-0.04
-);
+  const n=
+    Number(
+      $("lot").value
+    );
 
 
-const lot =
-Math.min(
-1,
-Math.max(
-0.01,
-Number.isFinite(raw)
-?
-raw
-:
-0.04
-)
-);
+  if(
+    !Number.isFinite(n) ||
+    n<=0
+  ){
+
+    return 0.01;
+
+  }
 
 
-return Math.round(
-lot*100
-)/100;
+  return n;
 
 }
 
 
-/* ADVERSE */
+/* =========================================================
+   PNL
+   ========================================================= */
 
-function adverseMove(
-position,
-price
+function calcPnl(
+  side,
+  entry,
+  exit,
+  lot
 ){
 
-return position.side==="BUY"
-?
-Math.max(
-0,
-position.entry-price
-)
-:
-Math.max(
-0,
-price-position.entry
-);
+  /*
+    Approximate XAUUSD paper P/L.
+    For 1.00 lot, 1 USD price move = $100.
+  */
+
+  const diff=
+    side==="BUY"
+      ? exit-entry
+      : entry-exit;
+
+
+  return diff*
+    100*
+    lot;
 
 }
 
 
-/* FAILURE SCORE */
+/* =========================================================
+   OPEN PAPER POSITION
+   ========================================================= */
 
-function failureScore(
-position,
-price
+function openPaperPosition(
+  side,
+  reason="AUTO"
 ){
 
-if(!analysis)
-return 0;
+  if(
+    side!=="BUY" &&
+    side!=="SELL"
+  ){
+
+    return;
+
+  }
 
 
-const opposite =
-position.side==="BUY"
-?
-"SELL"
-:
-"BUY";
+  if(
+    runner.position
+  ){
+
+    log(
+      "Pozycja juz istnieje."
+    );
+
+    return;
+
+  }
 
 
-const a5 =
-analysis.M5;
+  if(
+    !analysis
+  ){
 
-const a15 =
-analysis.M15;
+    log(
+      "Brak analizy."
+    );
 
-const a30 =
-analysis.M30;
+    return;
 
-
-let score=0;
-
-
-if(a5.signal===opposite)
-score+=2;
+  }
 
 
-if(a15.signal===opposite)
-score+=2;
+  const entry=
+    side==="BUY"
+      ? live.ask
+      : live.bid;
 
 
-if(a30.signal===opposite)
-score+=1;
+  if(
+    !Number.isFinite(entry)
+  ){
+
+    log(
+      "Brak aktualnej ceny."
+    );
+
+    return;
+
+  }
 
 
-if(
-position.side==="BUY" &&
-a5.direction<0
-)
-score+=2;
+  const lot=
+    getLot();
 
 
-if(
-position.side==="SELL" &&
-a5.direction>0
-)
-score+=2;
+  let sl=
+    analysis.sl;
 
 
-if(
-position.side==="BUY" &&
-a15.direction<0
-)
-score+=2;
+  let tp=
+    analysis.tp;
 
 
-if(
-position.side==="SELL" &&
-a15.direction>0
-)
-score+=2;
+  let tp1=
+    analysis.tp1;
 
 
-if(
-position.side==="BUY" &&
-a5.impulse<0
-)
-score+=1;
+  let tp2=
+    analysis.tp2;
 
 
-if(
-position.side==="SELL" &&
-a5.impulse>0
-)
-score+=1;
+  let tp3=
+    analysis.tp3;
 
 
-if(
-position.side==="BUY" &&
-a15.impulse<0
-)
-score+=1;
+  /*
+    Recalculate levels from actual entry
+    if live price moved since analysis.
+  */
+
+  const atrNow=
+    Number(
+      analysis.avgAtr
+    ) ||
+    2;
 
 
-if(
-position.side==="SELL" &&
-a15.impulse>0
-)
-score+=1;
+  if(
+    side==="BUY"
+  ){
+
+    if(
+      !Number.isFinite(sl) ||
+      sl>=entry
+    ){
+
+      sl=
+        entry-
+        atrNow*1.2;
+
+    }
 
 
-const atrValue =
-Number(
-analysis.atr ||
-a15.atr ||
-0
-);
+    tp=
+      entry+
+      Math.max(
+        atrNow*1.8,
+        0.15
+      );
 
 
-const adverse =
-adverseMove(
-position,
-price
-);
+    tp1=
+      entry+
+      Math.max(
+        atrNow*0.9,
+        0.15
+      );
 
 
-if(
-atrValue>0 &&
-adverse>=atrValue*0.35
-)
-score+=1;
+    tp2=
+      entry+
+      Math.max(
+        atrNow*1.4,
+        0.15
+      );
 
 
-if(
-atrValue>0 &&
-adverse>=atrValue*0.60
-)
-score+=1;
+    tp3=
+      entry+
+      Math.max(
+        atrNow*2.1,
+        0.15
+      );
+
+  }else{
+
+    if(
+      !Number.isFinite(sl) ||
+      sl<=entry
+    ){
+
+      sl=
+        entry+
+        atrNow*1.2;
+
+    }
 
 
-return score;
+    tp=
+      entry-
+      Math.max(
+        atrNow*1.8,
+        0.15
+      );
+
+
+    tp1=
+      entry-
+      Math.max(
+        atrNow*0.9,
+        0.15
+      );
+
+
+    tp2=
+      entry-
+      Math.max(
+        atrNow*1.4,
+        0.15
+      );
+
+
+    tp3=
+      entry-
+      Math.max(
+        atrNow*2.1,
+        0.15
+      );
+
+  }
+
+
+  runner.position={
+
+    side,
+
+    entry,
+
+    sl,
+
+    tp,
+
+    tp1,
+    tp2,
+    tp3,
+
+    lot,
+
+    originalLot:
+      lot,
+
+    remainingLot:
+      lot,
+
+    realized:0,
+
+    peakPnl:0,
+
+    currentPnl:0,
+
+    tp1Hit:false,
+
+    tp2Hit:false,
+
+    tp3Hit:false,
+
+    openedAt:
+      Date.now(),
+
+    openReason:
+      reason,
+
+    entryTF:
+      "M5/M15/M30/H1",
+
+    atr:
+      atrNow
+
+  };
+
+
+  runner.realized=0;
+
+
+  saveRunner();
+
+
+  renderRunner();
+
+
+  log(
+    "OPEN "+
+    side+
+    " @ "+
+    fmt(entry)+
+    " lot "+
+    lot+
+    " / "+
+    reason
+  );
 
 }
 
 
-/* EARLY FAILURE LIMIT */
+/* =========================================================
+   REVERSAL SCORE
+   ========================================================= */
 
-function entryFailureLimit(
-position
+function reversalScore(
+  p
 ){
 
-const atrValue =
-Number(
-position.atrAtEntry ||
-analysis?.atr ||
-0
-);
+  if(!p){
+
+    return 0;
+
+  }
 
 
-const risk =
-Number(
-position.initialRiskPrice ||
-Math.abs(
-position.entry-position.sl
-) ||
-atrValue
-);
+  const opposite=
+    p.side==="BUY"
+      ? "SELL"
+      : "BUY";
 
 
-return Math.max(
-atrValue*0.45,
-risk*0.42
-);
-
-}
+  let rev=0;
 
 
-/* OPEN */
-
-function openPosition(
-side,
-reason="AUTO ENTRY"
-){
-
-if(
-runner.position ||
-!analysis ||
-!live.bid ||
-!live.ask
-){
-
-return;
-
-}
+  const tfs=[
+    analysis?.M5,
+    analysis?.M15,
+    analysis?.M30,
+    analysis?.H1
+  ]
+  .filter(Boolean);
 
 
-const one =
-getTpMode()==="1TP";
+  for(
+    const a of tfs
+  ){
+
+    if(
+      a.direction===
+      opposite
+    ){
+
+      rev++;
+
+    }
+
+  }
 
 
-const price =
-side==="BUY"
-?
-live.ask
-:
-live.bid;
+  if(
+    analysis?.M5?.structure?.direction===
+    opposite
+  ){
+
+    rev++;
+
+  }
 
 
-const lot =
-getLot();
+  if(
+    analysis?.M15?.structure?.direction===
+    opposite
+  ){
+
+    rev++;
+
+  }
 
 
-const sl =
-analysis.sl;
+  if(
+    analysis?.M5?.impulse?.direction===
+    opposite
+  ){
+
+    rev++;
+
+  }
 
 
-const tp =
-analysis.tp3;
+  if(
+    analysis?.M15?.impulse?.direction===
+    opposite
+  ){
+
+    rev++;
+
+  }
 
 
-if(
-!Number.isFinite(sl) ||
-!Number.isFinite(tp)
-){
-
-return;
-
-}
-
-
-runner.position = {
-
-id:Date.now(),
-
-side,
-
-lot,
-
-originalLot:lot,
-
-remainingLot:lot,
-
-entry:price,
-
-sl,
-
-tp1:analysis.tp1,
-
-tp2:analysis.tp2,
-
-tp3:analysis.tp3,
-
-tp,
-
-initialSl:sl,
-
-initialRiskPrice:
-Math.abs(price-sl),
-
-atrAtEntry:
-analysis.atr,
-
-realized:0,
-
-tp1Realized:0,
-
-tp2Realized:0,
-
-runnerRealized:0,
-
-partials:[],
-
-peakPnl:0,
-
-maxAdverseMove:0,
-
-maxDrawdownFromPeak:0,
-
-failureScore:0,
-
-openedAt:Date.now(),
-
-entryReason:reason,
-
-entryTF:
-`${analysis.M5.signal}/${analysis.M15.signal}/${analysis.M30.signal}/${analysis.H1.signal}`,
-
-mode:
-getTpMode(),
-
-tp1Done:false,
-
-tp2Done:false
-
-};
-
-
-saveRunner();
-
-log(
-`${side} OPEN ${price} lot ${lot}`
-);
-
-renderRunner();
+  return rev;
 
 }
 
 
-/* AUTO ENTRY */
-
-function automaticEntryCheck(){
-
-if(
-!runner.on ||
-runner.position ||
-!analysis ||
-analysis.signal==="WAIT" ||
-signalMemory.count<2 ||
-Date.now()<runner.cooldownUntil
-){
-
-return;
-
-}
-
-
-if(
-level===4 &&
-macro.risk==="HIGH"
-){
-
-return;
-
-}
-
-
-openPosition(
-analysis.signal,
-"AUTO ENTRY"
-);
-
-}
-
-
-/* PARTIAL CLOSE */
-
-function closePartial(
-position,
-lot,
-price,
-type
-){
-
-if(
-lot<=0 ||
-position.remainingLot<=0
-){
-
-return;
-
-}
-
-
-lot =
-Math.min(
-lot,
-position.remainingLot
-);
-
-
-const pnl =
-pnlFor(
-position,
-price,
-lot
-);
-
-
-position.remainingLot =
-Math.max(
-0,
-position.remainingLot-lot
-);
-
-
-position.realized +=
-pnl;
-
-
-if(type==="TP1")
-position.tp1Realized += pnl;
-
-
-if(type==="TP2")
-position.tp2Realized += pnl;
-
-
-if(type==="RUNNER")
-position.runnerRealized += pnl;
-
-
-position.partials.push({
-
-time:Date.now(),
-
-type,
-
-lot,
-
-price,
-
-pnl
-
-});
-
-
-if(type==="TP1")
-position.tp1Done=true;
-
-
-if(type==="TP2")
-position.tp2Done=true;
-
-}
-
-
-/* CLOSE */
-
-function closeRunner(
-reason="CLOSE"
-){
-
-const position =
-runner.position;
-
-
-if(!position)
-return;
-
-
-const price =
-position.side==="BUY"
-?
-live.bid
-:
-live.ask;
-
-
-if(!Number.isFinite(price))
-return;
-
-
-const remainingLot =
-position.remainingLot;
-
-
-const remainingPnl =
-pnlFor(
-position,
-price,
-remainingLot
-);
-
-
-const net =
-position.realized +
-remainingPnl;
-
-
-if(remainingLot>0){
-
-position.runnerRealized +=
-remainingPnl;
-
-
-position.partials.push({
-
-time:Date.now(),
-
-type:"RUNNER",
-
-lot:remainingLot,
-
-price,
-
-pnl:remainingPnl
-
-});
-
-}
-
-
-const record = {
-
-date:Date.now(),
-
-side:position.side,
-
-lot:position.originalLot,
-
-entry:position.entry,
-
-sl:position.initialSl,
-
-tp:position.tp,
-
-tp1Realized:
-position.tp1Realized,
-
-tp2Realized:
-position.tp2Realized,
-
-runnerRealized:
-position.runnerRealized,
-
-pnl:net,
-
-peakPnl:
-position.peakPnl,
-
-maxDrawdownFromPeak:
-position.maxDrawdownFromPeak,
-
-giveback:
-Math.max(
-0,
-position.peakPnl-net
-),
-
-reason,
-
-entryReason:
-position.entryReason,
-
-entrySnapshot:{
-
-M5:
-analysis?.M5 || {},
-
-M15:
-analysis?.M15 || {},
-
-M30:
-analysis?.M30 || {},
-
-H1:
-analysis?.H1 || {}
-
-},
-
-partials:
-position.partials
-
-};
-
-
-history.unshift(record);
-
-history =
-history.slice(0,200);
-
-
-runner.position=null;
-
-runner.realized=net;
-
-
-/*
-Short cooldown.
-A new signal can later
-override this logic.
-*/
-
-runner.cooldownUntil =
-Date.now()+60000;
-
-
-saveRunner();
-
-saveHistory();
-
-
-log(
-`${position.side} CLOSE ${price} NET ${money(net)} REASON ${reason}`
-);
-
-
-renderHistory();
-
-renderRunner();
-
-}
-
-
-/* RUNNER UPDATE */
+/* =========================================================
+   UPDATE RUNNER
+   ========================================================= */
 
 function updateRunner(){
 
-const position =
-runner.position;
+  const p=
+    runner.position;
 
 
-if(!position){
+  if(!p){
 
-renderRunner();
+    renderRunner();
 
-return;
+    return;
+
+  }
+
+
+  const price=
+    p.side==="BUY"
+      ? live.bid
+      : live.ask;
+
+
+  if(
+    !Number.isFinite(price)
+  ){
+
+    return;
+
+  }
+
+
+  const totalCurrent=
+    calcPnl(
+      p.side,
+      p.entry,
+      price,
+      p.remainingLot
+    );
+
+
+  p.currentPnl=
+    runner.realized+
+    totalCurrent;
+
+
+  if(
+    p.currentPnl>
+    p.peakPnl
+  ){
+
+    p.peakPnl=
+      p.currentPnl;
+
+  }
+
+
+  /*
+    ========================================================
+    1 TP MODE
+    ========================================================
+  */
+
+  if(
+    tpMode==="ONE"
+  ){
+
+    const hit=
+      p.side==="BUY"
+        ? price>=p.tp
+        : price<=p.tp;
+
+
+    if(hit){
+
+      closeRunner(
+        price,
+        "TP"
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  /*
+    ========================================================
+    3 TP MODE
+    ========================================================
+  */
+
+  if(
+    tpMode==="THREE"
+  ){
+
+    if(
+      !p.tp1Hit
+    ){
+
+      const hit=
+        p.side==="BUY"
+          ? price>=p.tp1
+          : price<=p.tp1;
+
+
+      if(hit){
+
+        const closeLot=
+          Math.min(
+            p.originalLot*0.25,
+            p.remainingLot
+          );
+
+
+        const partial=
+          calcPnl(
+            p.side,
+            p.entry,
+            price,
+            closeLot
+          );
+
+
+        p.remainingLot-=
+          closeLot;
+
+
+        runner.realized+=
+          partial;
+
+
+        p.tp1Hit=true;
+
+
+        /*
+          Move SL to entry.
+        */
+
+        p.sl=
+          p.side==="BUY"
+            ? p.entry+0.10
+            : p.entry-0.10;
+
+
+        log(
+          "TP1 HIT — partial "+
+          money(partial)+
+          " / SL moved to BE"
+        );
+
+
+        saveRunner();
+
+      }
+
+    }
+
+
+    if(
+      p.tp1Hit &&
+      !p.tp2Hit
+    ){
+
+      const hit=
+        p.side==="BUY"
+          ? price>=p.tp2
+          : price<=p.tp2;
+
+
+      if(hit){
+
+        const closeLot=
+          Math.min(
+            p.originalLot*0.25,
+            p.remainingLot
+          );
+
+
+        const partial=
+          calcPnl(
+            p.side,
+            p.entry,
+            price,
+            closeLot
+          );
+
+
+        p.remainingLot-=
+          closeLot;
+
+
+        runner.realized+=
+          partial;
+
+
+        p.tp2Hit=true;
+
+
+        /*
+          Move SL to TP1.
+        */
+
+        p.sl=
+          p.tp1;
+
+
+        log(
+          "TP2 HIT — partial "+
+          money(partial)+
+          " / SL moved to TP1"
+        );
+
+
+        saveRunner();
+
+      }
+
+    }
+
+
+    if(
+      p.tp2Hit
+    ){
+
+      const hit=
+        p.side==="BUY"
+          ? price>=p.tp3
+          : price<=p.tp3;
+
+
+      if(hit){
+
+        closeRunner(
+          price,
+          "TP3 RUNNER"
+        );
+
+        return;
+
+      }
+
+    }
+
+  }
+
+
+  /*
+    ========================================================
+    STRUCTURAL SL
+    ========================================================
+  */
+
+  const slHit=
+    p.side==="BUY"
+      ? price<=p.sl
+      : price>=p.sl;
+
+
+  if(slHit){
+
+    closeRunner(
+      price,
+      "STRUCTURAL SL"
+    );
+
+    return;
+
+  }
+
+
+  /*
+    ========================================================
+    EARLY FAILURE / REVERSAL EXIT
+    ========================================================
+  */
+
+  const rev=
+    reversalScore(
+      p
+    );
+
+
+  const peak=
+    p.peakPnl;
+
+
+  /*
+    Early trade:
+    We do not use a fixed dollar loss.
+    The loss tolerance scales with ATR and lot.
+  */
+
+  const atrRisk=
+    Math.max(
+      0.25,
+      Number(p.atr||2)
+    );
+
+
+  const lotFactor=
+    Math.max(
+      0.25,
+      p.originalLot/
+      0.04
+    );
+
+
+  const earlyLoss=
+    atrRisk*
+    100*
+    p.originalLot*
+    0.9;
+
+
+  /*
+    If the trade starts going wrong while
+    the opposite structure becomes strong,
+    exit earlier.
+  */
+
+  if(
+    peak<
+    5 &&
+    p.currentPnl<
+    -earlyLoss &&
+    rev>=4
+  ){
+
+    closeRunner(
+      price,
+      "EARLY FAILURE"
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Medium profit protection.
+  */
+
+  if(
+    peak>=5 &&
+    peak<20
+  ){
+
+    const floor=
+      peak-
+      Math.max(
+        3,
+        atrRisk*
+        100*
+        p.originalLot*
+        0.7
+      );
+
+
+    if(
+      rev>=5 &&
+      p.currentPnl<=floor
+    ){
+
+      closeRunner(
+        price,
+        "REVERSAL EXIT"
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  /*
+    Large profit:
+    dynamic giveback based on reversal strength.
+  */
+
+  if(
+    peak>=20
+  ){
+
+    let givebackPct=
+      0.30;
+
+
+    if(rev>=6){
+
+      givebackPct=
+        0.08;
+
+    }else if(
+      rev>=5
+    ){
+
+      givebackPct=
+        0.12;
+
+    }else if(
+      rev>=4
+    ){
+
+      givebackPct=
+        0.18;
+
+    }else if(
+      rev>=3
+    ){
+
+      givebackPct=
+        0.24;
+
+    }
+
+
+    const floor=
+      peak*
+      (1-givebackPct);
+
+
+    if(
+      rev>=3 &&
+      p.currentPnl<=floor
+    ){
+
+      closeRunner(
+        price,
+        "PROFIT PROTECTION"
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  renderRunner();
 
 }
 
 
-const price =
-position.side==="BUY"
-?
-live.bid
-:
-live.ask;
+/* =========================================================
+   CLOSE RUNNER
+   ========================================================= */
 
-
-if(!Number.isFinite(price))
-return;
-
-
-const current =
-totalTradePnl(
-position,
-price
-);
-
-
-const peak =
-Math.max(
-position.peakPnl || 0,
-current
-);
-
-
-position.peakPnl =
-peak;
-
-
-position.maxAdverseMove =
-Math.max(
-position.maxAdverseMove || 0,
-adverseMove(
-position,
-price
-)
-);
-
-
-position.maxDrawdownFromPeak =
-Math.max(
-position.maxDrawdownFromPeak,
-peak-current
-);
-
-
-const one =
-position.mode==="1TP";
-
-
-/* ONE TP */
-
-if(
-one &&
-(
-position.side==="BUY"
-?
-price>=position.tp
-:
-price<=position.tp
-)
+function closeRunner(
+  exitPrice,
+  reason
 ){
 
-closeRunner("TP");
-
-return;
-
-}
+  const p=
+    runner.position;
 
 
-/* TP1 */
+  if(!p){
 
-if(
-!one &&
-!position.tp1Done &&
-(
-position.side==="BUY"
-?
-price>=position.tp1
-:
-price<=position.tp1
-)
-){
+    return;
 
-closePartial(
-position,
-position.originalLot*0.25,
-price,
-"TP1"
-);
+  }
 
 
-/*
-Move SL close to break-even.
-*/
-
-position.sl =
-position.entry +
-(
-position.side==="BUY"
-?
-0.10
-:
--0.10
-);
+  const remainingPnl=
+    calcPnl(
+      p.side,
+      p.entry,
+      exitPrice,
+      p.remainingLot
+    );
 
 
-log(
-"TP1 - SL moved to BE"
-);
-
-}
-
-
-/* TP2 */
-
-if(
-!one &&
-!position.tp2Done &&
-(
-position.side==="BUY"
-?
-price>=position.tp2
-:
-price<=position.tp2
-)
-){
-
-closePartial(
-position,
-position.originalLot*0.25,
-price,
-"TP2"
-);
+  const totalPnl=
+    p.realized+
+    runner.realized+
+    remainingPnl;
 
 
-position.sl =
-position.tp1;
+  const duration=
+    Date.now()-
+    p.openedAt;
 
 
-log(
-"TP2 - SL moved to TP1"
-);
-
-}
-
-
-/* TP3 */
-
-if(
-!one &&
-(
-position.side==="BUY"
-?
-price>=position.tp3
-:
-price<=position.tp3
-)
-){
-
-closeRunner(
-"TP3 RUNNER"
-);
-
-return;
-
-}
+  const giveback=
+    Math.max(
+      0,
+      p.peakPnl-
+      totalPnl
+    );
 
 
-/* STRUCTURAL SL */
+  const record={
 
-if(
+    date:
+      new Date(
+        p.openedAt
+      ).toISOString(),
 
-position.side==="BUY"
-?
-price<=position.sl
-:
-price>=position.sl
+    closedAt:
+      new Date().toISOString(),
 
-){
+    side:
+      p.side,
 
-closeRunner(
-"STRUCTURAL SL"
-);
+    entry:
+      p.entry,
 
-return;
+    exit:
+      exitPrice,
 
-}
+    tp:
+      tpMode==="ONE"
+        ? p.tp
+        : p.tp3,
+
+    sl:
+      p.sl,
+
+    lot:
+      p.originalLot,
+
+    pnl:
+      totalPnl,
+
+    peakPnl:
+      p.peakPnl,
+
+    giveback,
+
+    reason,
+
+    entryTF:
+      p.entryTF,
+
+    tpMode,
+
+    duration
+
+  };
 
 
-/* EARLY FAILURE */
-
-const reversal =
-failureScore(
-position,
-price
-);
+  history.unshift(
+    record
+  );
 
 
-position.failureScore =
-reversal;
+  if(
+    history.length>100
+  ){
+
+    history=
+      history.slice(
+        0,
+        100
+      );
+
+  }
 
 
-const adverse =
-adverseMove(
-position,
-price
-);
+  saveHistory();
 
 
-const limit =
-entryFailureLimit(
-position
-);
+  log(
+    "CLOSE "+
+    p.side+
+    " @ "+
+    fmt(exitPrice)+
+    " NET "+
+    money(totalPnl)+
+    " / "+
+    reason
+  );
 
 
-if(
-adverse>=limit &&
-reversal>=5
-){
+  runner.position=
+    null;
 
-closeRunner(
-"EARLY FAILURE"
-);
 
-return;
+  runner.realized=
+    0;
+
+
+  runner.cooldownUntil=
+    Date.now()+
+    5*60*1000;
+
+
+  saveRunner();
+
+
+  renderRunner();
+
+
+  renderHistory();
 
 }
 
 
-/* DYNAMIC REVERSAL EXIT */
-
-if(position.peakPnl>0){
-
-const giveback =
-position.peakPnl-current;
-
-
-let fraction;
-
-
-if(position.peakPnl<5){
-
-fraction=0.35;
-
-}else if(position.peakPnl<20){
-
-fraction=0.45;
-
-}else{
-
-fraction=0.30;
-
-}
-
-
-if(
-reversal>=5 &&
-giveback>
-position.peakPnl*fraction &&
-current>0
-){
-
-closeRunner(
-"REVERSAL EXIT"
-);
-
-return;
-
-}
-
-}
-
-
-saveRunner();
-
-renderRunner();
-
-}
-
-
-/* RUNNER SWITCH */
-
-function toggleRunner(){
-
-runner.on =
-!runner.on;
-
-
-saveRunner();
-
-
-$("autoStatus").textContent =
-runner.on
-?
-"Runner ON"
-:
-"Runner OFF";
-
-
-log(
-runner.on
-?
-"Runner ON"
-:
-"Runner OFF"
-);
-
-
-if(runner.on)
-automaticEntryCheck();
-
-
-renderRunner();
-
-}
-
-
-/* TEST */
+/* =========================================================
+   TEST ENTRY
+   ========================================================= */
 
 function testEntry(){
 
-if(
-!analysis ||
-analysis.signal==="WAIT"
-){
+  if(!analysis){
 
-log(
-"TEST ENTRY: brak sygnalu"
-);
+    log(
+      "Brak analizy."
+    );
 
-return;
+    return;
+
+  }
+
+
+  if(
+    analysis.signal==="WAIT"
+  ){
+
+    log(
+      "TEST ENTRY zablokowany: WAIT."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    runner.position
+  ){
+
+    log(
+      "Pozycja juz istnieje."
+    );
+
+    return;
+
+  }
+
+
+  openPaperPosition(
+    analysis.signal,
+    "TEST ENTRY"
+  );
 
 }
 
 
-openPosition(
-analysis.signal,
-"TEST ENTRY"
-);
+/* =========================================================
+   RUNNER CONTROLS
+   ========================================================= */
+
+function toggleRunner(){
+
+  runner.on=
+    !runner.on;
+
+
+  if(
+    runner.on
+  ){
+
+    log(
+      "RUNNER ON — automatyczne wejscia AKTYWNE"
+    );
+
+
+    $("autoStatus").textContent=
+      "AUTO ENTRY AKTYWNE — system czeka na potwierdzony sygnal.";
+
+
+  }else{
+
+    log(
+      "RUNNER OFF"
+    );
+
+
+    $("autoStatus").textContent=
+      "Runner OFF";
+
+  }
+
+
+  saveRunner();
+
+
+  renderRunner();
 
 }
 
-
-/* RESET */
 
 function resetRunner(){
 
-runner = {
+  runner={
 
-on:false,
+    on:false,
+    position:null,
+    realized:0,
+    cooldownUntil:0
 
-position:null,
-
-realized:0,
-
-cooldownUntil:0
-
-};
+  };
 
 
-localStorage.removeItem(
-RUNNER_KEY
-);
+  signalMemory={
+
+    last:null,
+    count:0,
+    time:0
+
+  };
 
 
-renderRunner();
+  saveRunner();
 
 
-log(
-"Runner reset"
-);
+  renderRunner();
+
+
+  log(
+    "Runner zresetowany."
+  );
 
 }
 
 
-/* RENDER RUNNER */
+/* =========================================================
+   RENDER RUNNER
+   ========================================================= */
 
 function renderRunner(){
 
-const position =
-runner.position;
+  const box=
+    $("runnerBox");
 
 
-$("runnerStatus").textContent =
-runner.on
-?
-"ON"
-:
-"OFF";
+  if(!runner.position){
+
+    box.innerHTML=
+      `<div class="notice">
+        Brak aktywnej pozycji.
+      </div>`;
 
 
-$("runnerStatus").className =
-"runnerStatus "+
-(
-runner.on
-?
-"buy"
-:
-"wait"
-);
+  }else{
+
+    const p=
+      runner.position;
 
 
-$("runnerPosition").textContent =
-position
-?
-`${position.side} ${fmt(position.remainingLot,2)} lot @ ${fmt(position.entry)}`
-:
-"BRAK";
+    const pnl=
+      Number(
+        p.currentPnl||0
+      );
 
 
-if(
-position &&
-Number.isFinite(live.bid)
-){
-
-const price =
-position.side==="BUY"
-?
-live.bid
-:
-live.ask;
+    const pnlClass=
+      pnl>=0
+        ? "greenText"
+        : "redText";
 
 
-const total =
-totalTradePnl(
-position,
-price
-);
+    const mode=
+      tpMode==="ONE"
+        ? "1 TP"
+        : "3 TP + RUNNER";
 
 
-const giveback =
-Math.max(
-0,
-position.peakPnl-total
-);
+    box.innerHTML=
+      `
+
+      <div class="runnerPosition">
+
+        <div class="runnerHeader">
+
+          <div>
+
+            <div class="runnerTitle">
+              ${escapeHtml(p.side)}
+            </div>
+
+            <div class="small">
+              ${escapeHtml(mode)}
+            </div>
+
+          </div>
+
+          <div class="pnl ${pnlClass}">
+            ${money(pnl)}
+          </div>
+
+        </div>
 
 
-$("runnerRealized").textContent =
-money(position.realized);
+        <div class="stats">
+
+          <div class="stat">
+
+            <div class="label">
+              ENTRY
+            </div>
+
+            <div class="v">
+              ${fmt(p.entry)}
+            </div>
+
+          </div>
 
 
-$("runnerTotal").textContent =
-money(total);
+          <div class="stat">
+
+            <div class="label">
+              SL
+            </div>
+
+            <div class="v">
+              ${fmt(p.sl)}
+            </div>
+
+          </div>
 
 
-$("runnerPeak").textContent =
-money(position.peakPnl);
+          <div class="stat">
+
+            <div class="label">
+              TP
+            </div>
+
+            <div class="v">
+              ${
+                tpMode==="ONE"
+                  ? fmt(p.tp)
+                  : fmt(p.tp3)
+              }
+            </div>
+
+          </div>
 
 
-$("runnerGiveback").textContent =
-money(giveback);
+          <div class="stat">
+
+            <div class="label">
+              LOT
+            </div>
+
+            <div class="v">
+              ${fmt(p.remainingLot,2)}
+            </div>
+
+          </div>
+
+        </div>
 
 
-$("runnerProtection").textContent =
-`Failure ${position.failureScore} - adverse ${fmt(position.maxAdverseMove)} - DD ${money(position.maxDrawdownFromPeak)} - mode ${position.mode}`;
+        <div
+          class="small"
+          style="margin-top:9px"
+        >
 
-}else{
+          ${
+            tpMode==="THREE"
+              ? "TP1: "+
+                (p.tp1Hit
+                  ? "HIT"
+                  : fmt(p.tp1))+
+                " | TP2: "+
+                (p.tp2Hit
+                  ? "HIT"
+                  : fmt(p.tp2))+
+                " | TP3: "+
+                fmt(p.tp3)
+              : "Jedno TP: "+
+                fmt(p.tp)
+          }
 
-$("runnerRealized").textContent =
-money(runner.realized);
+        </div>
 
 
-$("runnerTotal").textContent =
-money(runner.realized);
+        <div
+          class="small"
+          style="margin-top:5px"
+        >
+
+          Peak:
+          ${money(p.peakPnl)}
+          &nbsp; | &nbsp;
+          Realized:
+          ${money(runner.realized)}
+
+        </div>
+
+      </div>
+
+      `;
+
+  }
 
 
-$("runnerPeak").textContent =
-"$0.00";
+  const toggle=
+    $("runnerToggle");
 
 
-$("runnerGiveback").textContent =
-"$0.00";
+  if(toggle){
+
+    toggle.textContent=
+      runner.on
+        ? "WYLACZ RUNNER"
+        : "WLACZ RUNNER";
 
 
-$("runnerProtection").textContent =
-"Brak aktywnej pozycji.";
+    toggle.classList.toggle(
+      "active",
+      runner.on
+    );
+
+  }
+
+
+  $("autoStatus").textContent=
+    runner.on
+      ? "AUTO ENTRY AKTYWNE — system czeka na potwierdzony sygnal."
+      : "Runner OFF";
 
 }
 
 
-$("autoStatus").textContent =
-runner.on
-?
-"Runner ON"
-:
-"Runner OFF";
-
-
-const one =
-position &&
-position.mode==="1TP";
-
-
-$("runnerHead").innerHTML =
-one
-?
-`
-<tr>
-<th>Side</th>
-<th>Lot</th>
-<th>Entry</th>
-<th>SL</th>
-<th>TP</th>
-<th>P/L</th>
-<th>Status</th>
-</tr>
-`
-:
-`
-<tr>
-<th>Side</th>
-<th>Lot</th>
-<th>Entry</th>
-<th>SL</th>
-<th>TP1</th>
-<th>TP2</th>
-<th>TP3</th>
-<th>P/L</th>
-<th>Status</th>
-</tr>
-`;
-
-
-if(!position){
-
-$("runnerTable").innerHTML="";
-
-return;
-
-}
-
-
-const price =
-position.side==="BUY"
-?
-live.bid
-:
-live.ask;
-
-
-const total =
-totalTradePnl(
-position,
-price
-);
-
-
-if(one){
-
-$("runnerTable").innerHTML =
-
-`
-<tr>
-
-<td class="${sideClass(position.side)}">
-${position.side}
-</td>
-
-<td>
-${fmt(position.originalLot)}
-</td>
-
-<td>
-${fmt(position.entry)}
-</td>
-
-<td>
-${fmt(position.sl)}
-</td>
-
-<td>
-${fmt(position.tp)}
-</td>
-
-<td class="${total>=0?"buy":"sell"}">
-${money(total)}
-</td>
-
-<td>
-OPEN
-</td>
-
-</tr>
-`;
-
-}else{
-
-$("runnerTable").innerHTML =
-
-`
-<tr>
-
-<td class="${sideClass(position.side)}">
-${position.side}
-</td>
-
-<td>
-${fmt(position.originalLot)}
-</td>
-
-<td>
-${fmt(position.entry)}
-</td>
-
-<td>
-${fmt(position.sl)}
-</td>
-
-<td>
-${fmt(position.tp1)}
-</td>
-
-<td>
-${fmt(position.tp2)}
-</td>
-
-<td>
-${fmt(position.tp3)}
-</td>
-
-<td class="${total>=0?"buy":"sell"}">
-${money(total)}
-</td>
-
-<td>
-OPEN
-</td>
-
-</tr>
-`;
-
-}
-
-}
-
-
-/* HISTORY */
+/* =========================================================
+   HISTORY
+   ========================================================= */
 
 function renderHistory(){
 
-const one =
-getTpMode()==="1TP";
+  const body=
+    $("historyBody");
 
 
-$("historyHead").innerHTML =
-one
-?
-`
-<tr>
-<th>Data</th>
-<th>Side</th>
-<th>Lot</th>
-<th>Entry</th>
-<th>TP</th>
-<th>NET</th>
-<th>Peak</th>
-<th>Max DD</th>
-<th>Giveback</th>
-<th>Reason</th>
-</tr>
-`
-:
-`
-<tr>
-<th>Data</th>
-<th>Side</th>
-<th>Lot</th>
-<th>Entry</th>
-<th>TP1</th>
-<th>TP2</th>
-<th>Runner</th>
-<th>NET</th>
-<th>Peak</th>
-<th>Max DD</th>
-<th>Giveback</th>
-<th>Reason</th>
-</tr>
-`;
+  if(!history.length){
+
+    body.innerHTML="";
 
 
-const closed =
-history.length;
+    $("historyStats").textContent=
+      "Brak transakcji.";
 
 
-const wins =
-history.filter(
-x=>Number(x.pnl)>0
-).length;
+    return;
+
+  }
 
 
-const losses =
-history.filter(
-x=>Number(x.pnl)<0
-).length;
+  let wins=0;
+  let losses=0;
+  let net=0;
 
 
-const net =
-history.reduce(
-(sum,x)=>
-sum+Number(x.pnl||0),
-0
-);
+  for(
+    const h of history
+  ){
+
+    const pnl=
+      Number(
+        h.pnl||0
+      );
 
 
-$("histClosed").textContent =
-closed;
+    net+=pnl;
 
 
-$("histWin").textContent =
-wins;
+    if(pnl>=0){
+
+      wins++;
+
+    }else{
+
+      losses++;
+
+    }
+
+  }
 
 
-$("histLoss").textContent =
-losses;
+  const total=
+    history.length;
 
 
-$("histRate").textContent =
-closed
-?
-(wins/closed*100).toFixed(1)+"%"
-:
-"0%";
+  $("historyStats").innerHTML=
+    `
+      Transakcje:
+      <b>${total}</b>
+      &nbsp; | &nbsp;
+      WIN:
+      <b class="greenText">${wins}</b>
+      &nbsp; | &nbsp;
+      LOSS:
+      <b class="redText">${losses}</b>
+      &nbsp; | &nbsp;
+      WIN RATE:
+      <b>${fmt(
+        total
+          ? wins/total*100
+          : 0,
+        1
+      )}%</b>
+      &nbsp; | &nbsp;
+      NET:
+      <b class="${
+        net>=0
+          ? "greenText"
+          : "redText"
+      }">${money(net)}</b>
+    `;
 
 
-$("histNet").textContent =
-money(net);
+  body.innerHTML=
+    history
+      .map(h=>{
+
+        const pnl=
+          Number(
+            h.pnl||0
+          );
 
 
-$("histAvg").textContent =
-money(
-closed
-?
-net/closed
-:
-0
-);
+        const pnlClass=
+          pnl>=0
+            ? "greenText"
+            : "redText";
 
 
-$("histMaxWin").textContent =
-money(
-closed
-?
-Math.max(
-0,
-...history.map(
-x=>Number(x.pnl||0)
-)
-)
-:
-0
-);
+        return`
 
+          <tr>
 
-$("histMaxLoss").textContent =
-money(
-closed
-?
-Math.min(
-0,
-...history.map(
-x=>Number(x.pnl||0)
-)
-)
-:
-0
-);
+            <td>
+              ${new Date(
+                h.date
+              ).toLocaleDateString()}
+            </td>
 
+            <td class="${
+              sideClass(h.side)
+            }">
+              ${h.side}
+            </td>
 
-$("histMaxPeak").textContent =
-money(
-closed
-?
-Math.max(
-0,
-...history.map(
-x=>Number(x.peakPnl||0)
-)
-)
-:
-0
-);
+            <td>
+              ${fmt(h.entry)}
+            </td>
 
+            <td>
+              ${fmt(h.exit)}
+            </td>
 
-$("histGiveback").textContent =
-money(
-closed
-?
-history.reduce(
-(sum,x)=>
-sum+Number(x.giveback||0),
-0
-)/closed
-:
-0
-);
+            <td class="${pnlClass}">
+              ${money(pnl)}
+            </td>
 
+            <td class="greenText">
+              ${money(
+                h.peakPnl
+              )}
+            </td>
 
-$("historyTable").innerHTML =
+            <td>
+              ${escapeHtml(
+                h.reason ||
+                ""
+              )}
+            </td>
 
-history
-.slice(0,100)
-.map(
-record=>{
+          </tr>
 
-const date =
-new Date(
-record.date
-)
-.toLocaleString(
-"pl-PL",
-{
-day:"2-digit",
-month:"2-digit",
-hour:"2-digit",
-minute:"2-digit"
-}
-);
+        `;
 
-
-const tp1 =
-Number(
-record.tp1Realized||0
-);
-
-
-const tp2 =
-Number(
-record.tp2Realized||0
-);
-
-
-const runnerPnl =
-Number(
-record.runnerRealized||0
-);
-
-
-const tf = [
-
-record.entrySnapshot?.M5?.signal || "?",
-
-record.entrySnapshot?.M15?.signal || "?",
-
-record.entrySnapshot?.M30?.signal || "?",
-
-record.entrySnapshot?.H1?.signal || "?"
-
-].join("/");
-
-
-if(one){
-
-return `
-
-<tr>
-
-<td>${date}</td>
-
-<td>${record.side}</td>
-
-<td>${fmt(record.lot)}</td>
-
-<td>${fmt(record.entry)}</td>
-
-<td>${fmt(record.tp)}</td>
-
-<td>${money(record.pnl)}</td>
-
-<td>${money(record.peakPnl)}</td>
-
-<td>${money(record.maxDrawdownFromPeak)}</td>
-
-<td>${money(record.giveback)}</td>
-
-<td>${escapeHtml(record.reason)}</td>
-
-</tr>
-
-`;
+      })
+      .join("");
 
 }
 
 
-return `
+/* =========================================================
+   AUTO ENTRY
+   ========================================================= */
 
-<tr>
+function automaticEntry(){
 
-<td>${date}</td>
+  if(!runner.on){
 
-<td>${record.side}</td>
+    return;
 
-<td>${fmt(record.lot)}</td>
+  }
 
-<td>${fmt(record.entry)}</td>
 
-<td>${money(tp1)}</td>
+  if(runner.position){
 
-<td>${money(tp2)}</td>
+    return;
 
-<td>${money(runnerPnl)}</td>
+  }
 
-<td>${money(record.pnl)}</td>
 
-<td>${money(record.peakPnl)}</td>
+  if(
+    Date.now()<
+    runner.cooldownUntil
+  ){
 
-<td>${money(record.maxDrawdownFromPeak)}</td>
+    return;
 
-<td>${money(record.giveback)}</td>
+  }
 
-<td>
-${escapeHtml(record.reason)}
-${tf}
-</td>
 
-</tr>
+  if(!analysis){
 
-`;
+    return;
+
+  }
+
+
+  const signal=
+    analysis.signal;
+
+
+  if(
+    signal!=="BUY" &&
+    signal!=="SELL"
+  ){
+
+    signalMemory.last=
+      null;
+
+    signalMemory.count=
+      0;
+
+    return;
+
+  }
+
+
+  if(
+    signal===
+    signalMemory.last
+  ){
+
+    signalMemory.count++;
+
+  }else{
+
+    signalMemory.last=
+      signal;
+
+    signalMemory.count=
+      1;
+
+  }
+
+
+  signalMemory.time=
+    Date.now();
+
+
+  /*
+    Two consecutive same-direction analysis cycles.
+  */
+
+  if(
+    signalMemory.count>=2
+  ){
+
+    openPaperPosition(
+      signal,
+      "AUTO ENTRY"
+    );
+
+
+    signalMemory.count=
+      0;
+
+  }
 
 }
 
-)
-.join("");
 
-}
+/* =========================================================
+   ANALYSIS LOOP
+   ========================================================= */
+
+let lastAnalysis=
+  0;
 
 
-/* LOOPS */
+let lastMacro=
+  0;
+
 
 async function analysisLoop(){
 
-const now =
-Date.now();
+  const now=
+    Date.now();
 
 
-if(
-now-lastAnalysis>=60000
-){
+  /*
+    Full analysis every 60 seconds.
+  */
 
-lastAnalysis =
-now;
+  if(
+    now-lastAnalysis<
+    60000
+  ){
 
-await loadAllBars();
+    return;
+
+  }
+
+
+  lastAnalysis=
+    now;
+
+
+  try{
+
+    await loadAllBars();
+
+    analyzeAll();
+
+    automaticEntry();
+
+
+  }catch(e){
+
+    log(
+      "Analysis error: "+
+      e.message
+    );
+
+  }
+
+
+  /*
+    Macro every 5 minutes.
+  */
+
+  if(
+    now-lastMacro>=
+    300000
+  ){
+
+    lastMacro=
+      now;
+
+    await loadMacro();
+
+  }
 
 }
 
 
-if(
-now-lastMacro>=300000
-){
-
-lastMacro =
-now;
-
-await loadMacro();
-
-}
-
-
-updateRunner();
-
-}
-
-
-/* START */
+/* =========================================================
+   START
+   ========================================================= */
 
 async function start(){
 
-const savedLot =
-Number(
-localStorage.getItem(
-"xau_ai_lot"
-) || 0.04
-);
+  refreshLevelButtons();
+
+  renderHistory();
+
+  renderRunner();
+
+  renderTpMode();
 
 
-$("lotInput").value =
-Math.min(
-1,
-Math.max(
-0.01,
-Number.isFinite(savedLot)
-?
-savedLot
-:
-0.04
-)
-.toFixed(2);
+  log(
+    "XAU AI uruchomione."
+  );
 
 
-$("lotInput")
-.addEventListener(
-"change",
-()=>{
+  /*
+    Start live price immediately.
 
-localStorage.setItem(
-"xau_ai_lot",
-String(getLot())
-);
+    IMPORTANT:
+    Do NOT await it here.
+    If Safari/API hangs, the rest of the app
+    must still start and the live request itself
+    has an 8 second timeout.
+  */
 
-}
-);
-
-
-$("lotInput")
-.addEventListener(
-"blur",
-()=>{
-
-localStorage.setItem(
-"xau_ai_lot",
-String(getLot())
-);
-
-}
-);
+  fetchLive();
 
 
-$("tpMode").value =
-localStorage.getItem(
-"xau_ai_tp_mode"
-) ||
-"3TP";
+  /*
+    Historical candles and macro are loaded
+    in the background.
+    They cannot block the live connection.
+  */
+
+  loadAllBars();
+
+  loadMacro();
 
 
-$("tpMode")
-.addEventListener(
-"change",
-()=>{
+  lastAnalysis=
+    Date.now();
 
-localStorage.setItem(
-"xau_ai_tp_mode",
-getTpMode()
-);
-
-renderTpMode();
-
-renderAnalysis();
-
-renderRunner();
-
-renderHistory();
-
-}
-);
+  lastMacro=
+    Date.now();
 
 
-refreshLevelButtons();
+  /*
+    LIVE PRICE
+    every 2 seconds
+  */
 
-renderTpMode();
-
-renderHistory();
-
-renderRunner();
-
-
-await fetchLive();
-
-await loadAllBars();
-
-await loadMacro();
+  setInterval(
+    fetchLive,
+    2000
+  );
 
 
-lastAnalysis =
-Date.now();
+  /*
+    ANALYSIS
+    every 5 seconds checks whether
+    60 seconds passed.
+  */
+
+  setInterval(
+    analysisLoop,
+    5000
+  );
 
 
-lastMacro =
-Date.now();
+  /*
+    RUNNER
+    every 3 seconds.
+  */
 
+  setInterval(
+    ()=>{
+      
+      if(
+        runner.on
+      ){
 
-log(
-"XAU AI uruchomione."
-);
+        updateRunner();
 
+      }
 
-/*
-Live price:
-every 2 seconds.
-*/
-
-setInterval(
-fetchLive,
-2000
-);
-
-
-/*
-Analysis:
-every 5 seconds checks
-whether 60 seconds passed.
-*/
-
-setInterval(
-analysisLoop,
-5000
-);
-
-
-/*
-Runner:
-every 3 seconds.
-*/
-
-setInterval(
-()=>{
-
-if(runner.on){
-
-updateRunner();
-
-}
-
-},
-3000
-);
+    },
+    3000
+  );
 
 }
 
