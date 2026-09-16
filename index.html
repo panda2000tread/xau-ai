@@ -31,13 +31,12 @@ body{
 .app{
   max-width:900px;
   margin:auto;
-  padding:18px 14px 50px;
+  padding:18px 14px 60px;
 }
 
 h1{
   margin:0;
   font-size:30px;
-  letter-spacing:.5px;
 }
 
 h2{
@@ -99,47 +98,19 @@ h2{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:12px;
 }
 
 .status{
-  padding:8px 12px;
-  border-radius:12px;
+  padding:10px 14px;
+  border-radius:14px;
   background:#111820;
-  color:var(--muted);
-  font-size:12px;
+  font-size:13px;
 }
 
 .price{
   font-size:38px;
   font-weight:900;
   margin:12px 0;
-}
-
-button{
-  border:0;
-  border-radius:14px;
-  padding:14px 12px;
-  font-size:14px;
-  font-weight:800;
-  color:white;
-  background:#1c2733;
-}
-
-button.green{background:#235e3e}
-button.red{background:#66272e}
-button.yellow{background:#66551d}
-button.blue{background:#244d7c}
-
-button:active{
-  transform:scale(.98);
-}
-
-.buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:12px;
 }
 
 .signal{
@@ -157,11 +128,7 @@ button:active{
 
 .signal-sub{
   color:var(--muted);
-  margin-top:4px;
-}
-
-.tf{
-  font-size:15px;
+  margin-top:5px;
 }
 
 .tf strong{
@@ -170,10 +137,78 @@ button:active{
   font-size:22px;
 }
 
+.note{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+button{
+  border:0;
+  border-radius:14px;
+  padding:14px 10px;
+  font-size:13px;
+  font-weight:800;
+  color:white;
+  background:#1c2733;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+button.green{background:#235e3e}
+button.red{background:#66272e}
+button.yellow{background:#66551d}
+button.blue{background:#244d7c}
+
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.range{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.activeLevel{
+  outline:2px solid var(--blue);
+}
+
+.metric{
+  font-size:25px;
+  font-weight:900;
+}
+
+.runnerStatus{
+  font-size:34px;
+  font-weight:900;
+}
+
+.protection{
+  margin-top:12px;
+  padding:13px;
+  border-radius:14px;
+  background:#0a1118;
+  border:1px solid #1b2733;
+}
+
+.autoBox{
+  margin-top:12px;
+  padding:13px;
+  border-radius:14px;
+  background:#0b131a;
+  border:1px solid #1c2b38;
+}
+
 table{
   width:100%;
   border-collapse:collapse;
-  font-size:12px;
+  font-size:11px;
 }
 
 th{
@@ -184,12 +219,12 @@ th{
 }
 
 td{
-  padding:10px 6px;
+  padding:9px 6px;
   border-bottom:1px solid #18212b;
 }
 
 .log{
-  max-height:300px;
+  max-height:320px;
   overflow:auto;
   font-family:monospace;
   font-size:11px;
@@ -201,54 +236,8 @@ td{
   border-bottom:1px solid #141c25;
 }
 
-input,select{
-  width:100%;
-  background:#0b1017;
-  color:white;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px;
-  font-size:15px;
-}
-
-.range{
-  display:flex;
-  gap:8px;
-}
-
-.range button{
-  flex:1;
-}
-
-.activeLevel{
-  outline:2px solid var(--blue);
-}
-
-.metric{
-  font-size:26px;
-  font-weight:900;
-}
-
-.note{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-}
-
-.runnerStatus{
-  font-size:34px;
-  font-weight:900;
-}
-
-.protection{
-  margin-top:10px;
-  padding:12px;
-  border-radius:14px;
-  background:#0a1118;
-  border:1px solid #1b2733;
-}
-
 @media(max-width:600px){
+
   .grid4{
     grid-template-columns:1fr 1fr;
   }
@@ -258,17 +247,14 @@ input,select{
   }
 
   .price{
-    font-size:32px;
-  }
-
-  table{
-    font-size:10px;
+    font-size:34px;
   }
 }
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
   <div class="header">
@@ -276,14 +262,23 @@ input,select{
       <h1>XAU AI</h1>
       <div class="note">XAUUSD • dynamic analysis & paper runner</div>
     </div>
-    <div id="connection" class="status">Łączenie...</div>
+
+    <div id="connection" class="status">
+      Łączenie...
+    </div>
   </div>
 
+
+  <!-- PRICE -->
+
   <div class="section">
+
     <div class="label">XAUUSD</div>
+
     <div id="price" class="price">---</div>
 
     <div class="grid4">
+
       <div class="card">
         <div class="label">BID</div>
         <div id="bid" class="value">---</div>
@@ -303,18 +298,31 @@ input,select{
         <div class="label">AGE</div>
         <div id="age" class="value">---</div>
       </div>
+
     </div>
   </div>
 
+
+  <!-- SIGNAL -->
+
   <div class="section">
+
     <h2>SYGNAŁ</h2>
 
     <div class="signal">
-      <div id="signal" class="signal-main wait">WAIT</div>
-      <div id="signalReason" class="signal-sub">Oczekiwanie na dane</div>
+
+      <div id="signal" class="signal-main wait">
+        WAIT
+      </div>
+
+      <div id="signalReason" class="signal-sub">
+        Oczekiwanie na dane
+      </div>
+
     </div>
 
     <div class="grid2" style="margin-top:10px">
+
       <div class="card">
         <div class="label">ENTRY</div>
         <div id="entry" class="value">---</div>
@@ -344,13 +352,19 @@ input,select{
         <div class="label">SCORE</div>
         <div id="score" class="value">---</div>
       </div>
+
     </div>
   </div>
 
+
+  <!-- TIMEFRAMES -->
+
   <div class="section">
+
     <h2>TIMEFRAMES</h2>
 
     <div class="grid4">
+
       <div class="card tf">
         <div class="label">M5</div>
         <strong id="m5">---</strong>
@@ -374,13 +388,19 @@ input,select{
         <strong id="h1">---</strong>
         <div id="h1detail" class="note"></div>
       </div>
+
     </div>
   </div>
 
+
+  <!-- MARKET -->
+
   <div class="section">
+
     <h2>MARKET</h2>
 
     <div class="grid2">
+
       <div class="card">
         <div class="label">REGIME</div>
         <div id="regime" class="value">---</div>
@@ -400,13 +420,19 @@ input,select{
         <div class="label">ATR M15</div>
         <div id="atr" class="value">---</div>
       </div>
+
     </div>
   </div>
 
+
+  <!-- MACRO -->
+
   <div class="section">
+
     <h2>USA MACRO / NEWS</h2>
 
     <div class="grid2">
+
       <div class="card">
         <div class="label">BIAS</div>
         <div id="macroBias" class="value">---</div>
@@ -426,78 +452,150 @@ input,select{
         <div class="label">NEXT EVENT</div>
         <div id="nextEvent" class="value small">---</div>
       </div>
+
     </div>
   </div>
 
+
+  <!-- LEVEL -->
+
   <div class="section">
+
     <h2>ANALYSIS LEVEL</h2>
 
     <div class="range">
-      <button id="level1" onclick="setLevel(1)">1 FAST</button>
-      <button id="level2" onclick="setLevel(2)">2 STANDARD</button>
-      <button id="level3" onclick="setLevel(3)">3 ADVANCED</button>
-      <button id="level4" onclick="setLevel(4)">4 PRO</button>
+
+      <button id="level1" onclick="setLevel(1)">
+        1 FAST
+      </button>
+
+      <button id="level2" onclick="setLevel(2)">
+        2 STANDARD
+      </button>
+
+      <button id="level3" onclick="setLevel(3)">
+        3 ADVANCED
+      </button>
+
+      <button id="level4" onclick="setLevel(4)">
+        4 PRO
+      </button>
+
     </div>
 
-    <div class="note" style="margin-top:10px">
-      Level 4 wymaga mocniejszego potwierdzenia kierunku i może blokować wejścia przed ważnymi wydarzeniami USA.
-    </div>
   </div>
 
+
+  <!-- RUNNER -->
+
   <div class="section">
+
     <h2>RUNNER — PAPER MODE</h2>
 
     <div class="grid2">
 
       <div class="card">
         <div class="label">STATUS</div>
-        <div id="runnerStatus" class="runnerStatus">OFF</div>
+        <div id="runnerStatus" class="runnerStatus">
+          OFF
+        </div>
       </div>
 
       <div class="card">
         <div class="label">POZYCJA</div>
-        <div id="runnerPosition" class="value">BRAK</div>
+        <div id="runnerPosition" class="value">
+          BRAK
+        </div>
       </div>
 
       <div class="card">
         <div class="label">REALIZED</div>
-        <div id="runnerRealized" class="value">$0.00</div>
+        <div id="runnerRealized" class="value">
+          $0.00
+        </div>
       </div>
 
       <div class="card">
         <div class="label">TOTAL P/L</div>
-        <div id="runnerTotal" class="value">$0.00</div>
+        <div id="runnerTotal" class="value">
+          $0.00
+        </div>
       </div>
 
       <div class="card">
         <div class="label">PEAK P/L</div>
-        <div id="runnerPeak" class="value">$0.00</div>
+        <div id="runnerPeak" class="value">
+          $0.00
+        </div>
       </div>
 
       <div class="card">
         <div class="label">ODDANE OD PEAK</div>
-        <div id="runnerGiveback" class="value">$0.00</div>
+        <div id="runnerGiveback" class="value">
+          $0.00
+        </div>
       </div>
 
     </div>
+
+
+    <div class="autoBox">
+
+      <div class="label">
+        AUTOMATYCZNE WEJŚCIA
+      </div>
+
+      <div id="autoStatus" class="note">
+        Runner OFF
+      </div>
+
+      <div id="entryWait" class="note" style="margin-top:5px">
+        ---
+      </div>
+
+    </div>
+
 
     <div class="buttons">
-      <button class="green" onclick="toggleRunner()">RUNNER ON/OFF</button>
-      <button class="green" onclick="testEntry()">TEST ENTRY</button>
-      <button class="red" onclick="closeRunner('MANUAL CLOSE')">CLOSE POSITION</button>
-      <button class="yellow" onclick="resetRunner()">RESET</button>
+
+      <button class="green" onclick="toggleRunner()">
+        RUNNER ON/OFF
+      </button>
+
+      <button class="green" onclick="testEntry()">
+        TEST ENTRY
+      </button>
+
+      <button class="red" onclick="closeRunner('MANUAL CLOSE')">
+        CLOSE POSITION
+      </button>
+
+      <button class="yellow" onclick="resetRunner()">
+        RESET
+      </button>
+
     </div>
+
 
     <div class="protection">
-      <div class="label">DYNAMIC PROTECTION</div>
-      <div id="runnerProtection" class="note">
-        Brak pozycji
+
+      <div class="label">
+        DYNAMIC PROTECTION
       </div>
+
+      <div id="runnerProtection" class="note">
+        Brak aktywnej pozycji.
+      </div>
+
     </div>
 
+
     <div style="margin-top:15px;overflow:auto">
+
       <table>
+
         <thead>
+
           <tr>
             <th>Side</th>
             <th>Lot</th>
@@ -509,16 +607,26 @@ input,select{
             <th>P/L</th>
             <th>Status</th>
           </tr>
+
         </thead>
+
         <tbody id="runnerTable"></tbody>
+
       </table>
+
     </div>
+
   </div>
 
+
+  <!-- HISTORY -->
+
   <div class="section">
+
     <h2>HISTORIA TRANSAKCJI</h2>
 
     <div class="grid4">
+
       <div class="card">
         <div class="label">ZAMKNIĘTE</div>
         <div id="histClosed" class="metric">0</div>
@@ -545,7 +653,7 @@ input,select{
       </div>
 
       <div class="card">
-        <div class="label">AVG TRADE</div>
+        <div class="label">AVG / TRADE</div>
         <div id="histAvg" class="metric">$0</div>
       </div>
 
@@ -568,11 +676,16 @@ input,select{
         <div class="label">AVG GIVEBACK</div>
         <div id="histGiveback" class="metric">$0</div>
       </div>
+
     </div>
 
+
     <div style="margin-top:15px;overflow:auto">
+
       <table>
+
         <thead>
+
           <tr>
             <th>Data</th>
             <th>Side</th>
@@ -584,86 +697,148 @@ input,select{
             <th>Reason</th>
             <th>Entry TF</th>
           </tr>
+
         </thead>
+
         <tbody id="historyTable"></tbody>
+
       </table>
+
     </div>
+
   </div>
 
+
+  <!-- LOG -->
+
   <div class="section">
+
     <h2>LOG</h2>
+
     <div id="log" class="log"></div>
+
   </div>
 
 </div>
 
+
 <script>
-/* ============================================================
+
+/* =========================================================
    XAU AI
-   Dynamic Runner v2
-   ============================================================ */
+   AUTOMATIC PAPER RUNNER
+   ========================================================= */
 
-const API = "https://biquote.io/api/XAUUSD";
-const HISTORY_KEY = "xau_ai_trade_history_v3";
-const RUNNER_KEY = "xau_ai_runner_v3";
+const API="https://biquote.io/api/XAUUSD";
 
-let level = Number(localStorage.getItem("xau_ai_level") || 3);
+const HISTORY_KEY="xau_ai_trade_history_v4";
+const RUNNER_KEY="xau_ai_runner_v4";
 
-let live = {
-  bid: null,
-  ask: null,
-  mid: null,
-  spread: null,
-  timestamp: null
+let level=
+  Number(localStorage.getItem("xau_ai_level") || 3);
+
+
+let live={
+  bid:null,
+  ask:null,
+  mid:null,
+  spread:null,
+  timestamp:null
 };
 
-let data = {
-  M5: [],
-  M15: [],
-  M30: [],
-  H1: []
+
+let data={
+  M5:[],
+  M15:[],
+  M30:[],
+  H1:[]
 };
 
-let analysis = null;
-let macro = {
+
+let analysis=null;
+
+
+let macro={
   score:0,
   bias:"NEUTRAL",
   risk:"LOW",
   next:"---"
 };
 
-let runner = {
-  on:false,
-  position:null,
-  realized:0
+
+/*
+  Automatic signal confirmation.
+
+  The system needs two consecutive analysis cycles
+  in the same direction before automatically entering.
+*/
+
+let signalMemory={
+  last:null,
+  count:0,
+  time:0
 };
 
-let history = [];
+
+let runner={
+  on:false,
+  position:null,
+  realized:0,
+  cooldownUntil:0
+};
+
+
+let history=[];
+
 
 try{
-  history = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+  history=
+    JSON.parse(
+      localStorage.getItem(HISTORY_KEY) || "[]"
+    );
 }catch(e){
   history=[];
 }
 
+
 try{
-  const saved = JSON.parse(localStorage.getItem(RUNNER_KEY) || "null");
-  if(saved && saved.position){
+
+  const saved=
+    JSON.parse(
+      localStorage.getItem(RUNNER_KEY) || "null"
+    );
+
+  if(saved){
     runner=saved;
   }
+
 }catch(e){}
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
 
 function $(id){
   return document.getElementById(id);
 }
 
+
 function log(msg){
+
   const el=$("log");
-  const t=new Date().toLocaleTimeString();
-  el.innerHTML = `<div>[${t}] ${escapeHtml(msg)}</div>` + el.innerHTML;
+
+  const t=
+    new Date().toLocaleTimeString();
+
+  el.innerHTML=
+    `<div>[${t}] ${escapeHtml(msg)}</div>`+
+    el.innerHTML;
 }
 
+
 function escapeHtml(v){
+
   return String(v)
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
@@ -671,253 +846,578 @@ function escapeHtml(v){
     .replaceAll('"',"&quot;");
 }
 
+
 function fmt(n,d=2){
-  if(n===null || n===undefined || !Number.isFinite(Number(n))) return "---";
+
+  if(
+    n===null ||
+    n===undefined ||
+    !Number.isFinite(Number(n))
+  ){
+    return "---";
+  }
+
   return Number(n).toFixed(d);
 }
 
+
 function money(n){
+
   const x=Number(n||0);
-  return (x>=0?"+$":"-$")+Math.abs(x).toFixed(2);
+
+  return(
+    x>=0 ? "+$" : "-$"
+  )+
+  Math.abs(x).toFixed(2);
 }
 
+
 function sideClass(side){
+
   if(side==="BUY") return "buy";
+
   if(side==="SELL") return "sell";
+
   return "wait";
 }
 
+
 function saveRunner(){
-  localStorage.setItem(RUNNER_KEY,JSON.stringify(runner));
+
+  localStorage.setItem(
+    RUNNER_KEY,
+    JSON.stringify(runner)
+  );
 }
+
 
 function saveHistory(){
-  localStorage.setItem(HISTORY_KEY,JSON.stringify(history));
+
+  localStorage.setItem(
+    HISTORY_KEY,
+    JSON.stringify(history)
+  );
 }
 
-/* ============================================================
+
+/* =========================================================
    LEVEL
-   ============================================================ */
+   ========================================================= */
 
 function setLevel(n){
-  level=n;
-  localStorage.setItem("xau_ai_level",String(n));
 
-  for(let i=1;i<=4;i++){
-    $("level"+i).classList.toggle("activeLevel",i===n);
-  }
+  level=n;
+
+  localStorage.setItem(
+    "xau_ai_level",
+    String(n)
+  );
+
+  refreshLevelButtons();
 
   log("Poziom analizy: "+n);
+
   analyzeAll();
 }
 
+
 function refreshLevelButtons(){
+
   for(let i=1;i<=4;i++){
-    $("level"+i).classList.toggle("activeLevel",i===level);
+
+    $("level"+i)
+      .classList
+      .toggle(
+        "activeLevel",
+        i===level
+      );
   }
 }
 
-/* ============================================================
+
+/* =========================================================
    API
-   ============================================================ */
+   ========================================================= */
 
 async function fetchJSON(url){
-  const r=await fetch(url,{cache:"no-store"});
-  if(!r.ok) throw new Error("HTTP "+r.status);
+
+  const r=
+    await fetch(
+      url,
+      {
+        cache:"no-store"
+      }
+    );
+
+  if(!r.ok){
+
+    throw new Error(
+      "HTTP "+r.status
+    );
+  }
+
   return await r.json();
 }
 
+
+/* =========================================================
+   LIVE PRICE
+   ========================================================= */
+
 async function fetchLive(){
+
   try{
-    const j=await fetchJSON(API+"?allowStale=false");
 
-    live.bid=Number(j.bid);
-    live.ask=Number(j.ask);
-    live.mid=Number(j.mid || ((live.bid+live.ask)/2));
-    live.spread=Number(j.spread || (live.ask-live.bid));
-    live.timestamp=j.timestamp || Date.now();
+    const j=
+      await fetchJSON(
+        API+"?allowStale=false"
+      );
 
-    $("price").textContent=fmt(live.mid);
-    $("bid").textContent=fmt(live.bid);
-    $("ask").textContent=fmt(live.ask);
-    $("spread").textContent=fmt(live.spread,3);
 
-    let age=j.quoteAgeSeconds;
-    if(age===undefined && j.timestamp){
-      age=(Date.now()-new Date(j.timestamp).getTime())/1000;
+    live.bid=
+      Number(j.bid);
+
+    live.ask=
+      Number(j.ask);
+
+    live.mid=
+      Number(
+        j.mid ||
+        ((live.bid+live.ask)/2)
+      );
+
+    live.spread=
+      Number(
+        j.spread ||
+        (live.ask-live.bid)
+      );
+
+    live.timestamp=
+      j.timestamp ||
+      Date.now();
+
+
+    $("price").textContent=
+      fmt(live.mid);
+
+    $("bid").textContent=
+      fmt(live.bid);
+
+    $("ask").textContent=
+      fmt(live.ask);
+
+    $("spread").textContent=
+      fmt(live.spread,3);
+
+
+    let age=
+      j.quoteAgeSeconds;
+
+
+    if(
+      age===undefined &&
+      j.timestamp
+    ){
+
+      age=
+        (
+          Date.now()-
+          new Date(j.timestamp).getTime()
+        )/1000;
     }
 
-    $("age").textContent=Number.isFinite(Number(age))
-      ? Number(age).toFixed(1)+"s"
-      : "---";
 
-    $("connection").textContent =
-      j.stale ? "STALE" : "LIVE";
+    $("age").textContent=
+      Number.isFinite(Number(age))
+        ? Number(age).toFixed(1)+"s"
+        : "---";
 
-    $("connection").style.color =
-      j.stale ? "var(--red)" : "var(--green)";
+
+    $("connection").textContent=
+      j.stale
+        ? "STALE"
+        : "LIVE";
+
+
+    $("connection").style.color=
+      j.stale
+        ? "var(--red)"
+        : "var(--green)";
+
 
     updateRunner();
 
   }catch(e){
-    $("connection").textContent="BŁĄD API";
-    $("connection").style.color="var(--red)";
-    log("Live error: "+e.message);
+
+    $("connection").textContent=
+      "BŁĄD API";
+
+    $("connection").style.color=
+      "var(--red)";
+
+    log(
+      "Live error: "+
+      e.message
+    );
   }
 }
 
-/* ============================================================
+
+/* =========================================================
    OHLC
-   ============================================================ */
+   ========================================================= */
 
 function normalizeBars(raw){
+
   let arr=raw;
 
-  if(raw && Array.isArray(raw.bars)) arr=raw.bars;
-  if(!Array.isArray(arr)) return [];
 
-  return arr.map(b=>{
-    const time =
-      b.time ??
-      b.timestamp ??
-      b.date ??
-      b.datetime ??
-      b.t;
+  if(
+    raw &&
+    Array.isArray(raw.bars)
+  ){
 
-    return {
-      time:new Date(time).getTime(),
-      open:Number(b.open ?? b.o),
-      high:Number(b.high ?? b.h),
-      low:Number(b.low ?? b.l),
-      close:Number(b.close ?? b.c)
-    };
-  }).filter(b =>
-    Number.isFinite(b.time) &&
-    Number.isFinite(b.open) &&
-    Number.isFinite(b.high) &&
-    Number.isFinite(b.low) &&
-    Number.isFinite(b.close)
-  ).sort((a,b)=>a.time-b.time);
+    arr=raw.bars;
+  }
+
+
+  if(!Array.isArray(arr)){
+    return [];
+  }
+
+
+  return arr
+    .map(b=>{
+
+      /*
+        IMPORTANT:
+        BiQuote uses openTime.
+      */
+
+      const time=
+        b.openTime ??
+        b.timestamp ??
+        b.time ??
+        b.date ??
+        b.datetime ??
+        b.t;
+
+
+      return{
+
+        time:
+          new Date(time).getTime(),
+
+        open:
+          Number(
+            b.open ??
+            b.o
+          ),
+
+        high:
+          Number(
+            b.high ??
+            b.h
+          ),
+
+        low:
+          Number(
+            b.low ??
+            b.l
+          ),
+
+        close:
+          Number(
+            b.close ??
+            b.c
+          ),
+
+        isOpen:
+          Boolean(
+            b.isOpen
+          )
+
+      };
+
+    })
+    .filter(b=>
+
+      Number.isFinite(b.time) &&
+
+      Number.isFinite(b.open) &&
+
+      Number.isFinite(b.high) &&
+
+      Number.isFinite(b.low) &&
+
+      Number.isFinite(b.close)
+
+    )
+    .sort(
+      (a,b)=>
+        a.time-b.time
+    );
 }
+
 
 async function fetchBars(tf,interval){
-  const j=await fetchJSON(
-    API+"/ohlc?interval="+interval+"&limit=500"
-  );
 
-  let bars=normalizeBars(j);
+  const j=
+    await fetchJSON(
+      API+
+      "/ohlc?interval="+
+      interval+
+      "&limit=500"
+    );
 
-  /* current unfinished candle must NOT enter the analysis */
-  const now=Date.now();
 
-  const duration={
-    "1m":60000,
-    "5m":300000,
-    "15m":900000,
-    "30m":1800000,
-    "1h":3600000
-  }[interval] || 60000;
+  let bars=
+    normalizeBars(j);
 
-  bars=bars.filter(b =>
-    b.time + duration <= now
-  );
 
-  data[tf]=bars.slice(-300);
+  /*
+    VERY IMPORTANT:
+    use only closed candles.
+  */
+
+  bars=
+    bars.filter(
+      b=>b.isOpen!==true
+    );
+
+
+  data[tf]=
+    bars.slice(-300);
 }
+
 
 async function loadAllBars(){
+
   try{
+
     await Promise.all([
+
       fetchBars("M5","5m"),
+
       fetchBars("M15","15m"),
+
       fetchBars("M30","30m"),
+
       fetchBars("H1","1h")
+
     ]);
 
+
+    log(
+      `Świece: M5 ${data.M5.length} / M15 ${data.M15.length} / M30 ${data.M30.length} / H1 ${data.H1.length}`
+    );
+
+
     analyzeAll();
+
   }catch(e){
-    log("OHLC error: "+e.message);
+
+    log(
+      "OHLC error: "+
+      e.message
+    );
   }
 }
 
-/* ============================================================
+
+/* =========================================================
    INDICATORS
-   ============================================================ */
+   ========================================================= */
 
 function ema(values,period){
-  if(values.length<period) return null;
 
-  const k=2/(period+1);
-  let e=values.slice(0,period)
-    .reduce((a,b)=>a+b,0)/period;
-
-  for(let i=period;i<values.length;i++){
-    e=values[i]*k+e*(1-k);
+  if(values.length<period){
+    return null;
   }
+
+
+  const k=
+    2/(period+1);
+
+
+  let e=
+    values
+      .slice(0,period)
+      .reduce(
+        (a,b)=>a+b,
+        0
+      )/period;
+
+
+  for(
+    let i=period;
+    i<values.length;
+    i++
+  ){
+
+    e=
+      values[i]*k+
+      e*(1-k);
+  }
+
 
   return e;
 }
 
+
 function atr(bars,period=14){
-  if(bars.length<period+1) return null;
 
-  let trs=[];
+  if(
+    bars.length<
+    period+1
+  ){
 
-  for(let i=1;i<bars.length;i++){
-    const b=bars[i];
-    const p=bars[i-1];
-
-    trs.push(Math.max(
-      b.high-b.low,
-      Math.abs(b.high-p.close),
-      Math.abs(b.low-p.close)
-    ));
+    return null;
   }
 
-  return trs.slice(-period)
-    .reduce((a,b)=>a+b,0)/period;
+
+  const trs=[];
+
+
+  for(
+    let i=1;
+    i<bars.length;
+    i++
+  ){
+
+    const b=bars[i];
+
+    const p=
+      bars[i-1];
+
+
+    trs.push(
+      Math.max(
+
+        b.high-b.low,
+
+        Math.abs(
+          b.high-p.close
+        ),
+
+        Math.abs(
+          b.low-p.close
+        )
+
+      )
+    );
+  }
+
+
+  return(
+    trs
+      .slice(-period)
+      .reduce(
+        (a,b)=>a+b,
+        0
+      )/period
+  );
 }
 
+
 function rsi(bars,period=14){
-  if(bars.length<period+1) return null;
+
+  if(
+    bars.length<
+    period+1
+  ){
+
+    return null;
+  }
+
 
   let gains=0;
   let losses=0;
 
-  for(let i=bars.length-period;i<bars.length;i++){
-    const diff=bars[i].close-bars[i-1].close;
 
-    if(diff>0) gains+=diff;
-    else losses-=diff;
+  for(
+    let i=
+      bars.length-period;
+    i<bars.length;
+    i++
+  ){
+
+    const diff=
+      bars[i].close-
+      bars[i-1].close;
+
+
+    if(diff>0){
+
+      gains+=diff;
+
+    }else{
+
+      losses-=diff;
+
+    }
   }
 
-  if(losses===0) return 100;
 
-  const rs=(gains/period)/(losses/period);
+  if(losses===0){
+    return 100;
+  }
 
-  return 100-(100/(1+rs));
+
+  const rs=
+    (gains/period)/
+    (losses/period);
+
+
+  return(
+    100-
+    (100/(1+rs))
+  );
 }
 
+
 function macd(bars){
-  if(bars.length<40) return 0;
 
-  const closes=bars.map(x=>x.close);
+  if(bars.length<40){
+    return 0;
+  }
 
-  const fast=ema(closes,12);
-  const slow=ema(closes,26);
 
-  if(fast===null || slow===null) return 0;
+  const closes=
+    bars.map(
+      x=>x.close
+    );
+
+
+  const fast=
+    ema(closes,12);
+
+  const slow=
+    ema(closes,26);
+
+
+  if(
+    fast===null ||
+    slow===null
+  ){
+
+    return 0;
+  }
+
 
   return fast-slow;
 }
 
-/* ============================================================
+
+/* =========================================================
    STRUCTURE
-   ============================================================ */
+   ========================================================= */
 
 function structure(bars){
+
   if(bars.length<20){
-    return {
+
+    return{
       text:"UNKNOWN",
       direction:0,
       highs:[],
@@ -925,55 +1425,112 @@ function structure(bars){
     };
   }
 
-  const recent=bars.slice(-20);
+
+  const recent=
+    bars.slice(-20);
+
 
   const highs=[];
   const lows=[];
 
-  for(let i=2;i<recent.length-2;i++){
+
+  for(
+    let i=2;
+    i<recent.length-2;
+    i++
+  ){
 
     if(
-      recent[i].high>recent[i-1].high &&
-      recent[i].high>recent[i+1].high &&
-      recent[i].high>=recent[i-2].high &&
-      recent[i].high>=recent[i+2].high
+
+      recent[i].high>
+      recent[i-1].high &&
+
+      recent[i].high>
+      recent[i+1].high &&
+
+      recent[i].high>=
+      recent[i-2].high &&
+
+      recent[i].high>=
+      recent[i+2].high
+
     ){
-      highs.push(recent[i].high);
+
+      highs.push(
+        recent[i].high
+      );
     }
 
+
     if(
-      recent[i].low<recent[i-1].low &&
-      recent[i].low<recent[i+1].low &&
-      recent[i].low<=recent[i-2].low &&
-      recent[i].low<=recent[i+2].low
+
+      recent[i].low<
+      recent[i-1].low &&
+
+      recent[i].low<
+      recent[i+1].low &&
+
+      recent[i].low<=
+      recent[i-2].low &&
+
+      recent[i].low<=
+      recent[i+2].low
+
     ){
-      lows.push(recent[i].low);
+
+      lows.push(
+        recent[i].low
+      );
     }
   }
 
+
   let direction=0;
+
   let text="RANGE";
 
-  if(highs.length>=2 && lows.length>=2){
 
-    const hh=highs[highs.length-1]>highs[highs.length-2];
-    const hl=lows[lows.length-1]>lows[lows.length-2];
+  if(
+    highs.length>=2 &&
+    lows.length>=2
+  ){
 
-    const lh=highs[highs.length-1]<highs[highs.length-2];
-    const ll=lows[lows.length-1]<lows[lows.length-2];
+    const hh=
+      highs[highs.length-1]>
+      highs[highs.length-2];
+
+    const hl=
+      lows[lows.length-1]>
+      lows[lows.length-2];
+
+
+    const lh=
+      highs[highs.length-1]<
+      highs[highs.length-2];
+
+    const ll=
+      lows[lows.length-1]<
+      lows[lows.length-2];
+
 
     if(hh && hl){
+
       direction=1;
       text="HH / HL";
+
     }else if(lh && ll){
+
       direction=-1;
       text="LH / LL";
+
     }else{
+
       text="MIXED";
     }
   }
 
-  return {
+
+  return{
     text,
     direction,
     highs,
@@ -981,49 +1538,100 @@ function structure(bars){
   };
 }
 
-/* ============================================================
-   CANDLE / MOMENTUM
-   ============================================================ */
+
+/* =========================================================
+   MOMENTUM
+   ========================================================= */
 
 function candlePower(bars){
-  if(bars.length<3) return 0;
 
-  const b=bars[bars.length-1];
+  if(bars.length<3){
+    return 0;
+  }
 
-  const range=b.high-b.low;
 
-  if(range<=0) return 0;
+  const b=
+    bars[bars.length-1];
 
-  const body=Math.abs(b.close-b.open);
-  const ratio=body/range;
 
-  if(b.close>b.open) return ratio;
-  if(b.close<b.open) return -ratio;
+  const range=
+    b.high-b.low;
+
+
+  if(range<=0){
+    return 0;
+  }
+
+
+  const body=
+    Math.abs(
+      b.close-b.open
+    );
+
+
+  const ratio=
+    body/range;
+
+
+  if(
+    b.close>b.open
+  ){
+
+    return ratio;
+  }
+
+
+  if(
+    b.close<b.open
+  ){
+
+    return -ratio;
+  }
+
 
   return 0;
 }
+
 
 function impulse(bars){
-  if(bars.length<8) return 0;
 
-  const a=bars[bars.length-1].close;
-  const b=bars[bars.length-6].close;
+  if(bars.length<8){
+    return 0;
+  }
 
-  const diff=a-b;
 
-  if(diff>0) return 1;
-  if(diff<0) return -1;
+  const a=
+    bars[bars.length-1].close;
+
+
+  const b=
+    bars[bars.length-6].close;
+
+
+  if(a>b){
+    return 1;
+  }
+
+
+  if(a<b){
+    return -1;
+  }
+
 
   return 0;
 }
 
-/* ============================================================
+
+/* =========================================================
    TIMEFRAME ANALYSIS
-   ============================================================ */
+   ========================================================= */
 
 function analyzeTF(bars){
+
   if(bars.length<60){
-    return {
+
+    return{
+
       signal:"WAIT",
       score:0,
       rsi:50,
@@ -1033,42 +1641,99 @@ function analyzeTF(bars){
       impulse:0,
       candle:0,
       ema20:null,
-      ema50:null
+      ema50:null,
+      macd:0
     };
   }
 
-  const closes=bars.map(x=>x.close);
 
-  const e20=ema(closes,20);
-  const e50=ema(closes,50);
-  const rr=rsi(bars);
-  const aa=atr(bars);
-  const st=structure(bars);
-  const im=impulse(bars);
-  const cp=candlePower(bars);
-  const mm=macd(bars);
+  const closes=
+    bars.map(
+      x=>x.close
+    );
+
+
+  const e20=
+    ema(closes,20);
+
+  const e50=
+    ema(closes,50);
+
+  const rr=
+    rsi(bars);
+
+  const aa=
+    atr(bars);
+
+  const st=
+    structure(bars);
+
+  const im=
+    impulse(bars);
+
+  const cp=
+    candlePower(bars);
+
+  const mm=
+    macd(bars);
+
 
   let score=0;
 
-  if(e20>e50) score+=1;
-  if(e20<e50) score-=1;
 
-  if(rr>55) score+=1;
-  if(rr<45) score-=1;
+  if(e20>e50){
+    score+=1;
+  }
 
-  if(st.direction>0) score+=2;
-  if(st.direction<0) score-=2;
+  if(e20<e50){
+    score-=1;
+  }
 
-  if(im>0) score+=1;
-  if(im<0) score-=1;
 
-  if(cp>0.55) score+=1;
-  if(cp<-0.55) score-=1;
+  if(rr>55){
+    score+=1;
+  }
 
-  if(mm>0) score+=1;
-  if(mm<0) score-=1;
+  if(rr<45){
+    score-=1;
+  }
 
-  let signal="WAIT";
+
+  if(st.direction>0){
+    score+=2;
+  }
+
+  if(st.direction<0){
+    score-=2;
+  }
+
+
+  if(im>0){
+    score+=1;
+  }
+
+  if(im<0){
+    score-=1;
+  }
+
+
+  if(cp>0.55){
+    score+=1;
+  }
+
+  if(cp<-0.55){
+    score-=1;
+  }
+
+
+  if(mm>0){
+    score+=1;
+  }
+
+  if(mm<0){
+    score-=1;
+  }
+
 
   const threshold={
     1:2,
@@ -1077,10 +1742,22 @@ function analyzeTF(bars){
     4:5
   }[level] || 4;
 
-  if(score>=threshold) signal="BUY";
-  if(score<=-threshold) signal="SELL";
 
-  return {
+  let signal="WAIT";
+
+
+  if(score>=threshold){
+    signal="BUY";
+  }
+
+
+  if(score<=-threshold){
+    signal="SELL";
+  }
+
+
+  return{
+
     signal,
     score,
     rsi:rr,
@@ -1092,124 +1769,280 @@ function analyzeTF(bars){
     ema20:e20,
     ema50:e50,
     macd:mm
+
   };
 }
 
-/* ============================================================
+
+/* =========================================================
    MACRO
-   ============================================================ */
+   ========================================================= */
 
 async function loadMacro(){
+
   try{
 
     const url=
       "https://biquote.io/api/calendar/upcoming?countries=US&importance=high";
 
-    const j=await fetchJSON(url);
+
+    const j=
+      await fetchJSON(url);
+
 
     let events=[];
 
-    if(Array.isArray(j)) events=j;
-    else if(Array.isArray(j.events)) events=j.events;
-    else if(Array.isArray(j.data)) events=j.data;
 
-    events=events.map(e=>{
-      const time=e.timestamp || e.time || e.date;
-      return {
-        name:e.name || "US event",
-        time:new Date(time).getTime(),
-        actual:Number(e.actual),
-        forecast:Number(e.forecast),
-        previous:Number(e.previous),
-        importance:e.importance
-      };
-    }).filter(e=>Number.isFinite(e.time));
+    if(Array.isArray(j)){
+      events=j;
+    }else if(
+      Array.isArray(j.events)
+    ){
+      events=j.events;
+    }else if(
+      Array.isArray(j.data)
+    ){
+      events=j.data;
+    }
 
-    const now=Date.now();
 
-    const future=events
-      .filter(e=>e.time>now)
-      .sort((a,b)=>a.time-b.time);
+    events=
+      events
+      .map(e=>{
+
+        const time=
+          e.timestamp ??
+          e.time ??
+          e.date;
+
+
+        return{
+
+          name:
+            e.name ||
+            "US event",
+
+          time:
+            new Date(time)
+              .getTime(),
+
+          actual:
+            Number(e.actual),
+
+          forecast:
+            Number(e.forecast),
+
+          previous:
+            Number(e.previous),
+
+          importance:
+            e.importance
+
+        };
+      })
+      .filter(
+        e=>Number.isFinite(e.time)
+      );
+
+
+    const now=
+      Date.now();
+
+
+    const future=
+      events
+      .filter(
+        e=>e.time>now
+      )
+      .sort(
+        (a,b)=>
+          a.time-b.time
+      );
+
 
     if(future.length){
-      $("nextEvent").textContent=future[0].name;
 
-      const mins=(future[0].time-now)/60000;
+      $("nextEvent").textContent=
+        future[0].name;
 
-      macro.risk =
-        mins<=60 ? "HIGH" :
-        mins<=180 ? "MEDIUM" :
-        "LOW";
+
+      const mins=
+        (
+          future[0].time-
+          now
+        )/60000;
+
+
+      macro.risk=
+        mins<=60
+          ? "HIGH"
+          : mins<=180
+            ? "MEDIUM"
+            : "LOW";
+
     }else{
-      $("nextEvent").textContent="Brak";
+
+      $("nextEvent").textContent=
+        "Brak";
+
       macro.risk="LOW";
     }
 
-    /*
-      Actual-vs-forecast is intentionally conservative.
-      Missing values do not create a fake macro signal.
-    */
 
     let score=0;
 
+
     for(const e of events){
 
-      if(!Number.isFinite(e.actual) ||
-         !Number.isFinite(e.forecast)) continue;
+      if(
+        !Number.isFinite(e.actual) ||
+        !Number.isFinite(e.forecast)
+      ){
 
-      const diff=e.actual-e.forecast;
+        continue;
+      }
+
+
+      const diff=
+        e.actual-
+        e.forecast;
+
+
+      if(
+        Math.abs(diff)<
+        0.000001
+      ){
+
+        continue;
+      }
+
 
       /*
-        Generic macro interpretation:
-        stronger US data can pressure gold;
-        weaker US data can support gold.
+        Generic conservative interpretation:
+        stronger US data -> gold pressure
+        weaker US data -> gold support
       */
 
-      if(Math.abs(diff)<0.000001) continue;
+      if(diff>0){
+        score-=0.5;
+      }
 
-      if(diff>0) score-=0.5;
-      if(diff<0) score+=0.5;
+      if(diff<0){
+        score+=0.5;
+      }
     }
 
-    score=Math.max(-3,Math.min(3,score));
+
+    score=
+      Math.max(
+        -3,
+        Math.min(3,score)
+      );
+
 
     macro.score=score;
 
-    if(score>0.5) macro.bias="GOLD BULLISH";
-    else if(score<-0.5) macro.bias="GOLD BEARISH";
-    else macro.bias="NEUTRAL";
 
-    $("macroBias").textContent=macro.bias;
-    $("macroScore").textContent=score.toFixed(1);
-    $("newsRisk").textContent=macro.risk;
+    if(score>0.5){
+
+      macro.bias=
+        "GOLD BULLISH";
+
+    }else if(score<-0.5){
+
+      macro.bias=
+        "GOLD BEARISH";
+
+    }else{
+
+      macro.bias=
+        "NEUTRAL";
+    }
+
+
+    $("macroBias").textContent=
+      macro.bias;
+
+    $("macroScore").textContent=
+      score.toFixed(1);
+
+    $("newsRisk").textContent=
+      macro.risk;
 
   }catch(e){
-    log("Macro: "+e.message);
+
+    log(
+      "Macro: "+
+      e.message
+    );
   }
 }
 
-/* ============================================================
+
+/* =========================================================
    COMPLETE ANALYSIS
-   ============================================================ */
+   ========================================================= */
 
 function analyzeAll(){
 
-  const a5=analyzeTF(data.M5);
-  const a15=analyzeTF(data.M15);
-  const a30=analyzeTF(data.M30);
-  const a1=analyzeTF(data.H1);
+  const a5=
+    analyzeTF(data.M5);
 
-  if(!data.M5.length || !data.H1.length) return;
+  const a15=
+    analyzeTF(data.M15);
 
-  $("m5").textContent=a5.signal;
-  $("m15").textContent=a15.signal;
-  $("m30").textContent=a30.signal;
-  $("h1").textContent=a1.signal;
+  const a30=
+    analyzeTF(data.M30);
 
-  $("m5").className=sideClass(a5.signal);
-  $("m15").className=sideClass(a15.signal);
-  $("m30").className=sideClass(a30.signal);
-  $("h1").className=sideClass(a1.signal);
+  const a1=
+    analyzeTF(data.H1);
+
+
+  if(
+    data.M5.length<60 ||
+    data.M15.length<60 ||
+    data.M30.length<60 ||
+    data.H1.length<60
+  ){
+
+    $("signal").textContent=
+      "WAIT";
+
+    $("signal").className=
+      "signal-main wait";
+
+    $("signalReason").textContent=
+      "Oczekiwanie na komplet danych M5/M15/M30/H1";
+
+    return;
+  }
+
+
+  $("m5").textContent=
+    a5.signal;
+
+  $("m15").textContent=
+    a15.signal;
+
+  $("m30").textContent=
+    a30.signal;
+
+  $("h1").textContent=
+    a1.signal;
+
+
+  $("m5").className=
+    sideClass(a5.signal);
+
+  $("m15").className=
+    sideClass(a15.signal);
+
+  $("m30").className=
+    sideClass(a30.signal);
+
+  $("h1").className=
+    sideClass(a1.signal);
+
 
   $("m5detail").textContent=
     `RSI ${fmt(a5.rsi,1)} • ${a5.structure}`;
@@ -1223,14 +2056,25 @@ function analyzeAll(){
   $("h1detail").textContent=
     `RSI ${fmt(a1.rsi,1)} • ${a1.structure}`;
 
-  $("structure").textContent=a1.structure;
-  $("atr").textContent=fmt(a15.atr);
+
+  $("structure").textContent=
+    a1.structure;
+
+
+  $("atr").textContent=
+    fmt(a15.atr);
+
+
   $("impulse").textContent=
-    a5.impulse>0 ? "BULLISH" :
-    a5.impulse<0 ? "BEARISH" :
-    "NEUTRAL";
+    a5.impulse>0
+      ? "BULLISH"
+      : a5.impulse<0
+        ? "BEARISH"
+        : "NEUTRAL";
+
 
   let total=0;
+
 
   /*
     Weighting:
@@ -1240,26 +2084,36 @@ function analyzeAll(){
     M5 = timing
   */
 
-  total += a1.score*1.5;
-  total += a30.score*1.4;
-  total += a15.score*1.2;
-  total += a5.score*0.8;
+  total+=a1.score*1.5;
+  total+=a30.score*1.4;
+  total+=a15.score*1.2;
+  total+=a5.score*0.8;
 
-  total += macro.score*1.0;
+
+  total+=macro.score;
+
 
   /*
-    Strong disagreement between H1 and lower TF reduces score.
+    Disagreement penalty.
   */
 
-  if(a1.signal==="BUY" && a15.signal==="SELL"){
+  if(
+    a1.signal==="BUY" &&
+    a15.signal==="SELL"
+  ){
+
     total-=2;
   }
 
-  if(a1.signal==="SELL" && a15.signal==="BUY"){
+
+  if(
+    a1.signal==="SELL" &&
+    a15.signal==="BUY"
+  ){
+
     total+=2;
   }
 
-  let signal="WAIT";
 
   const threshold={
     1:5,
@@ -1268,58 +2122,92 @@ function analyzeAll(){
     4:11
   }[level] || 9;
 
-  if(total>=threshold) signal="BUY";
-  if(total<=-threshold) signal="SELL";
+
+  let signal="WAIT";
+
+
+  if(total>=threshold){
+    signal="BUY";
+  }
+
+
+  if(total<=-threshold){
+    signal="SELL";
+  }
+
 
   /*
-    PRO level:
-    high-impact event nearby blocks a fresh trade.
+    PRO:
+    high-impact event blocks fresh signal.
   */
 
-  if(level===4 && macro.risk==="HIGH"){
+  if(
+    level===4 &&
+    macro.risk==="HIGH"
+  ){
+
     signal="WAIT";
   }
 
-  const price=live.mid;
 
-  if(!Number.isFinite(price)) return;
+  const price=
+    live.mid;
 
-  const aa=a15.atr || a30.atr || 10;
 
-  let sl;
-  let tp1;
-  let tp2;
-  let tp3;
+  if(!Number.isFinite(price)){
+    return;
+  }
+
+
+  const aa=
+    a15.atr ||
+    a30.atr ||
+    10;
+
+
+  let sl=null;
+  let tp1=null;
+  let tp2=null;
+  let tp3=null;
+
 
   if(signal==="BUY"){
 
-    sl=Math.min(
-      price-aa*1.35,
-      price-aa*0.8
-    );
+    sl=
+      price-
+      aa*1.35;
 
-    tp1=price+aa*0.9;
-    tp2=price+aa*1.55;
-    tp3=price+aa*2.2;
+    tp1=
+      price+
+      aa*0.9;
+
+    tp2=
+      price+
+      aa*1.55;
+
+    tp3=
+      price+
+      aa*2.2;
 
   }else if(signal==="SELL"){
 
-    sl=Math.max(
-      price+aa*1.35,
-      price+aa*0.8
-    );
+    sl=
+      price+
+      aa*1.35;
 
-    tp1=price-aa*0.9;
-    tp2=price-aa*1.55;
-    tp3=price-aa*2.2;
+    tp1=
+      price-
+      aa*0.9;
 
-  }else{
+    tp2=
+      price-
+      aa*1.55;
 
-    sl=null;
-    tp1=null;
-    tp2=null;
-    tp3=null;
+    tp3=
+      price-
+      aa*2.2;
   }
+
 
   let reason=
     signal==="BUY"
@@ -1328,356 +2216,821 @@ function analyzeAll(){
         ? "MULTI-TF BEARISH"
         : "BRAK WYSTARCZAJĄCEGO POTWIERDZENIA";
 
+
   analysis={
+
     signal,
+
     score:total,
+
     entry:price,
+
     sl,
+
     tp1,
+
     tp2,
+
     tp3,
+
     atr:aa,
+
     M5:a5,
+
     M15:a15,
+
     M30:a30,
+
     H1:a1,
-    macro:{...macro},
+
+    macro:{
+      ...macro
+    },
+
     reason,
+
     time:Date.now()
+
   };
+
+
+  /*
+    Automatic signal memory.
+  */
+
+  updateSignalMemory();
+
 
   renderAnalysis();
 
+
   /*
-    Runner uses the SAME analysis object.
-    No separate fake signal.
+    IMPORTANT:
+    Runner now checks whether it should
+    automatically open a position.
   */
+
+  automaticEntryCheck();
+
 
   updateRunner();
 }
 
+
+/* =========================================================
+   SIGNAL MEMORY
+   ========================================================= */
+
+function updateSignalMemory(){
+
+  if(
+    !analysis ||
+    analysis.signal==="WAIT"
+  ){
+
+    signalMemory.last=null;
+    signalMemory.count=0;
+
+    $("entryWait").textContent=
+      "Brak wystarczającego sygnału.";
+
+    return;
+  }
+
+
+  if(
+    signalMemory.last===
+    analysis.signal
+  ){
+
+    signalMemory.count++;
+
+  }else{
+
+    signalMemory.last=
+      analysis.signal;
+
+    signalMemory.count=1;
+  }
+
+
+  signalMemory.time=
+    Date.now();
+
+
+  $("entryWait").textContent=
+    `${analysis.signal} • potwierdzenia ${signalMemory.count}/2`;
+}
+
+
+/* =========================================================
+   RENDER ANALYSIS
+   ========================================================= */
+
 function renderAnalysis(){
 
-  if(!analysis) return;
+  if(!analysis){
+    return;
+  }
 
-  $("signal").textContent=analysis.signal;
+
+  $("signal").textContent=
+    analysis.signal;
+
+
   $("signal").className=
-    "signal-main "+sideClass(analysis.signal);
+    "signal-main "+
+    sideClass(
+      analysis.signal
+    );
+
 
   $("signalReason").textContent=
     `${analysis.reason} • score ${analysis.score.toFixed(1)}`;
 
-  $("entry").textContent=fmt(analysis.entry);
+
+  $("entry").textContent=
+    fmt(analysis.entry);
+
 
   $("sl").textContent=
-    analysis.sl===null ? "---" : fmt(analysis.sl);
+    analysis.sl===null
+      ? "---"
+      : fmt(analysis.sl);
+
 
   $("tp1").textContent=
-    analysis.tp1===null ? "---" : fmt(analysis.tp1);
+    analysis.tp1===null
+      ? "---"
+      : fmt(analysis.tp1);
+
 
   $("tp2").textContent=
-    analysis.tp2===null ? "---" : fmt(analysis.tp2);
+    analysis.tp2===null
+      ? "---"
+      : fmt(analysis.tp2);
+
 
   $("tp3").textContent=
-    analysis.tp3===null ? "---" : fmt(analysis.tp3);
+    analysis.tp3===null
+      ? "---"
+      : fmt(analysis.tp3);
 
-  $("score").textContent=analysis.score.toFixed(1);
+
+  $("score").textContent=
+    analysis.score.toFixed(1);
+
+
+  $("regime").textContent=
+    analysis.atr >
+    25
+      ? "HIGH VOL"
+      : analysis.atr >
+        12
+        ? "NORMAL"
+        : "QUIET";
 }
 
-/* ============================================================
-   RUNNER
-   ============================================================ */
 
-/*
-  IMPORTANT:
-  0.01 lot is treated as approximately $1 per $1 move.
-
-  This is ONLY a paper approximation.
-  The real MT5 version will use the broker's
-  contract specification and tick value.
-*/
+/* =========================================================
+   PAPER P/L
+   ========================================================= */
 
 function pnlFor(position,price){
-  if(!position) return 0;
+
+  if(!position){
+    return 0;
+  }
+
 
   const direction=
-    position.side==="BUY" ? 1 : -1;
+    position.side==="BUY"
+      ? 1
+      : -1;
 
-  const priceDiff=
-    (price-position.entry)*direction;
 
-  return priceDiff*(position.lot/0.01);
+  const diff=
+    (
+      price-
+      position.entry
+    )*
+    direction;
+
+
+  /*
+    Paper approximation:
+    0.01 lot ~= $1 per $1 move.
+  */
+
+  return(
+    diff*
+    (position.lot/0.01)
+  );
 }
 
-function testEntry(){
 
-  if(!analysis){
-    log("Brak analizy.");
+/* =========================================================
+   AUTO ENTRY
+   ========================================================= */
+
+function automaticEntryCheck(){
+
+  if(!runner.on){
     return;
   }
 
-  if(analysis.signal==="WAIT"){
-    log("TEST ENTRY zablokowany: WAIT.");
-    return;
-  }
 
   if(runner.position){
-    log("Pozycja już istnieje.");
     return;
   }
 
-  openPaperPosition(analysis.signal,"TEST ENTRY");
+
+  if(
+    Date.now()<
+    Number(
+      runner.cooldownUntil || 0
+    )
+  ){
+
+    return;
+  }
+
+
+  if(!analysis){
+    return;
+  }
+
+
+  if(
+    analysis.signal==="WAIT"
+  ){
+
+    return;
+  }
+
+
+  /*
+    Need two consecutive analysis cycles.
+  */
+
+  if(
+    signalMemory.count<2
+  ){
+
+    $("autoStatus").textContent=
+      `Czekam na drugie potwierdzenie ${analysis.signal}...`;
+
+    return;
+  }
+
+
+  /*
+    Minimum quality.
+  */
+
+  const minScore=
+    level===4
+      ? 11
+      : level===3
+        ? 9
+        : level===2
+          ? 7
+          : 5;
+
+
+  if(
+    Math.abs(
+      analysis.score
+    )<
+    minScore
+  ){
+
+    return;
+  }
+
+
+  /*
+    Level 4:
+    no new entry during high news risk.
+  */
+
+  if(
+    level===4 &&
+    macro.risk==="HIGH"
+  ){
+
+    return;
+  }
+
+
+  $("autoStatus").textContent=
+    `AUTO ENTRY: ${analysis.signal}`;
+
+
+  openPaperPosition(
+    analysis.signal,
+    "AUTO ENTRY"
+  );
+
+
+  /*
+    Prevent immediate repeated entry.
+  */
+
+  signalMemory.count=0;
 }
 
-function openPaperPosition(side,reason){
 
-  if(!live.mid || !analysis) return;
+/* =========================================================
+   OPEN POSITION
+   ========================================================= */
+
+function openPaperPosition(
+  side,
+  reason
+){
+
+  if(
+    !analysis ||
+    !live.bid ||
+    !live.ask
+  ){
+
+    return;
+  }
+
+
+  if(runner.position){
+    return;
+  }
+
 
   const lot=0.04;
 
-  const entry =
+
+  const entry=
     side==="BUY"
       ? live.ask
       : live.bid;
 
-  const a=analysis;
 
   runner.position={
-    id:"P-"+Date.now(),
+
+    id:
+      "P-"+Date.now(),
+
     side,
+
     lot,
-    originalLot:lot,
+
+    originalLot:
+      lot,
 
     entry,
 
-    sl:a.sl,
-    tp1:a.tp1,
-    tp2:a.tp2,
-    tp3:a.tp3,
+    sl:
+      analysis.sl,
 
-    remainingLot:lot,
+    tp1:
+      analysis.tp1,
+
+    tp2:
+      analysis.tp2,
+
+    tp3:
+      analysis.tp3,
+
+    remainingLot:
+      lot,
 
     partial1:false,
+
     partial2:false,
 
     realized:0,
 
     currentPnl:0,
+
     peakPnl:0,
 
-    peakPrice:entry,
+    peakPrice:
+      entry,
 
     maxDrawdownFromPeak:0,
 
-    openedAt:Date.now(),
-    openReason:reason,
+    openedAt:
+      Date.now(),
 
-    entrySnapshot:JSON.parse(JSON.stringify(a))
+    openReason:
+      reason,
+
+    entrySnapshot:
+      JSON.parse(
+        JSON.stringify(
+          analysis
+        )
+      )
   };
+
 
   saveRunner();
 
+
   log(
-    `OPEN ${side} ${lot.toFixed(2)} @ ${entry.toFixed(2)}`
+    `OPEN AUTO ${side} ${lot.toFixed(2)} @ ${entry.toFixed(2)}`
   );
+
 
   renderRunner();
 }
 
-/* ============================================================
-   DYNAMIC EXIT ENGINE
-   ============================================================ */
+
+/* =========================================================
+   REVERSAL SCORE
+   ========================================================= */
 
 function reversalScore(p){
 
-  if(!analysis) return 0;
+  if(!analysis){
+    return 0;
+  }
 
-  const desired=
-    p.side==="BUY" ? 1 : -1;
+
+  const opposite=
+    p.side==="BUY"
+      ? "SELL"
+      : "BUY";
+
+
+  const a5=
+    analysis.M5;
+
+  const a15=
+    analysis.M15;
+
+  const a30=
+    analysis.M30;
+
+  const a1=
+    analysis.H1;
+
 
   let score=0;
 
+
+  if(
+    a5.signal===
+    opposite
+  ){
+
+    score+=2;
+  }
+
+
+  if(
+    a15.signal===
+    opposite
+  ){
+
+    score+=3;
+  }
+
+
+  if(
+    a30.signal===
+    opposite
+  ){
+
+    score+=2;
+  }
+
+
+  if(
+    a1.signal===
+    opposite
+  ){
+
+    score+=1;
+  }
+
+
   /*
-    M5 is the fastest warning.
+    Structure reversal.
   */
 
-  const a5=analysis.M5;
-  const a15=analysis.M15;
-  const a30=analysis.M30;
-  const a1=analysis.H1;
-
-  const againstSignal=
-    p.side==="BUY" ? "SELL" : "BUY";
-
-  if(a5.signal===againstSignal) score+=2;
-  if(a15.signal===againstSignal) score+=3;
-  if(a30.signal===againstSignal) score+=2;
-  if(a1.signal===againstSignal) score+=1;
-
   if(
+
     p.side==="BUY" &&
+
     a5.direction<0 &&
+
     a15.direction<0
-  ) score+=2;
+
+  ){
+
+    score+=2;
+  }
+
 
   if(
+
     p.side==="SELL" &&
+
     a5.direction>0 &&
+
     a15.direction>0
-  ) score+=2;
+
+  ){
+
+    score+=2;
+  }
+
+
+  /*
+    Momentum reversal.
+  */
 
   if(
+
     p.side==="BUY" &&
+
     a5.impulse<0 &&
+
     a15.impulse<0
-  ) score+=2;
+
+  ){
+
+    score+=2;
+  }
+
 
   if(
+
     p.side==="SELL" &&
+
     a5.impulse>0 &&
+
     a15.impulse>0
-  ) score+=2;
+
+  ){
+
+    score+=2;
+  }
+
 
   return score;
 }
 
-function dynamicProtection(p,pnl){
 
-  const peak=p.peakPnl;
+/* =========================================================
+   DYNAMIC PROTECTION
+   ========================================================= */
+
+function dynamicProtection(
+  p,
+  pnl
+){
+
+  const peak=
+    p.peakPnl;
+
 
   /*
-    Small profit:
-    If trade was late and reversal starts,
-    don't let +$1 become a large negative.
+    VERY EARLY TRADE
+
+    +$0.50 to +$5:
+    if reversal is real,
+    close quickly.
+
+    This prevents:
+    +$1 -> -$10
   */
 
-  if(peak>=0.5 && peak<5){
+  if(
+    peak>=0.5 &&
+    peak<5
+  ){
 
-    if(reversalScore(p)>=4){
-      return {
+    if(
+      reversalScore(p)>=4
+    ){
+
+      return{
         action:"CLOSE",
-        reason:"LATE ENTRY / REVERSAL"
+        reason:
+          "LATE ENTRY / REVERSAL"
       };
     }
 
-    return {
+
+    return{
       action:"HOLD",
       floor:null
     };
   }
 
+
   /*
-    Medium profit:
-    protection activates only when there is
-    actual reversal evidence.
+    MEDIUM PROFIT
   */
 
-  if(peak>=5 && peak<20){
+  if(
+    peak>=5 &&
+    peak<20
+  ){
 
-    if(reversalScore(p)>=5){
+    if(
+      reversalScore(p)>=5
+    ){
 
-      const floor=Math.max(
-        0,
-        peak-3
-      );
+      const floor=
+        Math.max(
+          0,
+          peak-3
+        );
 
-      if(pnl<=floor){
-        return {
+
+      if(
+        pnl<=floor
+      ){
+
+        return{
           action:"CLOSE",
-          reason:"PROFIT PROTECTION"
+          reason:
+            "PROFIT PROTECTION"
         };
       }
 
-      return {
+
+      return{
         action:"PROTECT",
         floor
       };
     }
 
-    return {
+
+    return{
       action:"HOLD",
       floor:null
     };
   }
 
+
   /*
-    Large profit:
-    NO fixed 20% rule.
+    LARGE PROFIT
 
-    The allowed giveback grows/shrinks according
-    to the strength of the reversal.
+    NOT a fixed 20% rule.
 
-    Strong reversal = tighter protection.
-    Weak correction = more room.
+    Strong reversal:
+    tight protection.
+
+    Weak correction:
+    more room.
   */
 
-  if(peak>=20){
+  if(
+    peak>=20
+  ){
 
-    const rev=reversalScore(p);
+    const rev=
+      reversalScore(p);
 
-    let givebackPct=0.22;
 
-    if(rev>=8) givebackPct=0.08;
-    else if(rev>=6) givebackPct=0.12;
-    else if(rev>=5) givebackPct=0.16;
-    else if(rev>=3) givebackPct=0.22;
-    else givebackPct=0.30;
+    let givebackPct=
+      0.30;
 
-    const floor=Math.max(
-      0,
-      peak*(1-givebackPct)
-    );
 
-    if(rev>=5 && pnl<=floor){
+    if(rev>=8){
 
-      return {
+      givebackPct=
+        0.08;
+
+    }else if(rev>=6){
+
+      givebackPct=
+        0.12;
+
+    }else if(rev>=5){
+
+      givebackPct=
+        0.16;
+
+    }else if(rev>=3){
+
+      givebackPct=
+        0.22;
+
+    }else{
+
+      givebackPct=
+        0.30;
+    }
+
+
+    const floor=
+      Math.max(
+        0,
+        peak*
+        (1-givebackPct)
+      );
+
+
+    if(
+      rev>=5 &&
+      pnl<=floor
+    ){
+
+      return{
         action:"CLOSE",
-        reason:"STRONG REVERSAL / PROFIT LOCK"
+        reason:
+          "STRONG REVERSAL / PROFIT LOCK"
       };
     }
 
-    return {
+
+    return{
       action:"PROTECT",
       floor
     };
   }
 
-  return {
+
+  return{
     action:"HOLD",
     floor:null
   };
 }
 
-/* ============================================================
-   POSITION UPDATE
-   ============================================================ */
+
+/* =========================================================
+   UPDATE RUNNER
+   ========================================================= */
 
 function updateRunner(){
 
-  if(!runner.on) return;
-  if(!runner.position) return;
-  if(!live.bid || !live.ask) return;
+  if(
+    !runner.on ||
+    !runner.position
+  ){
 
-  const p=runner.position;
+    renderRunner();
+    return;
+  }
+
+
+  if(
+    !live.bid ||
+    !live.ask
+  ){
+
+    return;
+  }
+
+
+  const p=
+    runner.position;
+
 
   const price=
     p.side==="BUY"
       ? live.bid
       : live.ask;
 
-  const pnl=pnlFor(p,price);
 
-  p.currentPnl=pnl;
+  const pnl=
+    pnlFor(
+      p,
+      price
+    );
 
-  if(pnl>p.peakPnl){
-    p.peakPnl=pnl;
-    p.peakPrice=price;
+
+  p.currentPnl=
+    pnl;
+
+
+  /*
+    New peak.
+  */
+
+  if(
+    pnl>
+    p.peakPnl
+  ){
+
+    p.peakPnl=
+      pnl;
+
+    p.peakPrice=
+      price;
   }
 
-  const giveback=Math.max(
-    0,
-    p.peakPnl-pnl
-  );
+
+  const giveback=
+    Math.max(
+      0,
+      p.peakPnl-pnl
+    );
+
 
   p.maxDrawdownFromPeak=
     Math.max(
@@ -1685,172 +3038,253 @@ function updateRunner(){
       giveback
     );
 
-  /*
-    PARTIAL TP 1
-    25% of original position.
-  */
 
-  if(!p.partial1){
+  /* =======================================================
+     TP1
+     ======================================================= */
 
-    const hit =
+  if(
+    !p.partial1 &&
+    p.tp1!==null
+  ){
+
+    const hit=
       p.side==="BUY"
         ? price>=p.tp1
         : price<=p.tp1;
 
+
     if(hit){
 
-      const qty=p.originalLot*0.25;
+      const qty=
+        p.originalLot*0.25;
 
-      p.remainingLot-=qty;
+
+      p.remainingLot-=
+        qty;
+
+
       p.partial1=true;
+
 
       const realized=
         pnlFor(
-          {...p,lot:qty},
+          {
+            ...p,
+            lot:qty
+          },
           p.tp1
         );
 
-      p.realized+=realized;
-      runner.realized+=realized;
+
+      p.realized+=
+        realized;
+
+      runner.realized+=
+        realized;
+
 
       log(
-        `TP1 ${money(realized)} • remaining ${p.remainingLot.toFixed(2)}`
+        `TP1 ${money(realized)}`
       );
+
 
       /*
         After TP1:
-        move logical SL toward entry,
-        but don't force a close of the rest.
+        protect entry.
       */
 
-      if(p.side==="BUY"){
-        p.sl=Math.max(
-          p.sl,
-          p.entry+0.10
-        );
+      if(
+        p.side==="BUY"
+      ){
+
+        p.sl=
+          Math.max(
+            p.sl,
+            p.entry+0.10
+          );
+
       }else{
-        p.sl=Math.min(
-          p.sl,
-          p.entry-0.10
-        );
+
+        p.sl=
+          Math.min(
+            p.sl,
+            p.entry-0.10
+          );
       }
     }
   }
 
-  /*
-    PARTIAL TP2
-    Another 25%.
-  */
 
-  if(p.partial1 && !p.partial2){
+  /* =======================================================
+     TP2
+     ======================================================= */
 
-    const hit =
+  if(
+    p.partial1 &&
+    !p.partial2 &&
+    p.tp2!==null
+  ){
+
+    const hit=
       p.side==="BUY"
         ? price>=p.tp2
         : price<=p.tp2;
 
+
     if(hit){
 
-      const qty=p.originalLot*0.25;
+      const qty=
+        p.originalLot*0.25;
 
-      p.remainingLot-=qty;
+
+      p.remainingLot-=
+        qty;
+
+
       p.partial2=true;
+
 
       const realized=
         pnlFor(
-          {...p,lot:qty},
+          {
+            ...p,
+            lot:qty
+          },
           p.tp2
         );
 
-      p.realized+=realized;
-      runner.realized+=realized;
+
+      p.realized+=
+        realized;
+
+      runner.realized+=
+        realized;
+
 
       log(
-        `TP2 ${money(realized)} • runner ${p.remainingLot.toFixed(2)}`
+        `TP2 ${money(realized)}`
       );
 
+
       /*
-        Move protection further.
+        Protect TP1.
       */
 
-      if(p.side==="BUY"){
-        p.sl=Math.max(
-          p.sl,
-          p.tp1
-        );
+      if(
+        p.side==="BUY"
+      ){
+
+        p.sl=
+          Math.max(
+            p.sl,
+            p.tp1
+          );
+
       }else{
-        p.sl=Math.min(
-          p.sl,
-          p.tp1
-        );
+
+        p.sl=
+          Math.min(
+            p.sl,
+            p.tp1
+          );
       }
     }
   }
 
-  /*
-    STRUCTURAL SL
-  */
 
-  const stopHit =
+  /* =======================================================
+     STRUCTURAL SL
+     ======================================================= */
+
+  const stopHit=
     p.side==="BUY"
       ? price<=p.sl
       : price>=p.sl;
 
+
   if(stopHit){
+
     closeRunner(
       "STRUCTURAL SL",
       price
     );
+
     return;
   }
 
-  /*
-    Dynamic exit.
-  */
+
+  /* =======================================================
+     DYNAMIC PROTECTION
+     ======================================================= */
 
   const protection=
-    dynamicProtection(p,pnl);
+    dynamicProtection(
+      p,
+      pnl
+    );
 
-  if(protection.action==="CLOSE"){
+
+  if(
+    protection.action===
+    "CLOSE"
+  ){
+
     closeRunner(
       protection.reason,
       price
     );
+
     return;
   }
 
-  /*
-    TP3 closes the remaining runner.
-    */
 
-  const tp3Hit =
+  /* =======================================================
+     TP3
+     ======================================================= */
+
+  const tp3Hit=
     p.side==="BUY"
       ? price>=p.tp3
       : price<=p.tp3;
 
+
   if(tp3Hit){
+
     closeRunner(
       "TP3 RUNNER",
       price
     );
+
     return;
   }
 
+
   saveRunner();
+
   renderRunner();
 }
 
-/* ============================================================
-   CLOSE
-   ============================================================ */
 
-function closeRunner(reason,customPrice=null){
+/* =========================================================
+   CLOSE POSITION
+   ========================================================= */
 
-  const p=runner.position;
+function closeRunner(
+  reason,
+  customPrice=null
+){
 
-  if(!p) return;
+  const p=
+    runner.position;
 
-  const price =
+
+  if(!p){
+    return;
+  }
+
+
+  const price=
     customPrice ??
     (
       p.side==="BUY"
@@ -1858,37 +3292,54 @@ function closeRunner(reason,customPrice=null){
         : live.ask
     );
 
+
   const remainingPnl=
     pnlFor(
-      {...p,lot:p.remainingLot},
+      {
+        ...p,
+        lot:p.remainingLot
+      },
       price
     );
+
 
   const totalPnl=
     p.realized+
     remainingPnl;
 
-  runner.realized+=remainingPnl;
 
-  const giveback=Math.max(
-    0,
-    p.peakPnl-totalPnl
-  );
+  runner.realized+=
+    remainingPnl;
+
+
+  const giveback=
+    Math.max(
+      0,
+      p.peakPnl-totalPnl
+    );
+
 
   const record={
+
     id:p.id,
-    date:new Date().toISOString(),
+
+    date:
+      new Date().toISOString(),
 
     side:p.side,
 
     lot:p.originalLot,
 
     entry:p.entry,
+
     exit:price,
 
     sl:p.sl,
+
     tp1:p.tp1,
+
     tp2:p.tp2,
+
     tp3:p.tp3,
 
     pnl:totalPnl,
@@ -1900,233 +3351,541 @@ function closeRunner(reason,customPrice=null){
     reason,
 
     duration:
-      Date.now()-p.openedAt,
+      Date.now()-
+      p.openedAt,
 
-    entrySnapshot:p.entrySnapshot
+    entrySnapshot:
+      p.entrySnapshot
   };
+
 
   history.unshift(record);
 
-  /*
-    Keep history manageable.
-  */
 
-  if(history.length>500){
-    history=history.slice(0,500);
+  if(
+    history.length>500
+  ){
+
+    history=
+      history.slice(0,500);
   }
+
 
   saveHistory();
 
+
   log(
-    `CLOSE ${p.side} ${money(totalPnl)} • ${reason} • peak ${money(p.peakPnl)} • giveback ${money(giveback)}`
+    `CLOSE ${p.side} ${money(totalPnl)} • ${reason} • PEAK ${money(p.peakPnl)} • GIVEBACK ${money(giveback)}`
   );
+
 
   runner.position=null;
 
+
+  /*
+    Five minute cooldown after close.
+    Prevents immediate re-entry at same level.
+  */
+
+  runner.cooldownUntil=
+    Date.now()+
+    5*60*1000;
+
+
+  signalMemory.count=0;
+
+
   saveRunner();
+
   renderRunner();
+
   renderHistory();
 }
 
-/* ============================================================
+
+/* =========================================================
+   TEST ENTRY
+   ========================================================= */
+
+function testEntry(){
+
+  if(!analysis){
+
+    log(
+      "Brak analizy."
+    );
+
+    return;
+  }
+
+
+  if(
+    analysis.signal==="WAIT"
+  ){
+
+    log(
+      "TEST ENTRY zablokowany: WAIT."
+    );
+
+    return;
+  }
+
+
+  if(
+    runner.position
+  ){
+
+    log(
+      "Pozycja już istnieje."
+    );
+
+    return;
+  }
+
+
+  openPaperPosition(
+    analysis.signal,
+    "TEST ENTRY"
+  );
+}
+
+
+/* =========================================================
    RUNNER CONTROLS
-   ============================================================ */
+   ========================================================= */
 
 function toggleRunner(){
 
-  runner.on=!runner.on;
+  runner.on=
+    !runner.on;
+
 
   if(runner.on){
-    log("RUNNER ON");
+
+    log(
+      "RUNNER ON — automatyczne wejścia AKTYWNE"
+    );
+
+    $("autoStatus").textContent=
+      "AUTO ENTRY AKTYWNE — system czeka na potwierdzony sygnał.";
+
   }else{
-    log("RUNNER OFF");
+
+    log(
+      "RUNNER OFF"
+    );
+
+    $("autoStatus").textContent=
+      "Runner OFF";
   }
 
+
   saveRunner();
+
   renderRunner();
 }
+
 
 function resetRunner(){
 
   runner={
     on:false,
     position:null,
-    realized:0
+    realized:0,
+    cooldownUntil:0
   };
 
-  localStorage.removeItem(RUNNER_KEY);
 
-  log("Runner zresetowany.");
+  signalMemory={
+    last:null,
+    count:0,
+    time:0
+  };
+
+
+  localStorage.removeItem(
+    RUNNER_KEY
+  );
+
+
+  log(
+    "Runner zresetowany."
+  );
+
 
   renderRunner();
 }
 
-/* ============================================================
+
+/* =========================================================
    RENDER RUNNER
-   ============================================================ */
+   ========================================================= */
 
 function renderRunner(){
 
   $("runnerStatus").textContent=
-    runner.on ? "ON" : "OFF";
+    runner.on
+      ? "ON"
+      : "OFF";
+
 
   $("runnerStatus").className=
-    "runnerStatus "+(
-      runner.on ? "buy" : ""
+    "runnerStatus "+
+    (
+      runner.on
+        ? "buy"
+        : ""
     );
 
-  const p=runner.position;
+
+  const p=
+    runner.position;
+
 
   $("runnerPosition").textContent=
     p
       ? `${p.side} ${p.remainingLot.toFixed(2)}`
       : "BRAK";
 
+
   $("runnerRealized").textContent=
-    money(runner.realized);
+    money(
+      runner.realized
+    );
+
 
   const total=
     runner.realized+
-    (p ? p.currentPnl : 0);
+    (
+      p
+        ? p.currentPnl
+        : 0
+    );
+
 
   $("runnerTotal").textContent=
     money(total);
 
+
   $("runnerTotal").className=
-    "value "+(
-      total>=0 ? "buy" : "sell"
+    "value "+
+    (
+      total>=0
+        ? "buy"
+        : "sell"
     );
 
+
   $("runnerPeak").textContent=
-    money(p ? p.peakPnl : 0);
+    money(
+      p
+        ? p.peakPnl
+        : 0
+    );
+
 
   const giveback=
     p
-      ? Math.max(0,p.peakPnl-p.currentPnl)
+      ? Math.max(
+          0,
+          p.peakPnl-
+          p.currentPnl
+        )
       : 0;
+
 
   $("runnerGiveback").textContent=
     money(giveback);
+
 
   if(!p){
 
     $("runnerProtection").textContent=
       "Brak aktywnej pozycji.";
 
+
     $("runnerTable").innerHTML=
-      `<tr><td colspan="9">Brak pozycji</td></tr>`;
+      `<tr>
+        <td colspan="9">
+          Brak pozycji
+        </td>
+      </tr>`;
+
+
+    if(
+      runner.on &&
+      Date.now()<
+      Number(
+        runner.cooldownUntil||0
+      )
+    ){
+
+      const left=
+        Math.ceil(
+          (
+            runner.cooldownUntil-
+            Date.now()
+          )/1000
+        );
+
+
+      $("autoStatus").textContent=
+        "AUTO ON — cooldown";
+
+
+      $("entryWait").textContent=
+        `Następne wejście za około ${left}s`;
+
+    }else if(runner.on){
+
+      $("autoStatus").textContent=
+        "AUTO ENTRY AKTYWNE";
+
+      $("entryWait").textContent=
+        analysis
+          ? `${analysis.signal} • potwierdzenia ${signalMemory.count}/2`
+          : "Czekam na analizę...";
+    }
+
 
     return;
   }
 
-  const rev=reversalScore(p);
+
+  const rev=
+    reversalScore(p);
+
+
   const protection=
-    dynamicProtection(p,p.currentPnl);
+    dynamicProtection(
+      p,
+      p.currentPnl
+    );
+
 
   let text=
-    `P/L ${money(p.currentPnl)} • peak ${money(p.peakPnl)} • reversal score ${rev}`;
+    `P/L ${money(p.currentPnl)} • peak ${money(p.peakPnl)} • reversal ${rev}`;
 
-  if(protection.floor!==null &&
-     protection.floor!==undefined){
+
+  if(
+    protection.floor!==null &&
+    protection.floor!==undefined
+  ){
 
     text+=
       ` • ochrona od ${money(protection.floor)}`;
   }
 
+
   text+=
     ` • ${protection.action}`;
 
-  $("runnerProtection").textContent=text;
+
+  $("runnerProtection").textContent=
+    text;
+
+
+  $("autoStatus").textContent=
+    `AUTO RUNNER — ${p.side} aktywna`;
+
+
+  $("entryWait").textContent=
+    "Pozycja jest automatycznie zarządzana.";
+
 
   $("runnerTable").innerHTML=`
+
     <tr>
-      <td class="${sideClass(p.side)}">${p.side}</td>
-      <td>${p.remainingLot.toFixed(2)}</td>
-      <td>${fmt(p.entry)}</td>
-      <td>${fmt(p.sl)}</td>
-      <td>${fmt(p.tp1)}</td>
-      <td>${fmt(p.tp2)}</td>
-      <td>${fmt(p.tp3)}</td>
-      <td class="${p.currentPnl>=0?"buy":"sell"}">${money(p.currentPnl)}</td>
-      <td>OPEN</td>
+
+      <td class="${sideClass(p.side)}">
+        ${p.side}
+      </td>
+
+      <td>
+        ${p.remainingLot.toFixed(2)}
+      </td>
+
+      <td>
+        ${fmt(p.entry)}
+      </td>
+
+      <td>
+        ${fmt(p.sl)}
+      </td>
+
+      <td>
+        ${fmt(p.tp1)}
+      </td>
+
+      <td>
+        ${fmt(p.tp2)}
+      </td>
+
+      <td>
+        ${fmt(p.tp3)}
+      </td>
+
+      <td class="${p.currentPnl>=0?"buy":"sell"}">
+        ${money(p.currentPnl)}
+      </td>
+
+      <td>
+        OPEN
+      </td>
+
     </tr>
+
   `;
 }
 
-/* ============================================================
+
+/* =========================================================
    HISTORY
-   ============================================================ */
+   ========================================================= */
 
 function renderHistory(){
 
-  const closed=history.length;
+  const closed=
+    history.length;
+
 
   const wins=
-    history.filter(x=>x.pnl>0).length;
+    history.filter(
+      x=>x.pnl>0
+    ).length;
+
 
   const losses=
-    history.filter(x=>x.pnl<0).length;
+    history.filter(
+      x=>x.pnl<0
+    ).length;
+
 
   const net=
-    history.reduce((s,x)=>s+Number(x.pnl||0),0);
+    history.reduce(
+      (s,x)=>
+        s+
+        Number(x.pnl||0),
+      0
+    );
+
 
   const avg=
-    closed ? net/closed : 0;
+    closed
+      ? net/closed
+      : 0;
+
 
   const maxWin=
     closed
-      ? Math.max(0,...history.map(x=>x.pnl))
+      ? Math.max(
+          0,
+          ...history.map(
+            x=>x.pnl
+          )
+        )
       : 0;
+
 
   const maxLoss=
     closed
-      ? Math.min(0,...history.map(x=>x.pnl))
+      ? Math.min(
+          0,
+          ...history.map(
+            x=>x.pnl
+          )
+        )
       : 0;
+
 
   const maxPeak=
     closed
-      ? Math.max(0,...history.map(x=>x.peakPnl||0))
+      ? Math.max(
+          0,
+          ...history.map(
+            x=>x.peakPnl||0
+          )
+        )
       : 0;
+
 
   const avgGiveback=
     closed
       ? history.reduce(
-          (s,x)=>s+Number(x.giveback||0),
+          (s,x)=>
+            s+
+            Number(
+              x.giveback||0
+            ),
           0
         )/closed
       : 0;
 
-  $("histClosed").textContent=closed;
-  $("histWin").textContent=wins;
-  $("histLoss").textContent=losses;
+
+  $("histClosed").textContent=
+    closed;
+
+  $("histWin").textContent=
+    wins;
+
+  $("histLoss").textContent=
+    losses;
+
 
   $("histRate").textContent=
     closed
-      ? ((wins/closed)*100).toFixed(1)+"%"
+      ? (
+          wins/closed*100
+        ).toFixed(1)+"%"
       : "0%";
 
-  $("histNet").textContent=money(net);
-  $("histAvg").textContent=money(avg);
-  $("histMaxWin").textContent=money(maxWin);
-  $("histMaxLoss").textContent=money(maxLoss);
-  $("histMaxPeak").textContent=money(maxPeak);
-  $("histGiveback").textContent=money(avgGiveback);
+
+  $("histNet").textContent=
+    money(net);
+
+  $("histAvg").textContent=
+    money(avg);
+
+  $("histMaxWin").textContent=
+    money(maxWin);
+
+  $("histMaxLoss").textContent=
+    money(maxLoss);
+
+  $("histMaxPeak").textContent=
+    money(maxPeak);
+
+  $("histGiveback").textContent=
+    money(avgGiveback);
+
 
   $("historyTable").innerHTML=
-    history.slice(0,100).map(x=>{
+    history
+      .slice(0,100)
+      .map(x=>{
 
-      const snap=x.entrySnapshot || {};
+        const snap=
+          x.entrySnapshot ||
+          {};
 
-      const tf=[
-        snap.M5?.signal || "?",
-        snap.M15?.signal || "?",
-        snap.M30?.signal || "?",
-        snap.H1?.signal || "?"
-      ].join("/");
 
-      const date=
-        new Date(x.date)
-          .toLocaleString(
+        const tf=[
+
+          snap.M5?.signal || "?",
+
+          snap.M15?.signal || "?",
+
+          snap.M30?.signal || "?",
+
+          snap.H1?.signal || "?"
+
+        ].join("/");
+
+
+        const date=
+          new Date(
+            x.date
+          ).toLocaleString(
             "pl-PL",
             {
               day:"2-digit",
@@ -2136,107 +3895,187 @@ function renderHistory(){
             }
           );
 
-      return `
-        <tr>
-          <td>${date}</td>
-          <td class="${sideClass(x.side)}">${x.side}</td>
-          <td>${fmt(x.entry)}</td>
-          <td>${fmt(x.exit)}</td>
-          <td class="${x.pnl>=0?"buy":"sell"}">${money(x.pnl)}</td>
-          <td>${money(x.peakPnl)}</td>
-          <td>${money(x.giveback)}</td>
-          <td>${escapeHtml(x.reason)}</td>
-          <td>${tf}</td>
-        </tr>
-      `;
-    }).join("");
+
+        return`
+
+          <tr>
+
+            <td>
+              ${date}
+            </td>
+
+            <td class="${sideClass(x.side)}">
+              ${x.side}
+            </td>
+
+            <td>
+              ${fmt(x.entry)}
+            </td>
+
+            <td>
+              ${fmt(x.exit)}
+            </td>
+
+            <td class="${x.pnl>=0?"buy":"sell"}">
+              ${money(x.pnl)}
+            </td>
+
+            <td>
+              ${money(x.peakPnl)}
+            </td>
+
+            <td>
+              ${money(x.giveback)}
+            </td>
+
+            <td>
+              ${escapeHtml(x.reason)}
+            </td>
+
+            <td>
+              ${tf}
+            </td>
+
+          </tr>
+
+        `;
+
+      })
+      .join("");
 }
 
-/* ============================================================
-   AUTOMATIC ANALYSIS LOOP
-   ============================================================ */
+
+/* =========================================================
+   LOOPS
+   ========================================================= */
 
 let lastAnalysis=0;
+
 let lastMacro=0;
+
 
 async function analysisLoop(){
 
-  const now=Date.now();
+  const now=
+    Date.now();
+
 
   /*
-    Normal analysis every 60 seconds.
+    Analysis every 60 seconds.
   */
 
-  if(now-lastAnalysis>=60000){
+  if(
+    now-lastAnalysis>=60000
+  ){
 
-    lastAnalysis=now;
+    lastAnalysis=
+      now;
 
     await loadAllBars();
   }
+
 
   /*
     Macro every 5 minutes.
   */
 
-  if(now-lastMacro>=300000){
+  if(
+    now-lastMacro>=300000
+  ){
 
-    lastMacro=now;
+    lastMacro=
+      now;
 
     await loadMacro();
   }
+
+
+  /*
+    Runner itself is updated
+    much faster by price loop.
+  */
+
+  updateRunner();
 }
 
-/* ============================================================
+
+/* =========================================================
    START
-   ============================================================ */
+   ========================================================= */
 
 async function start(){
 
   refreshLevelButtons();
 
   renderHistory();
+
   renderRunner();
+
 
   await fetchLive();
 
+
   await loadAllBars();
+
 
   await loadMacro();
 
-  lastAnalysis=Date.now();
-  lastMacro=Date.now();
 
-  log("XAU AI uruchomione.");
+  lastAnalysis=
+    Date.now();
 
-  /*
-    Live quote every 2 seconds.
-  */
+  lastMacro=
+    Date.now();
 
-  setInterval(fetchLive,2000);
 
-  /*
-    Analysis loop.
-  */
+  log(
+    "XAU AI uruchomione."
+  );
 
-  setInterval(analysisLoop,5000);
 
   /*
-    Runner gets an additional fast evaluation.
-    This matters because exit management should
-    react faster than new signal generation.
+    Live price:
+    every 2 seconds.
   */
 
-  setInterval(()=>{
+  setInterval(
+    fetchLive,
+    2000
+  );
 
-    if(runner.on && runner.position){
 
-      updateRunner();
-    }
+  /*
+    Analysis:
+    every 5 seconds checks whether
+    60 seconds passed.
+  */
 
-  },3000);
+  setInterval(
+    analysisLoop,
+    5000
+  );
+
+
+  /*
+    Runner:
+    every 3 seconds.
+  */
+
+  setInterval(
+    ()=>{
+      if(
+        runner.on
+      ){
+        updateRunner();
+      }
+    },
+    3000
+  );
 }
 
+
 start();
+
 </script>
 
 </body>
